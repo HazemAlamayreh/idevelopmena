@@ -29,8 +29,8 @@ aside{background:white;border-right:1px solid var(--line);padding:18px 14px;posi
 .locknote{font-size:10px;color:#9aa7b8;margin-left:38px;margin-top:-3px;margin-bottom:5px}
 main{padding:28px 30px;min-width:0} .container{max-width:1040px;margin:auto}
 .hero{background:white;border:1px solid var(--line);border-radius:23px;padding:28px 30px;position:relative;overflow:hidden;margin-bottom:18px;box-shadow:0 8px 30px #001b4d0a}
-.hero:after{content:"";position:absolute;right:-80px;bottom:-105px;width:310px;height:200px;border:22px solid #dff5fc;border-radius:50%;transform:rotate(-12deg)} .hero:before{content:"";position:absolute;right:55px;bottom:-145px;width:330px;height:210px;border:18px solid var(--navy);border-radius:50%;transform:rotate(-12deg);opacity:.96}
-body[dir=rtl] .hero:after{right:auto;left:-80px} body[dir=rtl] .hero:before{right:auto;left:55px}
+.hero:after,.hero:before{display:none}
+
 .hero .eyebrow{display:flex;align-items:center;gap:8px;color:var(--red);font-size:12px;font-weight:800;text-transform:uppercase;letter-spacing:.08em;position:relative;z-index:2} .hero .eyebrow:before{content:"";width:5px;height:28px;background:var(--red);border-radius:4px}
 .hero h2{position:relative;z-index:2;color:var(--navy);font-size:38px;line-height:1.05;margin:14px 0 10px;max-width:720px} .hero h2 .red{color:var(--red)} .hero p{position:relative;z-index:2;color:var(--muted);line-height:1.65;max-width:720px;margin:0}
 .grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px} .card{background:white;border:1px solid var(--line);border-radius:16px;padding:18px;box-shadow:0 5px 18px #001b4d08} .card h3{margin:0 0 8px;color:var(--navy);font-family:Poppins;font-size:22px} body[dir=rtl] .card h3{font-family:Cairo} .card p{color:var(--muted);line-height:1.55;margin:0}
