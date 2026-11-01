@@ -123,6 +123,21 @@ const DIRECTING_CASE_SAFE={"title":{"en":"The Directing Lab — Maya","ar":"مخ
 
 DETAILED_LEARN["4"]=DIRECTING_LEARN_SAFE;
 CASE_CONFIG["4"]=DIRECTING_CASE_SAFE;
+CASE_CONFIG["3"]={
+  title:{en:"Managing a New Team — Your Response",ar:"إدارة فريق جديد — إجابتك"},
+  items:[
+    {id:"team_handle",type:"text",
+      q:{en:"1. How would you handle this team?",ar:"1. كيف ستتعامل مع هذا الفريق؟"},
+      placeholder:{en:"Describe your overall management approach for Khalid, Sarah, Laila and Omar...",ar:"صف أسلوبك الإداري العام مع خالد وسارة وليلى وعمر..."}},
+    {id:"understand_support",type:"text",
+      q:{en:"2. What steps would you take to better understand and support each team member?",ar:"2. ما الخطوات التي ستتخذها لفهم ودعم كل عضو في الفريق بشكل أفضل؟"},
+      placeholder:{en:"Explain what you would assess, discuss or observe for each person...",ar:"اشرح ما الذي ستقيّمه أو تناقشه أو تلاحظه لكل شخص..."}},
+    {id:"performance_engagement",type:"text",
+      q:{en:"3. How would you approach improving their performance and engagement?",ar:"3. كيف ستتعامل مع تحسين أدائهم وتفاعلهم؟"},
+      placeholder:{en:"Link your actions to skill, will, support, development and follow-up...",ar:"اربط إجراءاتك بالمهارة والإرادة والدعم والتطوير والمتابعة..."}}
+  ]
+};
+
 const directModule=DATA.modules.find(m=>m.id===4);
 if(directModule && directModule.subsections && directModule.subsections[0]){
   directModule.subsections[0].takeaways={
