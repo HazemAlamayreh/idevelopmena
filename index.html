@@ -194,10 +194,54 @@ let assessType=null, ai=0, aAnswers=[], timerId=null, seconds=25, selected=null;
 const ui={home:{en:'Home',ar:'الرئيسية'},pre:{en:'Pre Self-Assessment',ar:'التقييم القبلي'},post:{en:'Module 8: Post-Training Assessment',ar:'الوحدة ٨: التقييم البعدي'},learn:{en:'Learn',ar:'التعلّم'},check:{en:'Knowledge Check',ar:'اختبار الفهم'},case:{en:'Case / Practice',ar:'الحالة / التطبيق'},next:{en:'Next Question',ar:'السؤال التالي'},finish:{en:'Finish Assessment',ar:'إنهاء التقييم'},start:{en:'Start Assessment',ar:'ابدأ التقييم'},score:{en:'Overall Score',ar:'النتيجة الإجمالية'},weak:{en:'Priority Learning Areas',ar:'مجالات التعلّم ذات الأولوية'},improved:{en:'Areas Improved',ar:'المجالات التي تحسنت'},still:{en:'Still Needs Improvement',ar:'ما زال بحاجة إلى تطوير'}};
 function save(){localStorage.setItem(STOREKEY,JSON.stringify(state));}
 function setLang(l){lang=l;document.body.lang=l;document.body.dir=l==='ar'?'rtl':'ltr';enBtn.classList.toggle('active',l==='en');arBtn.classList.toggle('active',l==='ar');renderSide();render();}
+
+function getModule2Progress(){
+ const sc=state.moduleScores?.[2]||{};
+ const a=sc.partA||null,b=sc.partB||null;
+ const doneA=!!a,doneB=!!b;
+ const scoreA=doneA?a.scaled:0,scoreB=doneB?b.scaled:0;
+ return {a,b,doneA,doneB,scoreA,scoreB,total:scoreA+scoreB,completed:doneA&&doneB,pending:(doneA?0:1)+(doneB?0:1)};
+}
+function getModule2StatusHtml(){
+ const p=getModule2Progress();
+ if(p.completed)return `<div class="status">${lang==='en'?'Completed':'مكتمل'} • ${p.total}/100</div>`;
+ if(p.doneA||p.doneB){
+   const partScore=p.doneA?p.scoreA:p.scoreB;
+   return `<div class="status">${partScore}/50 • ${lang==='en'?'1 assessment pending':'تقييم واحد متبقٍ'}</div>`;
+ }
+ return '';
+}
+function getModule2Banner(){
+ const p=getModule2Progress();
+ if(p.completed){
+   return `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;gap:14px;align-items:center"><div><b style="color:var(--navy)">${lang==='en'?'Module 2 Complete':'اكتملت الوحدة 2'}</b><div style="font-size:12px;color:var(--muted);margin-top:4px">${lang==='en'?'Both assessments completed':'تم إكمال التقييمين'}</div></div><div class="display" style="font-size:30px;color:var(--green)">${p.total}/100</div></div></div>`;
+ }
+ if(p.doneA||p.doneB){
+   const partName=p.doneA?(lang==='en'?'2A · Theory X & Y':'2A · نظرية X وY'):(lang==='en'?'2B · Leadership Styles':'2B · أساليب القيادة');
+   const partScore=p.doneA?p.scoreA:p.scoreB;
+   return `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;gap:14px;align-items:center"><div><b style="color:var(--navy)">${partName}</b><div style="font-size:12px;color:var(--red);margin-top:4px">${lang==='en'?'Other assessment pending':'التقييم الآخر ما زال متبقيًا'}</div></div><div class="display" style="font-size:30px;color:var(--navy)">${partScore}/50</div></div></div>`;
+ }
+ return `<div class="card" style="margin-bottom:14px"><div style="display:flex;justify-content:space-between;gap:14px;align-items:center"><div><b style="color:var(--navy)">${lang==='en'?'Module 2 Assessment Progress':'تقدم تقييمات الوحدة 2'}</b><div style="font-size:12px;color:var(--muted);margin-top:4px">${lang==='en'?'2 assessments pending':'تقييمان متبقيان'}</div></div><div class="display" style="font-size:30px;color:var(--navy)">0/100</div></div></div>`;
+}
+function saveModule2AssessmentResult(subIndex,score,totalQuestions){
+ const scaled=Math.round((score/totalQuestions)*50);
+ state.moduleScores=state.moduleScores||{};
+ const existing=state.moduleScores[2]||{};
+ if(subIndex===0)existing.partA={score,total:totalQuestions,scaled,date:new Date().toISOString()};
+ else existing.partB={score,total:totalQuestions,scaled,date:new Date().toISOString()};
+ const a=existing.partA?.scaled||0,b=existing.partB?.scaled||0;
+ existing.completed=!!(existing.partA&&existing.partB);
+ existing.totalScore=a+b;
+ existing.pct=existing.completed?existing.totalScore:null;
+ existing.date=new Date().toISOString();
+ state.moduleScores[2]=existing;
+ save();
+ return {scaled,progress:getModule2Progress()};
+}
 function renderSide(){
  let html=`<div class="navlabel">${lang==='en'?'Learning Journey':'رحلة التعلّم'}</div><button class="navbtn ${view==='home'?'active':''}" onclick="goHome()"><span class="num">⌂</span><div><b>${ui.home[lang]}</b></div></button>`;
  html+=`<button class="navbtn ${view==='assessment'&&assessType==='pre'?'active':''}" onclick="openAssessment('pre')"><span class="num">P</span><div><b>${ui.pre[lang]}</b><div class="small">${lang==='en'?'20 questions • 25 sec each':'20 سؤال • 25 ثانية لكل سؤال'}</div>${state.pre?`<div class="status">${lang==='en'?'Completed':'مكتمل'} • ${state.pre.total}%</div>`:''}</div></button>`;
- DATA.modules.forEach(m=>{let sc=state.moduleScores[m.id];html+=`<button class="navbtn ${view==='module'&&currentModuleId===m.id?'active':''}" onclick="openModule(${m.id})"><span class="num">${m.id}</span><div><b>${m.title[lang]}</b>${sc?`<div class="status">${lang==='en'?'Quiz':'اختبار'}: ${sc.pct}%</div>`:''}</div></button>`});
+ DATA.modules.forEach(m=>{let sc=state.moduleScores[m.id];let status=m.id===2?getModule2StatusHtml():(sc?`<div class="status">${lang==='en'?'Quiz':'اختبار'}: ${sc.pct}%</div>`:'');html+=`<button class="navbtn ${view==='module'&&currentModuleId===m.id?'active':''}" onclick="openModule(${m.id})"><span class="num">${m.id}</span><div><b>${m.title[lang]}</b>${status}</div></button>`});
  html+=`<button class="navbtn ${view==='assessment'&&assessType==='post'?'active':''}" onclick="openAssessment('post')"><span class="num">8</span><div><b>${ui.post[lang]}</b><div class="small">${lang==='en'?'20 questions • comparison with pre':'20 سؤال • مقارنة مع التقييم القبلي'}</div>${state.post?`<div class="status">${lang==='en'?'Completed':'مكتمل'} • ${state.post.total}%</div>`:''}</div></button>`;
  side.innerHTML=html;
 }
@@ -216,6 +260,7 @@ function renderModule2(){
  const m=DATA.modules.find(x=>x.id===2);
  const sub=m.subsections[currentSub]||m.subsections[0];
  app.innerHTML=`<section class="hero"><div class="eyebrow">Module 2</div><h2 class="display">${lang==='en'?'Leadership Styles':'أساليب القيادة'}</h2><p>${lang==='en'?'Explore the two leadership frameworks separately, then test your understanding and apply the Managerial Grid to practical situations.':'استكشف إطارَي القيادة بشكل منفصل، ثم اختبر فهمك وطبّق الشبكة الإدارية على مواقف عملية.'}</p></section>
+ ${getModule2Banner()}
  <div class="tabs" style="position:static;margin-bottom:10px">
    <button class="tab ${currentSub===0?'active':''}" onclick="currentSub=0;currentTab='learn';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2A · Theory X & Y':'2A · نظرية X وY'}</button>
    <button class="tab ${currentSub===1?'active':''}" onclick="currentSub=1;currentTab='learn';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2B · Leadership Styles':'2B · أساليب القيادة'}</button>
@@ -270,7 +315,19 @@ function renderLearn(){
  </div>`).join('')+(currentModuleId===4?`<div class="insight"><b>${lang==='en'?'Source note':'ملاحظة المصدر'}</b><br>${lang==='en'?'The PDF uploaded in this turn contains Delegation only. Directing theory is intentionally not invented here; add the approved Directing material when available.':'ملف PDF المرفوع في هذه الرسالة يحتوي على التفويض فقط. لم يتم اختراع نظرية Directing هنا؛ أضف المادة المعتمدة عندما تصبح متاحة.'}</div>`:'');
 }
 function renderCheck(){if(currentModuleId===2){renderModule2Check();return;}const m=DATA.modules.find(x=>x.id===currentModuleId);let picks=m.subsections.length>1?`<div class="quizpicker">${m.subsections.map((s,i)=>`<button class="pill ${currentSub===i?'active':''}" onclick="currentSub=${i};qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${s.title[lang]}</button>`).join('')}</div>`:'';tabbody.innerHTML=picks+'<div id="quizarea"></div>';renderQuizQ();}
-function renderQuizQ(){const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],qs=s.questions||[];if(!qs.length){quizarea.innerHTML='<div class="placeholder">No quiz data.</div>';return}if(qi>=qs.length){let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=(q.items||[]).map(x=>x.id);quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p style="color:var(--muted);font-size:13px">${lang==='en'?'Use the arrows to arrange the steps from first to last.':'استخدم الأسهم لترتيب الخطوات من الأولى إلى الأخيرة.'}</p><div id="quizOrderList" class="order-list"></div><div id="qfb"></div><button class="next" onclick="submitQuizOrder()">${lang==='en'?'Submit Order':'اعتماد الترتيب'}</button></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
+function renderQuizQ(){const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],qs=s.questions||[];if(!qs.length){quizarea.innerHTML='<div class="placeholder">No quiz data.</div>';return}if(qi>=qs.length){
+ if(currentModuleId===2){
+   const result=saveModule2AssessmentResult(currentSub,qscore,qs.length),p=result.progress;
+   renderSide();
+   const label=currentSub===0?(lang==='en'?'2A · Theory X & Y':'2A · نظرية X وY'):(lang==='en'?'2B · Leadership Styles':'2B · أساليب القيادة');
+   if(p.completed){
+     quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="ribbon">${lang==='en'?'MODULE 2 COMPLETE':'اكتملت الوحدة 2'}</div><h3 style="color:var(--navy);margin-top:10px">${label}</h3><div class="display" style="font-size:42px;color:var(--navy);margin-top:8px">${result.scaled}/50</div><div style="color:var(--muted);margin-bottom:16px">${lang==='en'?'This assessment score':'نتيجة هذا التقييم'}</div><div class="display" style="font-size:58px;color:var(--green)">${p.total}/100</div><h3>${lang==='en'?'Final Module 2 Score':'النتيجة النهائية للوحدة 2'}</h3><div class="insight" style="text-align:left">${lang==='en'?'<b>Completed.</b> Both assessments are finished and the combined score is now recorded.':'<b>مكتمل.</b> تم إنهاء التقييمين وتم تسجيل النتيجة المجمعة.'}</div><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderModule2Check()">${lang==='en'?'Retake This Assessment':'إعادة هذا التقييم'}</button></div>`;
+   }else{
+     quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="ribbon">${lang==='en'?'ASSESSMENT COMPLETE':'اكتمل التقييم'}</div><h3 style="color:var(--navy);margin-top:10px">${label}</h3><div class="display" style="font-size:58px;color:var(--navy)">${result.scaled}/50</div><div class="insight"><b>${lang==='en'?'Pending:':'متبقي:'}</b> ${lang==='en'?'Complete the other Module 2 assessment to receive your final score out of 100.':'أكمل التقييم الآخر في الوحدة 2 للحصول على النتيجة النهائية من 100.'}</div><button class="next red" onclick="currentSub=${currentSub===0?1:0};currentTab='check';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'Go to Pending Assessment':'الانتقال إلى التقييم المتبقي'}</button><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderModule2Check()">${lang==='en'?'Retake This Assessment':'إعادة هذا التقييم'}</button></div>`;
+   }
+   return;
+ }
+ let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=(q.items||[]).map(x=>x.id);quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p style="color:var(--muted);font-size:13px">${lang==='en'?'Use the arrows to arrange the steps from first to last.':'استخدم الأسهم لترتيب الخطوات من الأولى إلى الأخيرة.'}</p><div id="quizOrderList" class="order-list"></div><div id="qfb"></div><button class="next" onclick="submitQuizOrder()">${lang==='en'?'Submit Order':'اعتماد الترتيب'}</button></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
 function renderQuizOrderList(q){const map=Object.fromEntries(q.items.map(x=>[x.id,x]));quizOrderList.innerHTML=window.quizOrder.map((id,i)=>`<div class="order-item"><div class="order-num">${i+1}</div><div class="order-text">${map[id].t[lang]}</div><div class="order-moves"><button ${i===0?'disabled':''} onclick="moveQuizOrder(${i},-1)">↑</button><button ${i===window.quizOrder.length-1?'disabled':''} onclick="moveQuizOrder(${i},1)">↓</button></div></div>`).join('');}
 function moveQuizOrder(i,d){const j=i+d;if(j<0||j>=window.quizOrder.length)return;[window.quizOrder[i],window.quizOrder[j]]=[window.quizOrder[j],window.quizOrder[i]];const m=DATA.modules.find(x=>x.id===currentModuleId),q=m.subsections[currentSub].questions[qi];renderQuizOrderList(q);}
 function submitQuizOrder(){if(answered)return;answered=true;const m=DATA.modules.find(x=>x.id===currentModuleId),q=m.subsections[currentSub].questions[qi];const ok=JSON.stringify(window.quizOrder)===JSON.stringify(q.a);if(ok)qscore++;document.querySelectorAll('.order-moves button').forEach(x=>x.disabled=true);qfb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;}
