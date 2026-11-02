@@ -365,6 +365,12 @@ function resetQuizOrder(){
  const q=DATA.modules.find(x=>x.id===currentModuleId).subsections[currentSub].questions[qi];
  renderQuizOrderList(q);
 }
+function renderCase(){
+ const m=DATA.modules.find(x=>x.id===currentModuleId),acts=m.subsections.filter(s=>s.activity&&s.activity[lang]);
+ let sourceHtml=acts.length?acts.map(s=>`<div class="activity">${s.activity[lang]}</div>`).join('<div style="height:13px"></div>'):`<div class="placeholder"><h3>${lang==='en'?'Case will be added':'سيتم إضافة الحالة'}</h3><p>${lang==='en'?'The module structure is ready for the approved case activity.':'هيكل الوحدة جاهز لإضافة الحالة المعتمدة.'}</p></div>`;
+ const cfg=CASE_CONFIG[String(currentModuleId)];
+ tabbody.innerHTML=sourceHtml+(cfg?renderCaseWorkspace(cfg):'');
+}
 function getCaseStore(){
  state.caseResponses=state.caseResponses||{};
  state.caseResponses[currentModuleId]=state.caseResponses[currentModuleId]||{};
