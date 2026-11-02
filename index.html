@@ -85,7 +85,21 @@ body[dir=rtl] .case-choice{text-align:right}
 .order-check{font-size:18px;color:var(--green);font-weight:900}
 .order-hint{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 6px}
 .order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
-@media(max-width:640px){.order-item{padding:14px 12px;min-height:58px}.order-text{font-size:14px}}</style>
+@media(max-width:640px){.order-item{padding:14px 12px;min-height:58px}.order-text{font-size:14px}}
+.slides-wrap{max-width:1050px;margin:0 auto}
+.slide-stage{background:#0b1730;border-radius:16px;padding:14px;box-shadow:0 10px 30px rgba(0,27,77,.12)}
+.slide-frame{aspect-ratio:16/9;background:#fff;border-radius:11px;overflow:hidden;display:flex;align-items:center;justify-content:center;position:relative}
+.slide-frame img{width:100%;height:100%;object-fit:contain;background:#fff}
+.slide-empty{padding:40px;text-align:center;color:#526176}
+.slide-empty h3{color:var(--navy);margin:0 0 8px}
+.slide-nav{display:flex;justify-content:space-between;align-items:center;gap:12px;margin-top:14px;flex-wrap:wrap}
+.slide-count{font-weight:800;color:var(--navy);min-width:110px;text-align:center}
+.slide-nav button{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:10px;padding:10px 16px;font-weight:800;cursor:pointer}
+.slide-nav button:disabled{opacity:.35;cursor:not-allowed}
+.slide-meta{margin-top:14px;background:#fff;border:1px solid var(--line);border-radius:12px;padding:14px}
+.slide-meta h4{margin:0 0 6px;color:var(--navy)}
+.slide-meta p{margin:0;color:#526176;line-height:1.6}
+</style>
 </head>
 <body lang="en" dir="ltr">
 <header><div class="headerrow"><div class="brand"><div class="mark">M</div><div><h1 class="display">Management <span style="color:var(--red)">in Action</span></h1><p>Management Fundamentals Program • Interactive Learning Hub</p></div></div><div class="lang"><button id="enBtn" class="active" onclick="setLang('en')">EN</button><button id="arBtn" onclick="setLang('ar')">عربي</button></div></div></header>
@@ -354,7 +368,21 @@ let state=JSON.parse(localStorage.getItem(STOREKEY)||'{}');
 state.moduleScores=state.moduleScores||{}; state.visits=state.visits||{};
 let lang='en', view='home', currentModuleId=null, currentTab='learn', currentSub=0, qi=0, qscore=0, answered=false, wrong=[];
 let assessType=null, ai=0, aAnswers=[], timerId=null, seconds=25, selected=null;
-const ui={home:{en:'Home',ar:'الرئيسية'},pre:{en:'Pre Self-Assessment',ar:'التقييم القبلي'},post:{en:'Module 8: Post-Training Assessment',ar:'الوحدة ٨: التقييم البعدي'},learn:{en:'Learn',ar:'التعلّم'},check:{en:'Knowledge Check',ar:'اختبار الفهم'},case:{en:'Case / Practice',ar:'الحالة / التطبيق'},next:{en:'Next Question',ar:'السؤال التالي'},finish:{en:'Finish Assessment',ar:'إنهاء التقييم'},start:{en:'Start Assessment',ar:'ابدأ التقييم'},score:{en:'Overall Score',ar:'النتيجة الإجمالية'},weak:{en:'Priority Learning Areas',ar:'مجالات التعلّم ذات الأولوية'},improved:{en:'Areas Improved',ar:'المجالات التي تحسنت'},still:{en:'Still Needs Improvement',ar:'ما زال بحاجة إلى تطوير'}};
+let slideIndex=0;
+// Add actual slide image URLs here after the course deck is uploaded.
+// Module 2 is split into 2A and 2B; other modules use their module number.
+const MODULE_SLIDES={
+ "1":[],
+ "2A":[],
+ "2B":[],
+ "3":[],
+ "4":[],
+ "5":[],
+ "6":[],
+ "7":[]
+};
+
+const ui={home:{en:'Home',ar:'الرئيسية'},pre:{en:'Pre Self-Assessment',ar:'التقييم القبلي'},post:{en:'Module 8: Post-Training Assessment',ar:'الوحدة ٨: التقييم البعدي'},learn:{en:'Learn',ar:'التعلّم'},slides:{en:'Slides',ar:'الشرائح'},check:{en:'Knowledge Check',ar:'اختبار الفهم'},case:{en:'Case / Practice',ar:'الحالة / التطبيق'},next:{en:'Next Question',ar:'السؤال التالي'},finish:{en:'Finish Assessment',ar:'إنهاء التقييم'},start:{en:'Start Assessment',ar:'ابدأ التقييم'},score:{en:'Overall Score',ar:'النتيجة الإجمالية'},weak:{en:'Priority Learning Areas',ar:'مجالات التعلّم ذات الأولوية'},improved:{en:'Areas Improved',ar:'المجالات التي تحسنت'},still:{en:'Still Needs Improvement',ar:'ما زال بحاجة إلى تطوير'}};
 function save(){localStorage.setItem(STOREKEY,JSON.stringify(state));}
 function setLang(l){lang=l;document.body.lang=l;document.body.dir=l==='ar'?'rtl':'ltr';enBtn.classList.toggle('active',l==='en');arBtn.classList.toggle('active',l==='ar');renderSide();render();}
 
@@ -409,8 +437,8 @@ function renderSide(){
  side.innerHTML=html;
 }
 function goHome(){stopTimer();view='home';currentModuleId=null;renderSide();render();}
-function openModule(id){stopTimer();view='module';currentModuleId=id;currentTab='learn';currentSub=0;qi=0;qscore=0;answered=false;wrong=[];state.visits[id]=state.visits[id]||{};state.visits[id].learn=true;save();renderSide();render();}
-function switchTab(t){currentTab=t;if(currentModuleId){state.visits[currentModuleId]=state.visits[currentModuleId]||{};state.visits[currentModuleId][t]=true;save();}qi=0;qscore=0;answered=false;wrong=[];render();}
+function openModule(id){stopTimer();view='module';currentModuleId=id;currentTab='learn';currentSub=0;slideIndex=0;qi=0;qscore=0;answered=false;wrong=[];state.visits[id]=state.visits[id]||{};state.visits[id].learn=true;save();renderSide();render();}
+function switchTab(t){currentTab=t;slideIndex=0;if(currentModuleId){state.visits[currentModuleId]=state.visits[currentModuleId]||{};state.visits[currentModuleId][t]=true;save();}qi=0;qscore=0;answered=false;wrong=[];render();}
 function render(){if(view==='home')renderHome();else if(view==='assessment')renderAssess();else renderModule();}
 function renderHome(){
  app.innerHTML=`<section class="hero"><div class="eyebrow">Management Fundamentals</div><h2 class="display">${lang==='en'?'Learn. Apply. <span class="red">Lead.</span>':'تعلّم. طبّق. <span class="red">قُد.</span>'}</h2><p>${lang==='en'?'Start with the diagnostic self-assessment, move through the seven management modules, then complete the post-training assessment to see where your capability improved and what still needs attention.':'ابدأ بالتقييم التشخيصي، ثم انتقل عبر الوحدات الإدارية السبع، وأنهِ بالتقييم البعدي لمعرفة مجالات التحسن وما يحتاج إلى مزيد من التطوير.'}</p></section>
@@ -419,21 +447,53 @@ function renderHome(){
  <div class="card modulecard" onclick="openAssessment('post')"><span class="ribbon">MODULE 8</span><h3>${ui.post[lang]}</h3><p>${lang==='en'?'A parallel 20-question assessment that compares your capability by module against your pre-course baseline.':'تقييم بعدي موازٍ من 20 سؤالاً يقارن قدراتك حسب كل وحدة مع خط الأساس قبل الكورس.'}</p></div></div>`;
 }
 
+function getCurrentSlideKey(){
+ if(currentModuleId===2)return currentSub===0?'2A':'2B';
+ return String(currentModuleId);
+}
+function renderSlides(){
+ const key=getCurrentSlideKey();
+ const slides=MODULE_SLIDES[key]||[];
+ if(!slides.length){
+   tabbody.innerHTML=`<div class="slides-wrap"><div class="slide-stage"><div class="slide-frame"><div class="slide-empty"><h3>${lang==='en'?'Slides are ready to be added':'الشرائح جاهزة للإضافة'}</h3><p>${lang==='en'?'Upload the latest course deck/PDF and the slides for this module will appear here in a 16:9 viewer.':'ارفع أحدث ملف للكورس أو PDF وستظهر شرائح هذه الوحدة هنا داخل عارض 16:9.'}</p></div></div></div><div class="slide-nav"><button disabled>← ${lang==='en'?'Previous':'السابق'}</button><div class="slide-count">0 / 0</div><button disabled>${lang==='en'?'Next':'التالي'} →</button></div></div>`;
+   return;
+ }
+ slideIndex=Math.max(0,Math.min(slideIndex,slides.length-1));
+ const s=slides[slideIndex];
+ tabbody.innerHTML=`<div class="slides-wrap">
+   <div class="slide-stage"><div class="slide-frame"><img src="${s.src}" alt="${s.title?.[lang]||('Slide '+(slideIndex+1))}"></div></div>
+   <div class="slide-nav">
+     <button ${slideIndex===0?'disabled':''} onclick="changeSlide(-1)">← ${lang==='en'?'Previous':'السابق'}</button>
+     <div class="slide-count">${lang==='en'?'Slide':'شريحة'} ${slideIndex+1} / ${slides.length}</div>
+     <button ${slideIndex===slides.length-1?'disabled':''} onclick="changeSlide(1)">${lang==='en'?'Next':'التالي'} →</button>
+   </div>
+   ${(s.title||s.takeaway)?`<div class="slide-meta">${s.title?`<h4>${s.title[lang]}</h4>`:''}${s.takeaway?`<p><b>${lang==='en'?'Key takeaway:':'الخلاصة:'}</b> ${s.takeaway[lang]}</p>`:''}</div>`:''}
+ </div>`;
+}
+function changeSlide(delta){
+ const slides=MODULE_SLIDES[getCurrentSlideKey()]||[];
+ if(!slides.length)return;
+ slideIndex=Math.max(0,Math.min(slideIndex+delta,slides.length-1));
+ renderSlides();
+}
+
 function renderModule2(){
  const m=DATA.modules.find(x=>x.id===2);
  const sub=m.subsections[currentSub]||m.subsections[0];
  app.innerHTML=`<section class="hero"><div class="eyebrow">Module 2</div><h2 class="display">${lang==='en'?'Leadership Styles':'أساليب القيادة'}</h2><p>${lang==='en'?'Explore the two leadership frameworks separately, then test your understanding and apply the Managerial Grid to practical situations.':'استكشف إطارَي القيادة بشكل منفصل، ثم اختبر فهمك وطبّق الشبكة الإدارية على مواقف عملية.'}</p></section>
  ${getModule2Banner()}
  <div class="tabs" style="position:static;margin-bottom:10px">
-   <button class="tab ${currentSub===0?'active':''}" onclick="currentSub=0;currentTab='learn';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2A · Theory X & Y':'2A · نظرية X وY'}</button>
-   <button class="tab ${currentSub===1?'active':''}" onclick="currentSub=1;currentTab='learn';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2B · Leadership Styles':'2B · أساليب القيادة'}</button>
+   <button class="tab ${currentSub===0?'active':''}" onclick="currentSub=0;currentTab='learn';slideIndex=0;qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2A · Theory X & Y':'2A · نظرية X وY'}</button>
+   <button class="tab ${currentSub===1?'active':''}" onclick="currentSub=1;currentTab='learn';slideIndex=0;qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${lang==='en'?'2B · Leadership Styles':'2B · أساليب القيادة'}</button>
  </div>
  <div class="tabs" style="top:86px">
-   <button class="tab ${currentTab==='learn'?'active':''}" onclick="currentTab='learn';renderModule2()">${ui.learn[lang]}</button>
+   <button class="tab ${currentTab==='learn'?'active':''}" onclick="currentTab='learn';slideIndex=0;renderModule2()">${ui.learn[lang]}</button>
+   <button class="tab ${currentTab==='slides'?'active':''}" onclick="currentTab='slides';slideIndex=0;renderModule2()">${ui.slides[lang]}</button>
    <button class="tab ${currentTab==='check'?'active':''}" onclick="currentTab='check';qi=0;qscore=0;answered=false;wrong=[];renderModule2()">${ui.check[lang]}</button>
    ${currentSub===1?`<button class="tab ${currentTab==='case'?'active':''}" onclick="currentTab='case';renderModule2()">${ui.case[lang]}</button>`:''}
  </div><div id="tabbody"></div>`;
  if(currentTab==='learn')renderModule2Learn();
+ else if(currentTab==='slides')renderSlides();
  else if(currentTab==='check')renderModule2Check();
  else renderModule2Case();
 }
@@ -464,8 +524,8 @@ function renderModule(){
  if(currentModuleId===2){renderModule2();return;}
  const m=DATA.modules.find(x=>x.id===currentModuleId);
  app.innerHTML=`<section class="hero"><div class="eyebrow">Module ${m.id}</div><h2 class="display">${m.title[lang].replace(/^Module \d+: /,'')}</h2><p>${lang==='en'?'Review the key learning content, complete the knowledge check, then use the case activity for application and discussion.':'راجع المحتوى التعليمي، أكمل اختبار الفهم، ثم استخدم الحالة للتطبيق والنقاش.'}</p></section>
- <div class="tabs"><button class="tab ${currentTab==='learn'?'active':''}" onclick="switchTab('learn')">${ui.learn[lang]}</button><button class="tab ${currentTab==='check'?'active':''}" onclick="switchTab('check')">${ui.check[lang]}</button><button class="tab ${currentTab==='case'?'active':''}" onclick="switchTab('case')">${ui.case[lang]}</button></div><div id="tabbody"></div>`;
- if(currentTab==='learn')renderLearn();else if(currentTab==='check')renderCheck();else renderCase();
+ <div class="tabs"><button class="tab ${currentTab==='learn'?'active':''}" onclick="switchTab('learn')">${ui.learn[lang]}</button><button class="tab ${currentTab==='slides'?'active':''}" onclick="switchTab('slides')">${ui.slides[lang]}</button><button class="tab ${currentTab==='check'?'active':''}" onclick="switchTab('check')">${ui.check[lang]}</button><button class="tab ${currentTab==='case'?'active':''}" onclick="switchTab('case')">${ui.case[lang]}</button></div><div id="tabbody"></div>`;
+ if(currentTab==='learn')renderLearn();else if(currentTab==='slides')renderSlides();else if(currentTab==='check')renderCheck();else renderCase();
 }
 function renderLearn(){
  const sections=DETAILED_LEARN[String(currentModuleId)]||[];
