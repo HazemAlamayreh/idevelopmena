@@ -68,15 +68,14 @@ body[dir=rtl] .case-choice{text-align:right}
 .secondary{border:1px solid #cbd7e2;background:white;color:var(--navy);border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
 
 .order-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
-.order-item{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-.order-item:active{cursor:grabbing}
-.order-item.dragging{opacity:.82;box-shadow:0 10px 28px rgba(0,27,77,.16);border-color:#7fb8d8;transform:scale(1.015);z-index:3}
-.order-num{width:30px;height:30px;flex:0 0 30px;border-radius:50%;display:grid;place-items:center;background:#eaf7fb;color:var(--navy);font-weight:800}
+.order-item{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;transition:border-color .12s ease,box-shadow .12s ease}
+.order-item.assigned{border-color:#8fc7df;background:#f7fcfe}
+.order-num{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;background:#eaf7fb;color:var(--navy);font-weight:800}
+.order-num.empty{background:#f1f4f7;color:#91a0b2}
 .order-text{flex:1;line-height:1.45}
-.order-grip{font-size:20px;color:#8ca0b5;line-height:1;flex:0 0 auto}
+.order-select{border:1px solid var(--line);background:#fff;color:var(--navy);border-radius:9px;padding:8px 10px;font-weight:800;min-width:84px}
 .order-hint{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 6px}
-@media(max-width:640px){.order-item{padding:14px 12px;min-height:58px}.order-text{font-size:14px}.order-grip{font-size:22px}}
-</style>
+@media(max-width:640px){.order-item{padding:12px}.order-text{font-size:14px}.order-select{min-width:74px;padding:8px}}</style>
 </head>
 <body lang="en" dir="ltr">
 <header><div class="headerrow"><div class="brand"><div class="mark">M</div><div><h1 class="display">Management <span style="color:var(--red)">in Action</span></h1><p>Management Fundamentals Program • Interactive Learning Hub</p></div></div><div class="lang"><button id="enBtn" class="active" onclick="setLang('en')">EN</button><button id="arBtn" onclick="setLang('ar')">عربي</button></div></div></header>
@@ -331,52 +330,37 @@ function renderQuizQ(){const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.
    }
    return;
  }
- let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=(q.items||[]).map(x=>x.id);quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p style="color:var(--muted);font-size:13px">${lang==='en'?'Drag and drop the boxes to arrange the steps from first to last.':'اسحب البوكسات وأفلتها لترتيب الخطوات من الأولى إلى الأخيرة.'}</p><div id="quizOrderList" class="order-list"></div><div id="qfb"></div><button class="next" onclick="submitQuizOrder()">${lang==='en'?'Submit Order':'اعتماد الترتيب'}</button></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
-function enableOrderDrag(containerId,onChange){
- const container=document.getElementById(containerId);
- if(!container)return;
- container.querySelectorAll('.order-item').forEach(item=>{
-   item.addEventListener('pointerdown',e=>{
-     if(answered||selected==='order')return;
-     const dragged=item;
-     dragged.classList.add('dragging');
-     try{dragged.setPointerCapture(e.pointerId)}catch(_){}
-     const move=ev=>{
-       ev.preventDefault();
-       const others=[...container.querySelectorAll('.order-item:not(.dragging)')];
-       let before=null;
-       for(const el of others){
-         const r=el.getBoundingClientRect();
-         if(ev.clientY<r.top+r.height/2){before=el;break;}
-       }
-       if(before)container.insertBefore(dragged,before);
-       else container.appendChild(dragged);
-       [...container.querySelectorAll('.order-item')].forEach((el,i)=>{
-         const n=el.querySelector('.order-num');if(n)n.textContent=i+1;
-       });
-     };
-     const up=ev=>{
-       dragged.classList.remove('dragging');
-       dragged.removeEventListener('pointermove',move);
-       dragged.removeEventListener('pointerup',up);
-       dragged.removeEventListener('pointercancel',up);
-       try{dragged.releasePointerCapture(ev.pointerId)}catch(_){}
-       onChange([...container.querySelectorAll('.order-item')].map(el=>el.dataset.id));
-     };
-     dragged.addEventListener('pointermove',move,{passive:false});
-     dragged.addEventListener('pointerup',up);
-     dragged.addEventListener('pointercancel',up);
-   });
- });
+ let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=(q.items||[]).map(x=>x.id);quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p style="color:var(--muted);font-size:13px">${lang==='en'?'Select the correct number for each step, from 1 to the last step.':'اختر الرقم الصحيح لكل خطوة من 1 حتى آخر خطوة.'}</p><div id="quizOrderList" class="order-list"></div><div id="qfb"></div><button class="next" onclick="submitQuizOrder()">${lang==='en'?'Submit Order':'اعتماد الترتيب'}</button></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
+function renderQuizOrderList(q){
+ const map=Object.fromEntries(q.items.map(x=>[x.id,x]));
+ const orderMap=Object.fromEntries(window.quizOrder.map((id,i)=>[id,i+1]));
+ quizOrderList.innerHTML=q.items.map(item=>{
+   const assigned=orderMap[item.id]||'';
+   return `<div class="order-item ${assigned?'assigned':''}" data-id="${item.id}">
+     <div class="order-num ${assigned?'':'empty'}">${assigned||'—'}</div>
+     <div class="order-text">${item.t[lang]}</div>
+     <select class="order-select" onchange="setQuizOrderNumber('${item.id}',this.value)">
+       <option value="">${lang==='en'?'Select #':'اختر #'}</option>
+       ${q.items.map((_,i)=>`<option value="${i+1}" ${assigned===i+1?'selected':''}>${i+1}</option>`).join('')}
+     </select>
+   </div>`;
+ }).join('');
 }
-function renderQuizOrderList(q){const map=Object.fromEntries(q.items.map(x=>[x.id,x]));quizOrderList.innerHTML=window.quizOrder.map((id,i)=>`<div class="order-item" data-id="${id}"><div class="order-num">${i+1}</div><div class="order-text">${map[id].t[lang]}</div><div class="order-grip" aria-hidden="true">☰</div></div>`).join('');enableOrderDrag('quizOrderList',ids=>{window.quizOrder=ids;});}
-function submitQuizOrder(){if(answered)return;answered=true;const m=DATA.modules.find(x=>x.id===currentModuleId),q=m.subsections[currentSub].questions[qi];const ok=JSON.stringify(window.quizOrder)===JSON.stringify(q.a);if(ok)qscore++;document.querySelectorAll('.order-moves button').forEach(x=>x.disabled=true);qfb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;}
-function answerQuiz(i,b){if(answered)return;answered=true;const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],q=s.questions[qi];document.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j===q.a)x.style.borderColor='#21864a'});if(i===q.a)qscore++;else b.style.borderColor='var(--red)';qfb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;}
-function renderCase(){
- const m=DATA.modules.find(x=>x.id===currentModuleId),acts=m.subsections.filter(s=>s.activity&&s.activity[lang]);
- let sourceHtml=acts.length?acts.map(s=>`<div class="activity">${s.activity[lang]}</div>`).join('<div style="height:13px"></div>'):`<div class="placeholder"><h3>${lang==='en'?'Case will be added':'سيتم إضافة الحالة'}</h3><p>${lang==='en'?'The module structure is ready for the approved case activity.':'هيكل الوحدة جاهز لإضافة الحالة المعتمدة.'}</p></div>`;
- const cfg=CASE_CONFIG[String(currentModuleId)];
- tabbody.innerHTML=sourceHtml+(cfg?renderCaseWorkspace(cfg):'');
+function setQuizOrderNumber(id,value){
+ const q=DATA.modules.find(x=>x.id===currentModuleId).subsections[currentSub].questions[qi];
+ const n=Number(value);
+ const current=Object.fromEntries(window.quizOrder.map((x,i)=>[x,i+1]));
+ if(!n){delete current[id];}
+ else{
+   Object.keys(current).forEach(k=>{if(current[k]===n)delete current[k]});
+   current[id]=n;
+ }
+ const next=Array(q.items.length).fill(null);
+ Object.entries(current).forEach(([k,pos])=>{if(pos>=1&&pos<=q.items.length)next[pos-1]=k});
+ const unused=q.items.map(x=>x.id).filter(x=>!Object.prototype.hasOwnProperty.call(current,x));
+ let u=0;
+ window.quizOrder=next.map(x=>x||unused[u++]);
+ renderQuizOrderList(q);
 }
 function getCaseStore(){
  state.caseResponses=state.caseResponses||{};
