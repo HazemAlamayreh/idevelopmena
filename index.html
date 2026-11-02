@@ -523,6 +523,32 @@ function resetQuizOrder(){
  const q=DATA.modules.find(x=>x.id===currentModuleId).subsections[currentSub].questions[qi];
  renderQuizOrderList(q);
 }
+function submitQuizOrder(){
+ if(answered)return;
+ const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],q=s.questions[qi];
+ if(window.quizOrder.length!==(q.items||[]).length)return;
+ answered=true;
+ const ok=JSON.stringify(window.quizOrder)===JSON.stringify(q.a);
+ if(ok)qscore++;
+ if(!ok)wrong.push(qi);
+ qi++;
+ answered=false;
+ renderQuizQ();
+}
+function answerQuiz(i,b){
+ if(answered)return;
+ answered=true;
+ const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],q=s.questions[qi];
+ document.querySelectorAll('.opt').forEach((x,j)=>{
+   x.disabled=true;
+   if(j===q.a)x.style.borderColor='#21864a';
+ });
+ if(i===q.a)qscore++;
+ else{b.style.borderColor='var(--red)';wrong.push(qi);}
+ const fb=document.getElementById('qfb');
+ if(fb)fb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;
+}
+
 function renderCase(){
  const m=DATA.modules.find(x=>x.id===currentModuleId),acts=m.subsections.filter(s=>s.activity&&s.activity[lang]);
  let sourceHtml=acts.length?acts.map(s=>`<div class="activity">${s.activity[lang]}</div>`).join('<div style="height:13px"></div>'):`<div class="placeholder"><h3>${lang==='en'?'Case will be added':'سيتم إضافة الحالة'}</h3><p>${lang==='en'?'The module structure is ready for the approved case activity.':'هيكل الوحدة جاهز لإضافة الحالة المعتمدة.'}</p></div>`;
