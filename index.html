@@ -65,6 +65,14 @@ body[dir=rtl] .case-choice{text-align:right}
 .case-choice.selected{border-color:var(--navy);background:#eef5fb;box-shadow:0 0 0 2px #001b4d0a}
 .saved-indicator{font-size:11px;font-weight:800;color:var(--green);margin-top:10px}
 .case-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:14px}
+.case-submit-note{margin-top:10px;font-size:12px;color:var(--muted);font-weight:700}
+.case-answer-panel{margin-top:18px;border:1px solid #cfe3ee;background:#f6fbfd;border-radius:14px;padding:18px}
+.case-answer-panel h4{margin:0 0 10px;color:var(--navy);font-size:18px}
+.case-answer-panel ul{margin:8px 0 0;padding-inline-start:20px}
+.case-answer-panel li{margin:7px 0;line-height:1.5}
+.case-locked{opacity:.92}
+.case-locked textarea,.case-locked select,.case-locked .case-choice{cursor:not-allowed}
+
 .secondary{border:1px solid #cbd7e2;background:white;color:var(--navy);border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
 
 .order-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
@@ -142,6 +150,105 @@ CASE_CONFIG["3"]={
       q:{en:"3. How would you approach improving their performance and engagement?",ar:"3. كيف ستتعامل مع تحسين أدائهم وتفاعلهم؟"},
       placeholder:{en:"Link your actions to skill, will, support, development and follow-up...",ar:"اربط إجراءاتك بالمهارة والإرادة والدعم والتطوير والمتابعة..."}}
   ]
+};
+
+
+const CASE_SUGGESTED_ANSWERS={
+ "1":{
+   title:{en:"Recommended Approach",ar:"المنهج المقترح"},
+   points:{
+     en:[
+       "Kamal's previous behavior can create a precedent: the team may interpret early departure as acceptable because the manager modeled it himself.",
+       "He should acknowledge the inconsistency, clarify the attendance expectation, and apply the standard consistently while remaining approachable.",
+       "His credibility depends on matching his own behavior with the standards he expects from the team.",
+       "Use the incident as a leadership reset: clarify boundaries, explain expectations, and model the behavior going forward."
+     ],
+     ar:[
+       "قد يخلق سلوك كمال السابق سابقة للفريق؛ فقد يفسر الموظفون المغادرة المبكرة بأنها مقبولة لأن المدير نفسه كان يمارسها.",
+       "عليه أن يعترف بعدم الاتساق، ويوضح توقعات الدوام، ويطبق المعيار بشكل ثابت مع الحفاظ على أسلوب متاح للحوار.",
+       "مصداقيته كمدير تعتمد على توافق سلوكه الشخصي مع المعايير التي يطلبها من الفريق.",
+       "يستخدم الموقف كإعادة ضبط قيادية: يوضح الحدود والتوقعات ويكون قدوة في السلوك مستقبلًا."
+     ]
+   }
+ },
+ "2":{
+   title:{en:"Suggested Answers — Managerial Grid",ar:"الإجابات المقترحة — Managerial Grid"},
+   points:{
+     en:[
+       "Scenario 1 — New team needing trust and morale: 1.9 Country Club.",
+       "Scenario 2 — Urgent crisis requiring quick non-negotiable action: 9.1 Task Management.",
+       "Scenario 3 — Routine work with very little manager involvement: 1.1 Impoverished.",
+       "Scenario 4 — Moderate performance with conflict and need for balance: 5.5 Middle-of-the-Road.",
+       "Scenario 5 — Skilled, motivated team focused on innovation and growth: 9.9 Team Management."
+     ],
+     ar:[
+       "السيناريو 1 — فريق جديد يحتاج إلى الثقة والروح المعنوية: 1.9 Country Club.",
+       "السيناريو 2 — أزمة عاجلة تتطلب إجراء سريعًا وغير قابل للتفاوض: 9.1 Task Management.",
+       "السيناريو 3 — عمل روتيني يحتاج إلى تدخل إداري محدود جدًا: 1.1 Impoverished.",
+       "السيناريو 4 — أداء متوسط مع خلافات والحاجة إلى التوازن: 5.5 Middle-of-the-Road.",
+       "السيناريو 5 — فريق ماهر ومتحفز يركز على الابتكار والنمو: 9.9 Team Management."
+     ]
+   }
+ },
+ "3":{
+   title:{en:"Recommended Skill–Will Response",ar:"الاستجابة المقترحة حسب Skill–Will"},
+   points:{
+     en:[
+       "Khalid — High Skill / High Will → Delegate: give ownership, autonomy, challenge and clear outcomes.",
+       "Sarah — High Skill / Low Will → Excite: explore the cause of disengagement and reconnect her with challenge, meaning or growth.",
+       "Laila — Low Skill / High Will → Guide / Coaching: provide practice, structured coaching, feedback and quality checks.",
+       "Omar — Low Skill / Low Will → Direct: clarify expectations, structure the work, monitor closely and address fit/motivation.",
+       "Strong overall answers should diagnose each person separately, select the matching management response, define support, and include follow-up."
+     ],
+     ar:[
+       "خالد — Skill مرتفعة / Will مرتفعة → Delegate: امنحه ملكية واستقلالية وتحديًا مع نتائج واضحة.",
+       "سارة — Skill مرتفعة / Will منخفضة → Excite: استكشف سبب انخفاض التفاعل وأعد ربطها بالتحدي أو المعنى أو النمو.",
+       "ليلى — Skill منخفضة / Will مرتفعة → Guide / Coaching: وفر ممارسة وCoaching منظم وFeedback ومراجعات للجودة.",
+       "عمر — Skill منخفضة / Will منخفضة → Direct: وضح التوقعات، ونظم العمل، وتابع عن قرب، وافحص التوافق والدافعية.",
+       "الإجابة القوية تشخص كل شخص بشكل منفصل، وتختار الاستجابة الإدارية المناسبة، وتحدد الدعم والمتابعة."
+     ]
+   }
+ },
+ "4":{
+   title:{en:"Suggested Response — Directing Lab",ar:"الإجابة المقترحة — Directing Lab"},
+   points:{
+     en:[
+       "Break the first system task into four clear actions: access the correct system/process, complete the required fields or steps, review against the standard, then submit/escalate as required.",
+       "SMART example: Complete the first assigned system task using the approved process, with no critical errors, by the agreed deadline.",
+       "Use checkpoints at 20% Confirm Direction → 50% Review Quality → 80% Final Refinement.",
+       "Teach-Back example: “Before you start, can you explain in your own words what you will do first, what standard is expected, and when you will check back with me?”",
+       "Reduce Directing when Maya performs accurately and consistently, proposes solutions, needs less supervision, and shows growing confidence."
+     ],
+     ar:[
+       "قسّم أول مهمة على النظام إلى أربع خطوات واضحة: الدخول للعملية الصحيحة، تنفيذ الحقول أو الخطوات المطلوبة، مراجعة العمل مقابل المعيار، ثم الإرسال أو التصعيد حسب الحاجة.",
+       "مثال SMART: أن تنجز مايا أول مهمة مسندة على النظام باستخدام العملية المعتمدة، دون أخطاء حرجة، ضمن الموعد المتفق عليه.",
+       "استخدم نقاط المتابعة: 20% تأكيد الاتجاه ← 50% مراجعة الجودة ← 80% المراجعة النهائية.",
+       "مثال Teach-Back: «قبل أن تبدأي، ممكن تشرحيلي بطريقتك شو أول خطوة رح تعمليها، شو المعيار المطلوب، ومتى رح ترجعيلي للمتابعة؟»",
+       "خفف Directing عندما يصبح أداؤها دقيقًا وثابتًا، وتقترح حلولًا، وتحتاج إشرافًا أقل، وتظهر ثقة متزايدة."
+     ]
+   }
+ },
+ "7":{
+   title:{en:"Recommended Delegation Approach",ar:"المنهج المقترح للتفويض"},
+   points:{
+     en:[
+       "Choose a task that is appropriate to delegate and not one that must remain with the manager because of confidentiality, legal/regulatory implications, specialized expertise or core accountability.",
+       "Select the person based on skill, motivation, experience, development needs, availability and potential—not convenience alone.",
+       "Give enough authority for the employee to complete the task within clearly agreed boundaries.",
+       "Agree on checkpoints and review outcomes instead of checking every small decision or disappearing completely.",
+       "Before the manager leaves, clarify purpose, expected result, deadline, authority, resources, risks, escalation points and available support.",
+       "The manager delegates responsibility for implementation but retains accountability for the final result."
+     ],
+     ar:[
+       "اختر مهمة مناسبة للتفويض، وليس مهمة يجب أن تبقى مع المدير بسبب السرية أو المتطلبات القانونية/التنظيمية أو الخبرة المتخصصة أو المسؤولية الجوهرية.",
+       "اختر الشخص بناءً على المهارة والدافعية والخبرة واحتياجات التطوير والتوفر والإمكانات، وليس لمجرد السهولة.",
+       "امنح الموظف صلاحية كافية لإنجاز المهمة ضمن حدود واضحة ومتفق عليها.",
+       "اتفق على نقاط متابعة ومراجعة النتائج بدل متابعة كل قرار صغير أو غياب المتابعة تمامًا.",
+       "قبل مغادرة المدير، وضح الهدف والنتيجة المتوقعة والموعد والصلاحية والموارد والمخاطر ونقاط التصعيد والدعم المتاح.",
+       "المدير يفوض مسؤولية التنفيذ لكنه يحتفظ بالمساءلة عن النتيجة النهائية."
+     ]
+   }
+ }
 };
 
 const directModule=DATA.modules.find(m=>m.id===4);
@@ -378,19 +485,68 @@ function getCaseStore(){
 }
 function renderCaseWorkspace(cfg){
  const saved=getCaseStore();
- return `<div class="case-workspace"><span class="ribbon">${lang==='en'?'YOUR WORKSPACE':'مساحة عملك'}</span><h3>${cfg.title[lang]}</h3>${cfg.items.map(item=>renderCaseItem(item,saved[item.id])).join('')}<div class="case-actions"><button class="next" onclick="save()">💾 ${lang==='en'?'Save Responses':'حفظ الإجابات'}</button><button class="secondary" onclick="clearCaseResponses()">${lang==='en'?'Clear Responses':'مسح الإجابات'}</button></div><div class="saved-indicator" id="caseSaved">${lang==='en'?'Responses save automatically on this browser/device.':'يتم حفظ الإجابات تلقائياً على هذا المتصفح/الجهاز.'}</div></div>`;
+ state.caseSubmitted=state.caseSubmitted||{};
+ const submitted=!!state.caseSubmitted[currentModuleId];
+ const answerCfg=CASE_SUGGESTED_ANSWERS[String(currentModuleId)];
+ const answerVisible=submitted&&window.caseAnswerVisible===currentModuleId;
+ return `<div class="case-workspace ${submitted?'case-locked':''}">
+   <span class="ribbon">${lang==='en'?'YOUR WORKSPACE':'مساحة عملك'}</span>
+   <h3>${cfg.title[lang]}</h3>
+   ${cfg.items.map(item=>renderCaseItem(item,saved[item.id],submitted)).join('')}
+   <div class="case-actions">
+     ${!submitted?`<button class="next" onclick="submitCase()">${lang==='en'?'Submit Case':'إرسال الحالة'}</button><button class="secondary" onclick="save()">💾 ${lang==='en'?'Save Responses':'حفظ الإجابات'}</button><button class="secondary" onclick="clearCaseResponses()">${lang==='en'?'Clear Responses':'مسح الإجابات'}</button>`
+       :`${answerCfg?`<button class="next" onclick="toggleCaseAnswer()">${answerVisible?(lang==='en'?'Hide Suggested Answer':'إخفاء الإجابة المقترحة'):(lang==='en'?'View Suggested Answer':'عرض الإجابة المقترحة')}</button>`:''}<button class="secondary" onclick="restartCase()">${lang==='en'?'Start Again':'ابدأ من جديد'}</button>`}
+   </div>
+   <div class="case-submit-note" id="caseSaved">${submitted?(lang==='en'?'Case submitted. Your original response is locked for comparison.':'تم إرسال الحالة. إجابتك الأصلية مقفلة للمقارنة.'):(lang==='en'?'Responses save automatically on this browser/device.':'يتم حفظ الإجابات تلقائياً على هذا المتصفح/الجهاز.')}</div>
+   ${answerVisible&&answerCfg?renderSuggestedCaseAnswer(answerCfg):''}
+ </div>`;
 }
-function renderCaseItem(item,value){
+function renderCaseItem(item,value,submitted){
  if(item.type==='text'){
-   return `<div class="case-item"><label>${item.q[lang]}</label><textarea placeholder="${item.placeholder[lang]}" oninput="saveCaseValue('${item.id}',this.value)">${value||''}</textarea></div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label><textarea ${submitted?'disabled':''} placeholder="${item.placeholder[lang]}" oninput="saveCaseValue('${item.id}',this.value)">${value||''}</textarea></div>`;
  }
  if(item.type==='dropdown'){
-   return `<div class="case-item"><label>${item.q[lang]}</label><select onchange="saveCaseValue('${item.id}',this.value)">${item.options[lang].map((o,i)=>`<option value="${i===0?'':o.replace(/"/g,'&quot;')}" ${value===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label><select ${submitted?'disabled':''} onchange="saveCaseValue('${item.id}',this.value)">${item.options[lang].map((o,i)=>`<option value="${i===0?'':o.replace(/"/g,'&quot;')}" ${value===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
  }
  if(item.type==='mcq'){
-   return `<div class="case-item"><label>${item.q[lang]}</label>${item.options[lang].map((o,i)=>`<button class="case-choice ${value===o?'selected':''}" onclick="selectCaseChoice('${item.id}',${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label>${item.options[lang].map((o,i)=>`<button ${submitted?'disabled':''} class="case-choice ${value===o?'selected':''}" onclick="selectCaseChoice('${item.id}',${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>`;
  }
  return '';
+}
+function isCaseComplete(cfg,saved){
+ return cfg.items.every(item=>{
+   const v=saved[item.id];
+   return v!==undefined&&v!==null&&String(v).trim()!=='';
+ });
+}
+function submitCase(){
+ const cfg=CASE_CONFIG[String(currentModuleId)];
+ const saved=getCaseStore();
+ if(!isCaseComplete(cfg,saved)){
+   const el=document.getElementById('caseSaved');
+   if(el)el.textContent=lang==='en'?'Please answer all case questions before submitting.':'يرجى الإجابة على جميع أسئلة الحالة قبل الإرسال.';
+   return;
+ }
+ state.caseSubmitted=state.caseSubmitted||{};
+ state.caseSubmitted[currentModuleId]=true;
+ window.caseAnswerVisible=null;
+ save();
+ renderCase();
+}
+function toggleCaseAnswer(){
+ window.caseAnswerVisible=window.caseAnswerVisible===currentModuleId?null:currentModuleId;
+ renderCase();
+}
+function renderSuggestedCaseAnswer(cfg){
+ return `<div class="case-answer-panel"><h4>${cfg.title[lang]}</h4><ul>${cfg.points[lang].map(p=>`<li>${p}</li>`).join('')}</ul></div>`;
+}
+function restartCase(){
+ state.caseSubmitted=state.caseSubmitted||{};
+ delete state.caseSubmitted[currentModuleId];
+ if(state.caseResponses)delete state.caseResponses[currentModuleId];
+ window.caseAnswerVisible=null;
+ save();
+ renderCase();
 }
 function saveCaseValue(id,value){
  const store=getCaseStore();store[id]=value;save();flashCaseSaved();
@@ -404,7 +560,10 @@ function flashCaseSaved(){
  const el=document.getElementById('caseSaved');if(!el)return;el.textContent=lang==='en'?'Saved ✓':'تم الحفظ ✓';setTimeout(()=>{if(el)el.textContent=lang==='en'?'Responses save automatically on this browser/device.':'يتم حفظ الإجابات تلقائياً على هذا المتصفح/الجهاز.'},1200);
 }
 function clearCaseResponses(){
- if(!state.caseResponses)return;delete state.caseResponses[currentModuleId];save();renderCase();
+ if(state.caseResponses)delete state.caseResponses[currentModuleId];
+ if(state.caseSubmitted)delete state.caseSubmitted[currentModuleId];
+ window.caseAnswerVisible=null;
+ save();renderCase();
 }
 function openAssessment(type){stopTimer();view='assessment';assessType=type;currentModuleId=null;ai=0;aAnswers=[];selected=null;renderSide();render();}
 function renderAssess(){
