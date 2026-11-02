@@ -68,15 +68,16 @@ body[dir=rtl] .case-choice{text-align:right}
 .secondary{border:1px solid #cbd7e2;background:white;color:var(--navy);border-radius:10px;padding:10px 14px;font-weight:800;cursor:pointer}
 
 .order-list{display:flex;flex-direction:column;gap:10px;margin:14px 0}
-.order-item{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:grab;user-select:none;-webkit-user-select:none;touch-action:none;transition:transform .12s ease,box-shadow .12s ease,border-color .12s ease}
-.order-item:active{cursor:grabbing}
-.order-item.dragging{opacity:.82;box-shadow:0 10px 28px rgba(0,27,77,.16);border-color:#7fb8d8;transform:scale(1.015);z-index:3}
-.order-num{width:30px;height:30px;flex:0 0 30px;border-radius:50%;display:grid;place-items:center;background:#eaf7fb;color:var(--navy);font-weight:800}
+.order-item{display:flex;align-items:center;gap:11px;background:#fff;border:1px solid var(--line);border-radius:13px;padding:13px 14px;cursor:pointer;transition:border-color .12s ease,box-shadow .12s ease,background .12s ease}
+.order-item:hover{border-color:#9ec7dc}
+.order-item.selected{border-color:#68aecd;background:#f3fbfe;box-shadow:0 0 0 2px rgba(72,186,226,.08)}
+.order-num{width:34px;height:34px;flex:0 0 34px;border-radius:50%;display:grid;place-items:center;background:#eaf7fb;color:var(--navy);font-weight:800}
+.order-num.empty{background:#f1f4f7;color:#91a0b2}
 .order-text{flex:1;line-height:1.45}
-.order-grip{font-size:20px;color:#8ca0b5;line-height:1;flex:0 0 auto}
+.order-check{font-size:18px;color:var(--green);font-weight:900}
 .order-hint{color:var(--muted);font-size:13px;line-height:1.5;margin:0 0 6px}
-@media(max-width:640px){.order-item{padding:14px 12px;min-height:58px}.order-text{font-size:14px}.order-grip{font-size:22px}}
-</style>
+.order-actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+@media(max-width:640px){.order-item{padding:14px 12px;min-height:58px}.order-text{font-size:14px}}</style>
 </head>
 <body lang="en" dir="ltr">
 <header><div class="headerrow"><div class="brand"><div class="mark">M</div><div><h1 class="display">Management <span style="color:var(--red)">in Action</span></h1><p>Management Fundamentals Program • Interactive Learning Hub</p></div></div><div class="lang"><button id="enBtn" class="active" onclick="setLang('en')">EN</button><button id="arBtn" onclick="setLang('ar')">عربي</button></div></div></header>
@@ -331,52 +332,38 @@ function renderQuizQ(){const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.
    }
    return;
  }
- let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=(q.items||[]).map(x=>x.id);quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p style="color:var(--muted);font-size:13px">${lang==='en'?'Drag and drop the boxes to arrange the steps from first to last.':'اسحب البوكسات وأفلتها لترتيب الخطوات من الأولى إلى الأخيرة.'}</p><div id="quizOrderList" class="order-list"></div><div id="qfb"></div><button class="next" onclick="submitQuizOrder()">${lang==='en'?'Submit Order':'اعتماد الترتيب'}</button></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
-function enableOrderDrag(containerId,onChange){
- const container=document.getElementById(containerId);
- if(!container)return;
- container.querySelectorAll('.order-item').forEach(item=>{
-   item.addEventListener('pointerdown',e=>{
-     if(answered||selected==='order')return;
-     const dragged=item;
-     dragged.classList.add('dragging');
-     try{dragged.setPointerCapture(e.pointerId)}catch(_){}
-     const move=ev=>{
-       ev.preventDefault();
-       const others=[...container.querySelectorAll('.order-item:not(.dragging)')];
-       let before=null;
-       for(const el of others){
-         const r=el.getBoundingClientRect();
-         if(ev.clientY<r.top+r.height/2){before=el;break;}
-       }
-       if(before)container.insertBefore(dragged,before);
-       else container.appendChild(dragged);
-       [...container.querySelectorAll('.order-item')].forEach((el,i)=>{
-         const n=el.querySelector('.order-num');if(n)n.textContent=i+1;
-       });
-     };
-     const up=ev=>{
-       dragged.classList.remove('dragging');
-       dragged.removeEventListener('pointermove',move);
-       dragged.removeEventListener('pointerup',up);
-       dragged.removeEventListener('pointercancel',up);
-       try{dragged.releasePointerCapture(ev.pointerId)}catch(_){}
-       onChange([...container.querySelectorAll('.order-item')].map(el=>el.dataset.id));
-     };
-     dragged.addEventListener('pointermove',move,{passive:false});
-     dragged.addEventListener('pointerup',up);
-     dragged.addEventListener('pointercancel',up);
-   });
- });
+ let pct=Math.round(qscore/qs.length*100);state.moduleScores[currentModuleId]={score:qscore,total:qs.length,pct,date:new Date().toISOString()};save();renderSide();quizarea.innerHTML=`<div class="quizbox" style="text-align:center"><div class="display" style="font-size:54px;color:var(--navy)">${qscore}/${qs.length}</div><h3>${pct}%</h3><button class="next" onclick="qi=0;qscore=0;answered=false;wrong=[];renderCheck()">${lang==='en'?'Retry Quiz':'إعادة الاختبار'}</button></div>`;return}let q=qs[qi];if(q.type==='order'){window.quizOrder=[];quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div><p class="order-hint">${lang==='en'?'Tap the steps in the correct order. The first step you tap becomes #1, then #2, and so on.':'اضغط على الخطوات بالترتيب الصحيح. أول خطوة تختارها تصبح رقم 1، ثم 2، وهكذا.'}</p><div id="quizOrderProgress" style="font-size:12px;font-weight:800;color:var(--navy);margin-top:8px"></div><div id="quizOrderList" class="order-list"></div><div class="order-actions"><button class="secondary" onclick="resetQuizOrder()">${lang==='en'?'Reset':'إعادة'}</button><button id="quizOrderSubmit" class="next" disabled onclick="submitQuizOrder()">${lang==='en'?'Submit Sequence':'اعتماد الترتيب'}</button></div><div id="qfb"></div></div>`;renderQuizOrderList(q);return}quizarea.innerHTML=`<div class="quizbox"><div class="qtop"><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${qi+1} / ${qs.length}</div></div><div class="progress"><div style="width:${(qi/qs.length)*100}%"></div></div><div class="qtext">${q.s[lang]}</div>${q.o[lang].map((o,i)=>`<button class="opt" onclick="answerQuiz(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}<div id="qfb"></div></div>`;}
+function renderQuizOrderList(q){
+ const selectedMap=Object.fromEntries(window.quizOrder.map((id,i)=>[id,i+1]));
+ quizOrderList.innerHTML=q.items.map(item=>{
+   const n=selectedMap[item.id]||'';
+   return `<div class="order-item ${n?'selected':''}" onclick="tapQuizOrder('${item.id}')">
+     <div class="order-num ${n?'':'empty'}">${n||'—'}</div>
+     <div class="order-text">${item.t[lang]}</div>
+     ${n?'<div class="order-check">✓</div>':''}
+   </div>`;
+ }).join('');
+ const submitBtn=document.getElementById('quizOrderSubmit');
+ if(submitBtn)submitBtn.disabled=window.quizOrder.length!==q.items.length;
+ const progress=document.getElementById('quizOrderProgress');
+ if(progress)progress.textContent=`${window.quizOrder.length} / ${q.items.length} ${lang==='en'?'selected':'تم اختيارها'}`;
 }
-function renderQuizOrderList(q){const map=Object.fromEntries(q.items.map(x=>[x.id,x]));quizOrderList.innerHTML=window.quizOrder.map((id,i)=>`<div class="order-item" data-id="${id}"><div class="order-num">${i+1}</div><div class="order-text">${map[id].t[lang]}</div><div class="order-grip" aria-hidden="true">☰</div></div>`).join('');enableOrderDrag('quizOrderList',ids=>{window.quizOrder=ids;});}
-function submitQuizOrder(){if(answered)return;answered=true;const m=DATA.modules.find(x=>x.id===currentModuleId),q=m.subsections[currentSub].questions[qi];const ok=JSON.stringify(window.quizOrder)===JSON.stringify(q.a);if(ok)qscore++;document.querySelectorAll('.order-moves button').forEach(x=>x.disabled=true);qfb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;}
-function answerQuiz(i,b){if(answered)return;answered=true;const m=DATA.modules.find(x=>x.id===currentModuleId),s=m.subsections[currentSub],q=s.questions[qi];document.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j===q.a)x.style.borderColor='#21864a'});if(i===q.a)qscore++;else b.style.borderColor='var(--red)';qfb.innerHTML=`<div class="insight">${q.e[lang]}</div><button class="next" onclick="qi++;answered=false;renderQuizQ()">${ui.next[lang]}</button>`;}
-function renderCase(){
- const m=DATA.modules.find(x=>x.id===currentModuleId),acts=m.subsections.filter(s=>s.activity&&s.activity[lang]);
- let sourceHtml=acts.length?acts.map(s=>`<div class="activity">${s.activity[lang]}</div>`).join('<div style="height:13px"></div>'):`<div class="placeholder"><h3>${lang==='en'?'Case will be added':'سيتم إضافة الحالة'}</h3><p>${lang==='en'?'The module structure is ready for the approved case activity.':'هيكل الوحدة جاهز لإضافة الحالة المعتمدة.'}</p></div>`;
- const cfg=CASE_CONFIG[String(currentModuleId)];
- tabbody.innerHTML=sourceHtml+(cfg?renderCaseWorkspace(cfg):'');
+function tapQuizOrder(id){
+ if(answered)return;
+ const q=DATA.modules.find(x=>x.id===currentModuleId).subsections[currentSub].questions[qi];
+ const existing=window.quizOrder.indexOf(id);
+ if(existing>=0){
+   window.quizOrder=window.quizOrder.slice(0,existing);
+ }else{
+   window.quizOrder.push(id);
+ }
+ renderQuizOrderList(q);
+}
+function resetQuizOrder(){
+ if(answered)return;
+ window.quizOrder=[];
+ const q=DATA.modules.find(x=>x.id===currentModuleId).subsections[currentSub].questions[qi];
+ renderQuizOrderList(q);
 }
 function getCaseStore(){
  state.caseResponses=state.caseResponses||{};
@@ -423,9 +410,9 @@ function renderAssess(){
  <div class="assessintro"><div class="card"><h3>${lang==='en'?'How it works':'كيف يعمل التقييم'}</h3><p>${lang==='en'?'• 20 multiple-choice and sequencing questions<br>• 40 seconds for standard questions<br>• 60 seconds for sequencing questions<br>• No question-by-question feedback<br>• Unanswered questions move forward automatically<br>• Final feedback identifies your learning priorities':'• 20 سؤال اختيار من متعدد وترتيب خطوات<br>• 40 ثانية للأسئلة العادية<br>• 60 ثانية لأسئلة الترتيب<br>• بدون تغذية راجعة بعد كل سؤال<br>• ينتقل السؤال تلقائياً عند انتهاء الوقت<br>• التغذية الراجعة النهائية تحدد أولويات التعلم'}</p><button class="next red" onclick="beginAssessment()">${ui.start[lang]}</button></div><div class="sidepanel"><h3>${lang==='en'?'Your Learning Baseline':'خط أساس التعلم'}</h3><div class="big">20</div><p>${lang==='en'?'Questions across 7 capability areas':'سؤالاً عبر 7 مجالات قدرات'}</p><div class="big">40s / 60s</div><p>${lang==='en'?'40s standard • 60s sequencing':'40ث عادي • 60ث ترتيب'}</p></div></div>`;
 }
 function beginAssessment(){ai=0;aAnswers=[];selected=null;renderAssessQ();}
-function renderAssessQ(){stopTimer();const qs=ASSESS[assessType];if(ai>=qs.length){finishAssessment();return}const q=qs[ai];const qText=q.q[lang];const domainLabel=lang==='ar'?(DOMAIN_AR[q.d]?.ar||ASSESS.domains[q.d].en):ASSESS.domains[q.d].en;seconds=q.type==='order'?60:40;selected=null;app.innerHTML=`<section class="hero" style="padding:20px 26px"><div class="eyebrow">${lang==='ar'?(assessType==='pre'?'التقييم القبلي':'التقييم البعدي'):(assessType==='pre'?'Pre Self-Assessment':'Post-Training Assessment')}</div><h2 class="display" style="font-size:30px">${lang==='en'?'Think like a Sales Supervisor':'فكّر كمشرف مبيعات'}</h2></section><div class="assessmentbox"><div class="qtop"><div><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${ai+1} / 20</div><div style="font-size:11px;color:#91a0b2;margin-top:3px">${domainLabel}</div></div><div class="timer" id="timerCircle"><span id="timeNum">${seconds}</span></div></div><div class="progress"><div style="width:${(ai/20)*100}%"></div></div><div class="qtext">${qText}</div><div id="aopts"></div><div id="anext"></div></div>`;if(q.type==='order'){window.assessOrder=q.items.map(x=>x.id);renderAssessOrder(q);}else{aopts.innerHTML=q.o[lang].map((o,i)=>`<button class="opt" onclick="selectAssess(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('');}startTimer();}
+function renderAssessQ(){stopTimer();const qs=ASSESS[assessType];if(ai>=qs.length){finishAssessment();return}const q=qs[ai];const qText=q.q[lang];const domainLabel=lang==='ar'?(DOMAIN_AR[q.d]?.ar||ASSESS.domains[q.d].en):ASSESS.domains[q.d].en;seconds=q.type==='order'?60:40;selected=null;app.innerHTML=`<section class="hero" style="padding:20px 26px"><div class="eyebrow">${lang==='ar'?(assessType==='pre'?'التقييم القبلي':'التقييم البعدي'):(assessType==='pre'?'Pre Self-Assessment':'Post-Training Assessment')}</div><h2 class="display" style="font-size:30px">${lang==='en'?'Think like a Sales Supervisor':'فكّر كمشرف مبيعات'}</h2></section><div class="assessmentbox"><div class="qtop"><div><div class="qnum">${lang==='en'?'QUESTION':'السؤال'} ${ai+1} / 20</div><div style="font-size:11px;color:#91a0b2;margin-top:3px">${domainLabel}</div></div><div class="timer" id="timerCircle"><span id="timeNum">${seconds}</span></div></div><div class="progress"><div style="width:${(ai/20)*100}%"></div></div><div class="qtext">${qText}</div><div id="aopts"></div><div id="anext"></div></div>`;if(q.type==='order'){window.assessOrder=[];renderAssessOrder(q);}else{aopts.innerHTML=q.o[lang].map((o,i)=>`<button class="opt" onclick="selectAssess(${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('');}startTimer();}
 function renderAssessOrder(q){const map=Object.fromEntries(q.items.map(x=>[x.id,x]));aopts.innerHTML=`<p class="order-hint">${lang==='en'?'Drag and drop the boxes to arrange the steps from first to last.':'اسحب البوكسات وأفلتها لترتيب الخطوات من الأولى إلى الأخيرة.'}</p><div id="assessOrderList" class="order-list">${window.assessOrder.map((id,i)=>`<div class="order-item" data-id="${id}"><div class="order-num">${i+1}</div><div class="order-text">${map[id].t[lang]}</div><div class="order-grip" aria-hidden="true">☰</div></div>`).join('')}</div>`;enableOrderDrag('assessOrderList',ids=>{window.assessOrder=ids;});anext.innerHTML=`<button class="next" onclick="submitAssessOrder()">${ai===19?ui.finish[lang]:ui.next[lang]}</button>`;}
-function submitAssessOrder(){if(selected!==null)return;selected='order';stopTimer();submitAssess([...window.assessOrder],false);}
+function submitAssessOrder(){if(selected!==null)return;const q=ASSESS[assessType][ai];if(window.assessOrder.length!==(q.items||[]).length)return;selected='order';stopTimer();submitAssess([...window.assessOrder],false);}
 function startTimer(){stopTimer();const maxSeconds=(ASSESS[assessType][ai]?.type==='order'?60:40);timerId=setInterval(()=>{seconds--;if(timeNum)timeNum.textContent=seconds;if(timerCircle)timerCircle.style.setProperty('--timer-pct',(seconds/maxSeconds*100)+'%');if(seconds<=0){stopTimer();submitAssess(null,true)}},1000)}
 function stopTimer(){if(timerId){clearInterval(timerId);timerId=null}}
 function selectAssess(i,b){if(selected!==null)return;selected=i;stopTimer();document.querySelectorAll('.opt').forEach((x,j)=>{x.disabled=true;if(j===i)x.classList.add('selected')});anext.innerHTML=`<button class="next" onclick="submitAssess(${i},false)">${ai===19?ui.finish[lang]:ui.next[lang]}</button>`;}
