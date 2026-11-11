@@ -1,0 +1,728 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Decision Making &amp; Critical Thinking | DAD Academy</title>
+<style>
+:root{--navy:#112c46;--teal:#00665e;--mint:#d9f2eb;--surface:#fff;--paper:#f3f7f6;--line:#cbdad8;--muted:#48616b;--ink:#152e3d;--focus:#a45109}
+*{box-sizing:border-box}
+body{margin:0;background:var(--paper);color:var(--ink);font:16px/1.55 "Instrument Sans","Segoe UI",system-ui,sans-serif}
+button,input,select,textarea{font:inherit}
+button{cursor:pointer}
+button:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible,summary:focus-visible{outline:3px solid var(--focus);outline-offset:3px}
+[hidden]{display:none!important}
+.wrap{width:min(1120px,calc(100% - 48px));margin-inline:auto}
+.hero{background:var(--navy);color:white;border-bottom:5px solid #75d6c0}
+.hero .wrap{padding:32px 0 38px}
+.brand{font-size:.82rem;color:#a8e8d9;font-weight:800;letter-spacing:.12em;text-transform:uppercase;margin:0 0 8px}
+h1,h2,h3,p{margin-top:0}
+h1{font-size:clamp(2rem,5vw,3.25rem);line-height:1.04;letter-spacing:-.045em;margin-bottom:13px}
+h2{font-size:clamp(1.72rem,3.4vw,2.45rem);line-height:1.12;letter-spacing:-.035em;margin-bottom:12px}
+h3{font-size:1.19rem;line-height:1.25;letter-spacing:-.012em;margin-bottom:10px}
+p{margin-bottom:14px}
+p:last-child{margin-bottom:0}
+.hero-top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:8px}.hero-top .brand{margin:0}.language{border:1px solid #9dd5cc;color:white;background:transparent;border-radius:8px;padding:5px 11px;font-weight:700}.language:hover{background:#244966}.validation{margin-top:24px;border:1px solid var(--line);border-radius:10px;padding:16px}.validation ul{padding-inline-start:24px}.validation li{margin:6px 0}.correct{color:#00665e}.incorrect{color:#a1292c}.example{margin-top:10px;padding:10px 13px;background:#f0f7f5;border-inline-start:3px solid #78b8ad}.example strong{color:var(--teal)}[dir=rtl] body{font-family:Tahoma,"Segoe UI",system-ui,sans-serif}[dir=rtl] h1,[dir=rtl] h2,[dir=rtl] h3{letter-spacing:normal}.hero p:last-child{color:#dbeeea;font-size:1.06rem}
+.tabs{display:flex;flex-wrap:wrap;gap:6px}
+.modules{margin-top:24px}
+.tab{color:var(--navy);background:transparent;text-align:start;border:1px solid transparent;border-radius:9px;padding:10px 14px;font-weight:700}
+.modules .tab{border-color:var(--line);background:#fafffe;flex:1;min-width:130px;line-height:1.25}
+.modules .tab small{display:block;font-size:.78rem;font-weight:600;margin-top:5px}
+.modules .tab[aria-selected=true]{background:var(--navy);color:white;border-color:var(--navy)}
+.subnav{margin-top:18px;border-bottom:1px solid var(--line)}
+.subnav .tab{border-radius:8px 8px 0 0;border-bottom:3px solid transparent}
+.subnav .tab[aria-selected=true]{color:var(--teal);border-bottom-color:var(--teal);background:#e7f4ef}
+.cases{margin-bottom:22px}
+.cases .tab{border-color:var(--line);background:white}
+.cases .tab[aria-selected=true]{background:var(--mint);color:var(--teal);border-color:#78b8ad}
+.panel{margin-top:18px;margin-bottom:36px;padding:clamp(17px,4.2vw,43px);border:1px solid var(--line);border-radius:15px;background:white;box-shadow:0 10px 30px #102a4310}
+.intro{font-size:1.06rem;color:var(--muted);max-width:75ch}
+.lesson-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 32px;margin:23px 0}
+.lesson-grid section{border-top:2px solid var(--line);padding:14px 0 4px}
+.lesson-grid p{color:var(--muted)}
+.callout,.reveal{border-inline-start:4px solid var(--teal);background:#eef8f4;padding:14px 16px;margin:19px 0}
+.callout p,.reveal p{margin-bottom:7px}
+.callout p:last-child,.reveal p:last-child{margin-bottom:0}
+.case-header{display:flex;justify-content:space-between;gap:16px;align-items:start}
+.status-label{white-space:nowrap;font-size:.86rem;color:var(--muted);padding-top:4px}
+.status-label[data-state=saved]{color:var(--teal)}
+.status-label[data-state=draft]{color:#845118}
+fieldset{border:0;padding:0;min-inline-size:0;margin:0}
+legend{font-weight:750;color:var(--navy);margin-bottom:8px;padding:0}
+.input-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px 18px}
+.response-row{border-top:1px solid var(--line);padding:16px 0}
+.response-row legend{float:left;width:100%;margin-bottom:10px}
+.response-row .input-grid{clear:both}
+.response-row:last-child{margin-bottom:8px}
+.question{display:block;margin:14px 0}
+.input-grid .question{margin:0}
+label>span{display:block;font-weight:700;margin-bottom:5px}
+input,select,textarea{width:100%;border:1px solid #9fb8b6;background:#fbfefd;color:var(--ink);border-radius:7px;padding:8px 10px;min-height:42px}
+textarea{resize:vertical;min-height:76px;line-height:1.42}
+input:disabled,select:disabled,textarea:disabled{color:#354e55;background:#edf3f1;opacity:1}
+.question small{display:block;color:var(--muted);margin-top:5px}
+.table-wrap{overflow-x:auto;margin:15px 0 20px}
+table{width:100%;border-collapse:collapse;text-align:start;font-size:.95rem}
+th,td{border-bottom:1px solid var(--line);padding:9px 10px;vertical-align:top}
+thead th{background:#e8f3ef;color:var(--navy)}
+tbody th{font-weight:650}
+.matrix td{min-width:90px}
+.matrix input,.matrix select{min-width:66px;min-height:36px;padding:4px 6px}
+.matrix-label{font-weight:650}
+.hint{color:var(--muted);font-size:.92rem}
+.stage-title{margin-top:25px}
+.actions{display:flex;flex-wrap:wrap;align-items:center;gap:9px;margin-top:22px}
+.button{display:inline-flex;align-items:center;min-height:42px;border:1px solid var(--teal);border-radius:8px;padding:8px 13px;background:var(--teal);color:white;font-weight:750}
+.button:hover{filter:brightness(.91)}
+.button.secondary{background:white;color:var(--teal)}
+.button.reset{background:white;color:#922a2d;border-color:#a9585b}.button:disabled{cursor:not-allowed;opacity:.58}
+.message{margin:9px 0 0;color:var(--teal);min-height:1.45em;font-size:.94rem}
+.message.error{color:#93292a}
+.skip{position:absolute;left:8px;top:8px;background:white;color:var(--teal);padding:8px;transform:translateY(-150%)}
+.skip:focus{transform:none}
+@media(max-width:720px){.wrap{width:calc(100% - 26px)}.hero .wrap{padding:24px 0 29px}.modules .tab{min-width:100px;padding:8px 9px;font-size:.92rem}.modules .tab small{font-size:.7rem}.lesson-grid,.input-grid{grid-template-columns:1fr}.case-header{display:block}.status-label{display:block;margin-bottom:8px}.panel{border-radius:10px}}
+@media(prefers-reduced-motion:no-preference){.button,.tab{transition:background .13s,border-color .13s}}
+</style>
+</head>
+<body>
+<a id="skip-link" class="skip" href="#main">Skip to workshop content</a>
+<header class="hero">
+  <div class="wrap">
+    <div class="hero-top"><p class="brand" id="brand">DAD Academy</p><button class="language" id="language" type="button">العربية</button></div>
+    <h1 id="page-title">Decision Making &amp; Critical Thinking</h1>
+    <p id="page-intro">Three modules and seven workplace exercises.</p>
+  </div>
+</header>
+<main id="main" class="wrap">
+  <nav id="module-nav" class="tabs modules" aria-label="Modules"></nav>
+  <div id="module-panel" role="tabpanel">
+    <nav id="view-nav" class="tabs subnav" aria-label="Module content"></nav>
+    <article id="content" class="panel" aria-label="Workshop content"></article>
+  </div>
+</main>
+<noscript><p class="wrap">Enable JavaScript in your browser to open the activities and save your responses.</p></noscript>
+<script>
+"use strict";
+
+const field = (id, label, options = {}) => ({id,label,...options});
+const choice = (id, label, choices) => field(id,label,{choices});
+const evidencePrompts = [
+  "The pilot started on Monday in two departments.",
+  "“If two departments managed the change, every department will find it easy.”",
+  "The pilot log shows that 19 of 20 routine requests reached the intended team.",
+  "Can we test whether urgent requests reach the intended team on both shifts?",
+  "The team used the same handover form throughout the pilot.",
+  "“The day shift found the form easy to use, so the night shift will too.”",
+  "Can we compare both shifts’ handover records to check whether the error rate is similar?",
+  "The signed attendance sheet lists 8 of the 10 pilot staff at the process briefing."
+];
+const biasPrompts = [
+  '“This process is faster, so it must give us the best overall result.”',
+  '“Let’s keep the current form. We’ve always used it.”',
+  '“The first estimate was 20 days. The new estimate is 14, so that sounds reasonable.”',
+  '“The pilot worked. Include the successful handovers in the review and leave the failed cases out.”',
+  '“We need a decision today. Let’s skip the readiness check.”',
+  '“We’ve already spent six weeks on this rollout. We should keep going even though the pilot missed its targets.”',
+  '“The department director prefers this option. That settles it.”',
+  '“Yesterday’s missed handover was a mess. This must be our most frequent problem.”',
+];
+const biasBank = ['Anchoring','Authority','Availability','Confirmation','Familiarity','Overweighting one criterion','Sunk cost','Urgency'];
+const mustPrompts = ['Documented approval','Compatibility with the existing tracking system','Rollout within 15 calendar days','Faster support','Lower staff effort','Shorter training'];
+const purchasePrompts = ['Wi-Fi connectivity','Compatibility with the existing label software','Delivery within five business days','An extra roll of labels','A two-year warranty','Total cost of JOD 200 or less'];
+const choicesABC = ['A · Shared tracker','B · Standard form and queue','C · Dedicated workflow'];
+const ratings = ['1','3','5'];
+const metrics = [
+  {id:'reliability',label:'Handover reliability',weight:'35%',values:['91%','97%','99%']},
+  {id:'effort',label:'Staff effort to implement',weight:'30%',values:['Low','Medium','High']},
+  {id:'coverage',label:'Request types supported',weight:'20%',values:['20','28','32']},
+  {id:'speed',label:'Time to start',weight:'15%',values:['4 days','7 days','10 days']},
+];
+const metricsMatrix = metrics.map(m=>({
+  label:m.label,
+  weight:m.weight,
+  fields:['A','B','C'].map(o=>choice(m.id+o,m.label+' rating for Option '+o,ratings)),
+}));
+const finalScores = ['A','B','C'].map(o=>field('total'+o,'Weighted total for Option '+o,{number:true}));
+const pitch = () => [
+  field('recommendation','Your final recommendation and the decision you want approved'),
+  field('evidence','What evidence supports your recommendation?'),
+  field('tradeoff','What trade-off are you asking the stakeholder to accept?'),
+  field('next','What should be verified before proceeding, and who should verify it?'),
+  field('pitch','Write your 60-second response to the stakeholder'),
+];
+const modules = [
+  {
+    title:'Check & Challenge',
+    intro:'Test what the available information supports before you act on it.',
+    cases:[
+      {
+        id:'m1-classify',title:'Fact, Assumption, Evidence, or Validation?',
+        brief:'Your pharmaceutical company has piloted a new process for handing over requests between departments. The project team wants to roll it out across the company.',
+        instruction:'Group 1 reviews items 1–4. Group 2 reviews items 5–8. Choose one category per item. A fact states what happened, evidence points to a record or finding, and validation asks how to check a claim.',
+        rows:evidencePrompts.map((text,i)=>({text,fields:[choice('classification'+(i+1),'Classification',['Fact','Assumption','Evidence','Validation'])]})),
+        fields:[],
+      },
+      {
+        id:'m1-bias',title:'Catch the Bias',
+        brief:'The project team is discussing the handover pilot. Listen for what may be shaping each colleague’s judgment.',
+        instruction:'Group 1 reviews situations 1–4. Group 2 reviews situations 5–8. Match each situation to a bias or decision pattern. Each option can be used once.',
+        rows:biasPrompts.map((text,i)=>({text,fields:[choice('bias'+(i+1),'Bias or decision pattern',biasBank)]})),
+        uniqueChoices:true,
+        fields:[],
+      },
+    ],
+  },
+  {
+    title:'Compare & Choose',
+    intro:'Check which options can proceed, then compare the eligible options against the same criteria.',
+    cases:[
+      {
+        id:'m2-musts',title:'Must or Want?',
+        brief:'A pharmaceutical company wants to improve how departments hand over internal requests. The project lead says, “Faster support would help. We need documented approval before rollout. Keep training short if possible. The new process has to use our current tracking system. I’d prefer lower staff effort, and we must start within 15 calendar days.”',
+        callout:'Option X has documented approval, can be ready in 10 days, and offers low effort, fast support, and short training. It cannot use the existing tracking system.',
+        instruction:'Classify the six criteria. Then decide whether Option X should proceed to scoring.',
+        rows:mustPrompts.map((text,i)=>({text,fields:[choice('must'+i,'Classification',['Must','Want'])]})),
+        fields:[choice('eligible','Should Option X proceed to scoring?',['Yes','No']),field('reason','Explain your decision in one sentence.')],
+      },
+      {
+        id:'m2-purchase',title:'Must or Want? · The Label Printer Request',
+        brief:'A manager asks an employee to buy a label printer for shared office storage. “Wi-Fi would be useful. The printer must work with our existing label software and arrive within five business days. I’d prefer an extra roll and a two-year warranty. Keep the total cost within JOD 200.”',
+        callout:'Option Y costs JOD 165 and works with the existing label software. It has Wi-Fi, includes an extra roll, and comes with a two-year warranty. The seller confirms delivery in seven business days.',
+        instruction:'Classify the six criteria. Then decide whether Option Y should proceed to scoring.',
+        rows:purchasePrompts.map((text,i)=>({text,fields:[choice('purchase'+i,'Classification',['Must','Want'])]})),
+        fields:[choice('eligible','Should Option Y proceed to scoring?',['Yes','No']),field('reason','Explain your decision in one sentence.')],
+      },
+      {
+        id:'m2-matrix',title:'The Option That Looks Best',
+        brief:'Three ways to handle internal requests across departments have passed the agreed Musts. Which would you recommend?',
+        instruction:'Review the options and record your first impression. The criteria weights appear after you save your initial choice.',
+        firstTable:{headers:['Criterion',...choicesABC],items:metrics.map(m=>[m.label,...m.values])},
+        before:[
+          choice('firstChoice','Which option would you recommend on first impression?',choicesABC),
+          field('firstReason','Why did you choose it?'),
+        ],
+        revealLabel:'Save First Choice & Show Weights',
+        revealTitle:'The agreed weights',
+        revealText:'Rate each option 5 for the strongest result, 3 for the middle, and 1 for the weakest. Lower effort and a shorter time to start score higher. Multiply each rating by its weight, then add the results.',
+        matrix:metricsMatrix,
+        fields:[
+          ...finalScores,
+          choice('finalChoice','Which option has the highest weighted score?',choicesABC),
+        ],
+      },
+    ],
+  },
+  {
+    title:'Critique, Validate & Convince',
+    intro:'Challenge the recommendation, revisit it when evidence changes, and explain what you want approved.',
+    cases:[
+      {
+        id:'m3-handover',title:'The Handover Workflow',
+        brief:'A pharmaceutical company wants to roll out a new internal request workflow. A pilot that used routine requests ranked Option C first. C covers 32 request types and B covers 28.',
+        firstTable:{headers:['Option','Initial reliability rating','Initial weighted score'],items:[
+          [choicesABC[0],'1','2.80'],[choicesABC[1],'3','3.00'],[choicesABC[2],'5','3.20'],
+        ]},
+        instruction:'Play the Devil’s Advocate. Write your strongest objection and record your initial recommendation.',
+        before:[
+          field('objection','What could make the original result misleading?'),
+          field('initial','What would you initially recommend, and what evidence would you ask for?'),
+        ],
+        revealLabel:'Save Initial Response & Reveal Evidence',
+        revealTitle:'The repeat test',
+        revealText:'The repeat test included urgent and cross-shift requests. Handover reliability was 91% for A, 97% for B, and 93% for C. All options still meet the Musts. Reliability carries 35% of the weighted score.',
+        matrix:[{label:'Handover reliability',weight:'35%',fields:['A','B','C'].map(o=>choice('updatedRating'+o,'Updated reliability rating for Option '+o,ratings))}],
+        afterInstruction:'Rate the new reliability results using 5 for best, 3 for middle, and 1 for lowest. Update the weighted totals while keeping the other ratings unchanged.',
+        stakeholder:'“What do we give up if we move from C to B?”',
+        fields:[
+          ...finalScores,
+          choice('changeType','What changed in the decision matrix?',['A Must','A weighted criterion','Neither']),
+          field('validation','Explain what changed in your comparison and why.'),
+          ...pitch(),
+        ],
+      },
+      {
+        id:'m3-training',title:'The Training Rollout',
+        brief:'A pharmaceutical company plans to start using a new shift handover form on Monday. The day shift has signed off. The night shift is scheduled to practice on Friday. The initial recommendation is to switch both shifts on Monday.',
+        callout:'The Must · Each shift must complete supervised practice and sign-off before it switches.',
+        instruction:'Play the Devil’s Advocate. Challenge the initial recommendation before you see the update.',
+        before:[
+          field('objection','What are we assuming about night-shift readiness?'),
+          field('initial','What is your initial recommendation, and what would you check first?'),
+        ],
+        revealLabel:'Save Initial Response & Reveal Evidence',
+        revealTitle:'The missed sign-off',
+        revealText:'Night-shift practice moved to Wednesday. The shared handover record cannot support the old and new forms in parallel.',
+        stakeholder:'“Why can’t the day shift start on Monday?”',
+        fields:[
+          choice('option','What would you do now?',['Switch both shifts on Monday','Switch only the day shift on Monday','Keep the current form until both shifts are signed off']),
+          field('validation','Which option still meets the Must and the shared-record constraint? Explain your reasoning.'),
+          ...pitch(),
+        ],
+      },
+    ],
+  },
+];
+
+const arabic = {"DAD Academy": "أكاديمية دار الدواء", "Decision Making & Critical Thinking": "اتخاذ القرار والتفكير النقدي", "Three modules and seven workplace exercises.": "ثلاث وحدات وسبعة تمارين من بيئة العمل.", "Skip to workshop content": "انتقل إلى محتوى الورشة", "Modules": "الوحدات", "Module content": "محتوى الوحدة", "Workshop content": "محتوى الورشة", "Exercises in this module": "تمارين هذه الوحدة", "Module": "الوحدة", "Explanation": "الشرح", "Exercises": "التمارين", "Go to Exercises": "انتقل إلى التمارين", "Example": "مثال", "Running case · Internal request handovers": "الحالة المشتركة · تسليم الطلبات الداخلية", "Check & Challenge": "تحقّق وتحدَّ الافتراضات", "Compare & Choose": "قارن واختر", "Critique, Validate & Convince": "راجع القرار وتحقّق منه وأقنع صاحب القرار", "Test what the available information supports before you act on it.": "تحقّق مما تدعمه المعلومات المتاحة قبل أن تتصرّف بناءً عليها.", "Check which options can proceed, then compare the eligible options against the same criteria.": "حدّد الخيارات التي يمكن المضي بها، ثم قارن الخيارات المؤهّلة باستخدام المعايير نفسها.", "Challenge the recommendation, revisit it when evidence changes, and explain what you want approved.": "تحدَّ التوصية وراجعها عندما يتغيّر الدليل، ثم وضّح ما تطلب الموافقة عليه.", "Your pharmaceutical company has piloted a new process for handing over requests between departments. The project team wants to roll it out across the company.": "جرّبت شركة الأدوية طريقة جديدة لتسليم الطلبات بين الأقسام. يريد فريق المشروع تطبيقها في جميع أقسام الشركة.", "Classification": "التصنيف", "Fact": "حقيقة", "Assumption": "افتراض", "Catch the Bias": "اكتشف التحيّز", "The project team is discussing the handover pilot. Listen for what may be shaping each colleague’s judgment.": "يناقش فريق المشروع تجربة تسليم الطلبات. انتبه لما قد يؤثّر على حكم كل زميل.", "“This process is faster, so it must give us the best overall result.”": "«هذه الطريقة أسرع، إذن لا بد أنها تعطي أفضل نتيجة إجمالاً».", "“Let’s keep the current form. We’ve always used it.”": "«خلّينا نبقي على النموذج الحالي. إحنا دايماً بنستخدمه».", "“The first estimate was 20 days. The new estimate is 14, so that sounds reasonable.”": "«كان أول تقدير 20 يوماً. التقدير الجديد 14 يوماً، فشكله معقول».", "“The pilot worked. Include the successful handovers in the review and leave the failed cases out.”": "«التجربة نجحت. أدرج عمليات التسليم الناجحة واترك الحالات اللي فشلت خارج المراجعة».", "“We need a decision today. Let’s skip the readiness check.”": "«بدنا القرار اليوم. خلّينا نتجاوز فحص الجاهزية».", "“We’ve already spent six weeks on this rollout. We should keep going even though the pilot missed its targets.”": "«قضينا ستة أسابيع على هذا المشروع. لازم نكمّل حتى لو التجربة ما حقّقت أهدافها».", "“The department director prefers this option. That settles it.”": "«مدير القسم يفضّل هذا الخيار، وهيك الموضوع محسوم».", "“Yesterday’s missed handover was a mess. This must be our most frequent problem.”": "«عملية التسليم اللي فاتتنا مبارح سبّبت مشكلة كبيرة. أكيد هاي أكثر مشكلة بتتكرّر».", "Bias or decision pattern": "التحيّز أو نمط التفكير", "Anchoring": "الارتساء على أول معلومة", "Authority": "التحيّز للسلطة", "Availability": "التحيّز لما يسهل تذكّره", "Confirmation": "التحيّز التأكيدي", "Familiarity": "التحيّز للمألوف", "Overweighting one criterion": "المبالغة في وزن معيار واحد", "Sunk cost": "التحيّز للتكلفة الغارقة", "Urgency": "التحيّز بسبب الاستعجال", "Must or Want?": "شرط إلزامي أم معيار تفضيلي؟", "A pharmaceutical company wants to improve how departments hand over internal requests. The project lead says, “Faster support would help. We need documented approval before rollout. Keep training short if possible. The new process has to use our current tracking system. I’d prefer lower staff effort, and we must start within 15 calendar days.”": "تريد شركة أدوية تحسين تسليم الطلبات بين الأقسام. يقول قائد المشروع: «الدعم الأسرع سيساعدنا. نحتاج إلى موافقة موثّقة قبل التطبيق. خلّوا التدريب قصيراً إن أمكن. يجب أن تستخدم الطريقة الجديدة نظام التتبّع الحالي. أفضّل جهداً أقل للموظفين، ولا بد أن نبدأ خلال 15 يوماً تقويمياً».", "Option X has documented approval, can be ready in 10 days, and offers low effort, fast support, and short training. It cannot use the existing tracking system.": "الخيار X حاصل على موافقة موثّقة ويمكن تجهيزه خلال 10 أيام. يحتاج إلى جهد قليل ويقدّم دعماً سريعاً وتدريباً قصيراً. لا يمكن استخدامه مع نظام التتبّع الحالي.", "Classify the six criteria. Then decide whether Option X should proceed to scoring.": "صنّف المعايير الستة، ثم قرّر هل ينتقل الخيار X إلى مرحلة التقييم.", "Documented approval": "موافقة موثّقة", "Compatibility with the existing tracking system": "التوافق مع نظام التتبّع الحالي", "Rollout within 15 calendar days": "التطبيق خلال 15 يوماً تقويمياً", "Faster support": "دعم أسرع", "Lower staff effort": "جهد أقل للموظفين", "Shorter training": "تدريب أقصر", "Must": "شرط إلزامي", "Want": "معيار تفضيلي", "Should Option X proceed to scoring?": "هل ينتقل الخيار X إلى مرحلة التقييم؟", "Yes": "نعم", "No": "لا", "Explain your decision in one sentence.": "اشرح قرارك بجملة واحدة.", "The Option That Looks Best": "الخيار الذي يبدو الأفضل", "Three ways to handle internal requests across departments have passed the agreed Musts. Which would you recommend?": "ثلاث طرق لتسليم الطلبات الداخلية بين الأقسام حقّقت الشروط الإلزامية المتفق عليها. أيّها تختار؟", "Review the options and record your first impression. The criteria weights appear after you save your initial choice.": "راجع الخيارات وسجّل انطباعك الأول. تظهر أوزان المعايير بعد حفظ الاختيار الأول.", "Criterion": "المعيار", "Weight": "الوزن", "A rating": "تقييم A", "B rating": "تقييم B", "C rating": "تقييم C", "A · Shared tracker": "A · سجل تتبّع مشترك", "B · Standard form and queue": "B · نموذج موحّد وقائمة انتظار", "C · Dedicated workflow": "C · مسار عمل مخصّص", "Handover reliability": "موثوقية تسليم الطلبات", "Staff effort to implement": "جهد الموظفين للتنفيذ", "Request types supported": "أنواع الطلبات المدعومة", "Time to start": "المدة حتى بدء التطبيق", "Low": "منخفض", "Medium": "متوسط", "High": "مرتفع", "4 days": "4 أيام", "7 days": "7 أيام", "10 days": "10 أيام", "Which option would you recommend on first impression?": "أي خيار تختار بناءً على الانطباع الأول؟", "Why did you choose it?": "لماذا اخترته؟", "Save First Choice & Show Weights": "احفظ الاختيار الأول واعرض الأوزان", "The agreed weights": "الأوزان المتفق عليها", "Rate each option 5 for the strongest result, 3 for the middle, and 1 for the weakest. Lower effort and a shorter time to start score higher. Multiply each rating by its weight, then add the results.": "قيّم الخيارات: 5 للنتيجة الأقوى، و3 للوسطى، و1 للأضعف. الجهد الأقل والمدة الأقصر يأخذان تقييماً أعلى. اضرب كل تقييم بوزنه ثم اجمع النتائج.", "Which option has the highest weighted score?": "أي خيار حصل على أعلى مجموع مرجّح؟", "The Handover Workflow": "مسار تسليم الطلبات", "A pharmaceutical company wants to roll out a new internal request workflow. A pilot that used routine requests ranked Option C first. C covers 32 request types and B covers 28.": "تريد شركة أدوية تطبيق مسار جديد للطلبات الداخلية. تصدّر الخيار C في تجربة شملت الطلبات العادية. يدعم C ‏32 نوعاً من الطلبات ويدعم B ‏28 نوعاً.", "Option": "الخيار", "Initial reliability rating": "تقييم الموثوقية الأولي", "Initial weighted score": "المجموع المرجّح الأولي", "Play the Devil’s Advocate. Write your strongest objection and record your initial recommendation.": "العب دور المعارض البنّاء. اكتب أقوى اعتراض وسجّل توصيتك الأولية.", "What could make the original result misleading?": "ما الذي قد يجعل النتيجة الأولى مضلّلة؟", "What would you initially recommend, and what evidence would you ask for?": "ما توصيتك الأولية، وما الدليل الذي ستطلبه؟", "Save Initial Response & Reveal Evidence": "احفظ الرد الأول واعرض الدليل", "The repeat test": "إعادة الاختبار", "The repeat test included urgent and cross-shift requests. Handover reliability was 91% for A, 97% for B, and 93% for C. All options still meet the Musts. Reliability carries 35% of the weighted score.": "شمل الاختبار الجديد طلبات عاجلة وطلبات تنتقل بين الورديات. بلغت موثوقية التسليم 91% للخيار A و97% للخيار B و93% للخيار C. كل الخيارات ما زالت تحقق الشروط الإلزامية. وزن الموثوقية 35%.", "Rate the new reliability results using 5 for best, 3 for middle, and 1 for lowest. Update the weighted totals while keeping the other ratings unchanged.": "أعد تقييم نتائج الموثوقية: 5 للأعلى، و3 للوسط، و1 للأدنى. حدّث المجاميع المرجّحة مع إبقاء التقييمات الأخرى كما هي.", "“What do we give up if we move from C to B?”": "«ما الذي سنخسره إذا انتقلنا من الخيار C إلى B؟»", "What changed in the decision matrix?": "ما الذي تغيّر في مصفوفة القرار؟", "A Must": "شرط إلزامي", "A weighted criterion": "معيار مرجّح", "Neither": "لم يتغيّر أي منهما", "Explain what changed in your comparison and why.": "اشرح ما تغيّر في المقارنة ولماذا.", "The Training Rollout": "تطبيق نموذج تسليم الورديات", "A pharmaceutical company plans to start using a new shift handover form on Monday. The day shift has signed off. The night shift is scheduled to practice on Friday. The initial recommendation is to switch both shifts on Monday.": "تخطّط شركة أدوية لبدء استخدام نموذج جديد لتسليم الورديات يوم الاثنين. أكملت الوردية النهارية الاعتماد، ومن المقرر أن تتدرّب الوردية الليلية يوم الجمعة. التوصية الأولية هي تطبيق النموذج في الورديتين يوم الاثنين.", "The Must · Each shift must complete supervised practice and sign-off before it switches.": "الشرط الإلزامي · على كل وردية إكمال التدريب العملي بإشراف والحصول على الاعتماد قبل الانتقال إلى النموذج الجديد.", "Play the Devil’s Advocate. Challenge the initial recommendation before you see the update.": "العب دور المعارض البنّاء وتحدَّ التوصية الأولية قبل الاطّلاع على التحديث.", "What are we assuming about night-shift readiness?": "ما الذي نفترضه بشأن جاهزية الوردية الليلية؟", "What is your initial recommendation, and what would you check first?": "ما توصيتك الأولية، وما أول شيء ستتحقّق منه؟", "The missed sign-off": "الاعتماد الذي لم يكتمل", "Night-shift practice moved to Wednesday. The shared handover record cannot support the old and new forms in parallel.": "تأجّل تدريب الوردية الليلية إلى الأربعاء. سجل التسليم المشترك لا يدعم استخدام النموذج القديم والجديد في الوقت نفسه.", "“Why can’t the day shift start on Monday?”": "«ليش الوردية النهارية ما تبدأ يوم الاثنين؟»", "What would you do now?": "ماذا ستفعل الآن؟", "Switch both shifts on Monday": "انتقال الورديتين يوم الاثنين", "Switch only the day shift on Monday": "انتقال الوردية النهارية فقط يوم الاثنين", "Keep the current form until both shifts are signed off": "الإبقاء على النموذج الحالي إلى حين اعتماد الورديتين", "Which option still meets the Must and the shared-record constraint? Explain your reasoning.": "أي خيار ما زال يحقّق الشرط الإلزامي ويراعي قيد السجل المشترك؟ اشرح السبب.", "Your final recommendation and the decision you want approved": "توصيتك النهائية والقرار الذي تطلب الموافقة عليه", "What evidence supports your recommendation?": "ما الدليل الذي يدعم توصيتك؟", "What trade-off are you asking the stakeholder to accept?": "ما الذي تطلب من صاحب القرار قبول التنازل عنه مقابل اختيارك؟", "What should be verified before proceeding, and who should verify it?": "ما الذي يجب التحقّق منه قبل التنفيذ، ومن سيتحقّق منه؟", "Write your 60-second response to the stakeholder": "اكتب ردّك لصاحب القرار في 60 ثانية", "Initial response": "الرد الأول", "Your initial response is recorded above.": "ردّك الأول مسجّل أعلاه.", "Stakeholder challenge": "سؤال صاحب القرار", "Select…": "اختر…", "Save Answers": "احفظ الإجابات", "Save & Validate Answers": "احفظ الإجابات وتحقّق منها", "Export My Answers": "صدّر إجاباتي", "Save in this browser or export a copy to keep or share.": "احفظ على هذا المتصفح أو صدّر نسخة للاحتفاظ بها أو مشاركتها.", "Saved on this browser": "محفوظة على هذا المتصفح", "Unsaved changes": "تغييرات غير محفوظة", "Enter at least one response before saving.": "اكتب إجابة واحدة على الأقل قبل الحفظ.", "Answers saved.": "تم حفظ الإجابات.", "This browser could not save locally. Export your answers to keep a copy.": "تعذّر الحفظ على هذا المتصفح. صدّر إجاباتك للاحتفاظ بنسخة.", "Complete your initial response before revealing the next step.": "أكمل ردّك الأول قبل عرض الخطوة التالية.", "Initial response saved.": "تم حفظ الرد الأول.", "The next step is open. Export your answers to keep a copy.": "تم فتح الخطوة التالية. صدّر إجاباتك للاحتفاظ بنسخة.", "Workshop responses": "إجابات الورشة", "Exported": "تاريخ التصدير", "No responses recorded.": "لا توجد إجابات مسجّلة.", "Enter an answer before exporting.": "اكتب إجابة قبل التصدير.", "Answers exported. Local saving is unavailable in this browser.": "تم تصدير الإجابات. الحفظ المحلي غير متاح على هذا المتصفح.", "Answers exported.": "تم تصدير الإجابات.", "Correct": "صحيحة", "Incorrect": "غير صحيحة", "Not answered": "بلا إجابة", "Your answer": "إجابتك", "Expected": "الإجابة المتوقّعة", "Validation results": "نتائج التحقّق", "Review your written answers": "راجع إجاباتك الكتابية", "Written responses are for self-review and do not receive a right or wrong mark.": "راجع الإجابات الكتابية بنفسك باستخدام الإرشادات. لا تُعطى علامة صح أو خطأ.", "Record your initial response and open the next step before validating.": "سجّل ردّك الأول وافتح الخطوة التالية قبل التحقّق.", "Answers saved and checked.": "تم حفظ الإجابات والتحقّق منها.", "Answers checked. This browser could not save locally, so export a copy.": "تم التحقّق من الإجابات. تعذّر الحفظ على هذا المتصفح، لذلك صدّر نسخة.", "Check whether your reason names the failed compatibility requirement and explains why an option that fails a Must stops before scoring.": "راجع هل ذكرت شرط التوافق الذي لم يتحقّق ووضّحت لماذا يتوقّف الخيار قبل التقييم عند إخفاقه في شرط إلزامي.", "Your first impression and reason are for reflection. The feedback checks the ratings, weighted totals, and highest-scoring option.": "الاختيار الأول وسببه للتأمّل. التحقّق يشمل التقييمات والمجاميع المرجّحة والخيار الأعلى.", "Review your pitch. Does it request a clear decision, cite the repeat test, explain the difference in request coverage, and assign someone to verify priority request types?": "راجع عرضك. هل طلبت قراراً واضحاً واستشهدت بنتيجة الاختبار الجديد ووضّحت فرق التغطية وحدّدت من سيتحقّق من أنواع الطلبات ذات الأولوية؟", "Review your pitch. Does it explain the missed sign-off, address the shared record, and name who will confirm readiness before the common changeover?": "راجع عرضك. هل أوضحت الاعتماد الذي لم يكتمل وقيد السجل المشترك وحدّدت من سيؤكّد الجاهزية قبل الانتقال الموحّد؟", "Updated reliability": "الموثوقية بعد التحديث", "Fact, Assumption, Evidence, or Validation?": "حقيقة أم افتراض أم دليل أم تحقّق؟", "Evidence": "دليل", "Validation": "تحقّق", "Group 1 reviews items 1–4. Group 2 reviews items 5–8. Choose one category per item. A fact states what happened, evidence points to a record or finding, and validation asks how to check a claim.": "تراجع المجموعة الأولى البنود 1–4، والثانية البنود 5–8. اختر تصنيفاً واحداً لكل بند. الحقيقة تصف ما حدث، والدليل يشير إلى سجل أو نتيجة، والتحقّق يطرح سؤالاً لفحص ادّعاء.", "The pilot started on Monday in two departments.": "بدأت التجربة يوم الاثنين في قسمين.", "“If two departments managed the change, every department will find it easy.”": "«إذا قدر قسمان يطبّقوا التغيير، أكيد كل الأقسام رح تلاقيه سهل».", "The pilot log shows that 19 of 20 routine requests reached the intended team.": "يبيّن سجل التجربة أن 19 من أصل 20 طلباً عادياً وصلت إلى الفريق المعني.", "Can we test whether urgent requests reach the intended team on both shifts?": "هل يمكننا اختبار وصول الطلبات العاجلة إلى الفريق المعني في كلتا الورديتين؟", "The team used the same handover form throughout the pilot.": "استخدم الفريق نموذج تسليم الطلبات نفسه طوال التجربة.", "“The day shift found the form easy to use, so the night shift will too.”": "«الوردية النهارية لقت النموذج سهل الاستخدام، إذن الوردية الليلية رح تلاقيه سهل كمان».", "Can we compare both shifts’ handover records to check whether the error rate is similar?": "هل يمكننا مقارنة سجلات التسليم للورديتين للتحقّق مما إذا كان معدل الأخطاء متقارباً؟", "The signed attendance sheet lists 8 of the 10 pilot staff at the process briefing.": "تُظهر ورقة الحضور الموقّعة أن 8 من أصل 10 موظفين شاركوا في جلسة شرح الإجراء.", "Group 1 reviews situations 1–4. Group 2 reviews situations 5–8. Match each situation to a bias or decision pattern. Each option can be used once.": "تراجع المجموعة الأولى المواقف 1–4، والثانية المواقف 5–8. اختر التحيّز أو نمط التفكير لكل موقف. يمكنك استخدام كل خيار مرة واحدة.", "Case": "الحالة", "Must or Want? · The Label Printer Request": "شرط إلزامي أم معيار تفضيلي؟ · طلب شراء طابعة ملصقات", "A manager asks an employee to buy a label printer for shared office storage. “Wi-Fi would be useful. The printer must work with our existing label software and arrive within five business days. I’d prefer an extra roll and a two-year warranty. Keep the total cost within JOD 200.”": "طلب مدير من موظف شراء طابعة ملصقات لمساحة التخزين المشتركة في المكتب. قال له: «الاتصال عبر Wi-Fi سيكون مفيداً. يجب أن تعمل الطابعة مع برنامج الملصقات الحالي وأن تصل خلال خمسة أيام عمل. أفضّل وجود لفة ملصقات إضافية وكفالة لمدة سنتين. خلّيك ضمن ميزانية إجمالية لا تتجاوز 200 دينار أردني».", "Option Y costs JOD 165 and works with the existing label software. It has Wi-Fi, includes an extra roll, and comes with a two-year warranty. The seller confirms delivery in seven business days.": "سعر الخيار Y هو 165 ديناراً أردنياً، ويعمل مع برنامج الملصقات الحالي. يدعم Wi-Fi، ويشمل لفة ملصقات إضافية وكفالة لمدة سنتين. يؤكّد البائع أن التسليم سيكون خلال سبعة أيام عمل.", "Classify the six criteria. Then decide whether Option Y should proceed to scoring.": "صنّف المعايير الستة، ثم قرّر هل ينتقل الخيار Y إلى مرحلة التقييم.", "Wi-Fi connectivity": "اتصال عبر Wi-Fi", "Compatibility with the existing label software": "التوافق مع برنامج الملصقات الحالي", "Delivery within five business days": "التسليم خلال خمسة أيام عمل", "An extra roll of labels": "لفة ملصقات إضافية", "A two-year warranty": "كفالة لمدة سنتين", "Total cost of JOD 200 or less": "تكلفة إجمالية لا تتجاوز 200 دينار أردني", "Should Option Y proceed to scoring?": "هل ينتقل الخيار Y إلى مرحلة التقييم؟", "Check whether your reason identifies the delivery deadline. Seven business days exceeds the five-business-day Must, even though the option is within budget and offers the preferred features.": "راجع إذا ذكرت مهلة التسليم في إجابتك. سبعة أيام عمل تتجاوز الشرط الإلزامي البالغ خمسة أيام عمل، مع أن الخيار ضمن الميزانية ويقدّم المواصفات المفضّلة.", "Reset All Answers": "امسح جميع الإجابات", "Clear all answers across all seven cases and start again? This cannot be undone.": "هل تريد مسح جميع إجابات الحالات السبع والبدء من جديد؟ لا يمكن التراجع عن هذا الإجراء.", "Responses on this page were reset, but the browser could not clear previously saved answers.": "مُسحت الإجابات في الصفحة الحالية، لكن المتصفح لم يتمكّن من مسح الإجابات المحفوظة سابقاً.", "All answers were reset.": "تم مسح جميع الإجابات."};
+const lessonContent = [
+  {
+    case:{en:'Should DAD expand a new way to hand over internal requests between departments? A team says the pilot was successful. Your first task is to see what its evidence actually supports.',ar:'هل توسّع دار الدواء استخدام طريقة جديدة لتسليم الطلبات بين الأقسام؟ يقول الفريق إن التجربة نجحت. مهمتك الأولى أن تحدّد ما تدعمه الأدلة فعلاً.'},
+    steps:[
+      {en:['Separate the claim from the evidence','A claim is a statement someone makes. Evidence is a record, observation, or test you can inspect. A supported conclusion stays within the limits of that evidence.','Claim: “The new process works for everyone.” Evidence: The pilot log shows 19 of 20 routine requests reached the intended team. Conclusion: Routing worked for most routine requests in this pilot.'],ar:['افصل الادّعاء عن الدليل','الادّعاء هو عبارة يقولها أحدهم. الدليل سجل أو ملاحظة أو اختبار يمكنك مراجعته. الاستنتاج المدعوم يبقى ضمن حدود الدليل.','الادّعاء: «الطريقة الجديدة تناسب الجميع». الدليل: يبيّن سجل التجربة أن 19 من 20 طلباً عادياً وصلت إلى الفريق المقصود. الاستنتاج: نجح التوجيه في معظم الطلبات العادية ضمن هذه التجربة.']},
+       {en:['Fact, assumption, evidence, and validation','A fact states what happened. An assumption is something we are treating as true before checking it. Evidence is the record or finding that supports a statement. A validation question asks what to check or test.','Fact: The pilot ran on two shifts. Assumption: It will work equally well on every shift. Evidence: The tracker recorded one missed handover. Validation: Can we compare the missed handovers by shift?'],ar:['الحقيقة والافتراض والدليل والتحقّق','الحقيقة تصف ما حدث. الافتراض فكرة نتعامل معها على أنها صحيحة قبل فحصها. الدليل هو السجل أو النتيجة التي تدعم العبارة. وسؤال التحقّق يحدّد ما يمكن مراجعته أو اختباره.','حقيقة: شملت التجربة ورديتين. افتراض: ستنجح الطريقة بالقدر نفسه في كل وردية. دليل: سجّل نظام التتبّع عملية تسليم واحدة لم تتم. تحقّق: هل يمكننا مقارنة عمليات التسليم التي لم تتم حسب الوردية؟']},
+      {en:['Check what the test covered','Ask who collected the data, what counted as success, which requests were included, and what was left out. Use the answer to decide how much confidence to place in the claim.','Before extending the pilot, ask whether it included urgent requests or requests that move between shifts.'],ar:['راجع نطاق الاختبار','اسأل من جمع البيانات، وكيف عرّف النجاح، وما الطلبات التي شملها الاختبار، وما الذي غاب عنه. الإجابات تساعدك في تحديد مدى ثقتك بالادّعاء.','قبل توسيع التجربة، اسأل إن كانت شملت الطلبات العاجلة أو الطلبات التي تنتقل بين الورديات.']},
+      {en:['Catch the bias','Notice when a familiar option, the first estimate, a senior person’s preference, or a recent incident steers the decision. Ask a question that brings the discussion back to evidence.','“Show the successful handovers only” suggests confirmation bias. Ask: “What do the failed handovers tell us?”'],ar:['انتبه للتحيّز','انتبه عندما يوجّه القرارَ خيارٌ مألوف، أو أول تقدير، أو رأي مسؤول، أو حادثة حديثة. اطرح سؤالاً يعيد النقاش إلى الدليل.','عبارة «اعرض عمليات التسليم الناجحة فقط» تشير إلى التحيّز التأكيدي. اسأل: «ماذا نتعلّم من عمليات التسليم التي فشلت؟»']},
+    ],
+  },
+  {
+    case:{en:'DAD is comparing three ways to hand over internal requests: a shared tracker, a standard form and queue, and a dedicated workflow. Check which options qualify before comparing them.',ar:'تقارن دار الدواء بين ثلاث طرق لتسليم الطلبات الداخلية: سجل مشترك، ونموذج موحّد مع قائمة انتظار، ومسار عمل مخصّص. تحقّق أولاً من أهلية الخيارات قبل المقارنة بينها.'},
+    steps:[
+      {en:['Start with the decision and the Musts','State what the team is deciding. A Must is a condition an option has to meet to be eligible. If a condition fails, stop scoring that option as proposed. If it is unverified, record what is needed to check it.','If the new process has to work with the current tracking system, an option that cannot use it stays out of the scoring.'],ar:['ابدأ بالقرار والشروط الإلزامية','حدّد القرار المطلوب. الشرط الإلزامي هو شرط يجب أن يحقّقه الخيار حتى يكون مؤهّلاً. إذا أخفق الخيار في شرط، لا يدخل التقييم بصورته الحالية. وإذا لم يُتحقّق من الشرط بعد، حدّد ما يلزم للتحقق منه.','إذا كان لا بد أن تعمل الطريقة الجديدة مع نظام التتبّع الحالي، فالخيار غير المتوافق معه لا يدخل التقييم.']},
+      {en:['Identify the Wants','Wants distinguish options that have met the Musts. Select criteria that matter for the decision and define which direction is better for each one.','Higher reliability is better. Lower implementation effort is better. A shorter time to start is better.'],ar:['حدّد المعايير التفضيلية','المعايير التفضيلية تساعدك في المقارنة بين الخيارات التي حقّقت الشروط الإلزامية. اختر المعايير المرتبطة بالقرار وحدّد ما يُعد نتيجة أفضل في كل معيار.','موثوقية أعلى أفضل. جهد تنفيذ أقل أفضل. ومدة أقصر لبدء العمل أفضل.']},
+      {en:['Weight and rate consistently','Weights show how important each criterion is. The weights add up to 100%. Apply the same rating scale to every eligible option.','On a 1/3/5 scale, give 5 to the strongest result, 3 to the middle, and 1 to the weakest.'],ar:['استخدم الأوزان والتقييمات بشكل موحّد','الوزن يبيّن أهمية كل معيار، ومجموع الأوزان يساوي 100%. استخدم مقياس التقييم نفسه لكل خيار مؤهّل.','على مقياس 1 و3 و5، أعطِ 5 للنتيجة الأقوى، و3 للوسطى، و1 للأضعف.']},
+      {en:['Calculate the weighted total','Multiply each rating by the criterion’s weight as a decimal. Add the weighted ratings to get the total, then compare the eligible options.','For a criterion weighted at 35%, a rating of 5 adds 5 × 0.35 = 1.75 points to the total.'],ar:['احسب المجموع المرجّح','اضرب كل تقييم بوزن المعيار بعد تحويل الوزن إلى عدد عشري. اجمع النتائج للحصول على المجموع، ثم قارن الخيارات المؤهّلة.','إذا كان وزن المعيار 35% وتقييم الخيار 5، يضيف هذا المعيار 5 × 0.35 = 1.75 نقطة إلى المجموع.']},
+    ],
+  },
+  {
+    case:{en:'DAD has a preliminary recommendation for the internal handover workflow. Before approval, the team runs a broader test with urgent and cross-shift requests. Decide how the new evidence should affect the recommendation.',ar:'لدى دار الدواء توصية أولية حول طريقة تسليم الطلبات الداخلية. قبل الموافقة، يجري الفريق اختباراً أوسع يشمل الطلبات العاجلة وتلك التي تنتقل بين الورديات. قرّر كيف تؤثّر الأدلة الجديدة على التوصية.'},
+    steps:[
+      {en:['Play Devil’s Advocate','Identify one assumption the recommendation depends on. Make the strongest objection you can, then ask what evidence could settle it.','“Our pilot used routine requests. How would we know whether the process also handles urgent requests?”'],ar:['العب دور المعارض البنّاء','حدّد افتراضاً واحداً تعتمد عليه التوصية. اطرح أقوى اعتراض يمكنك تقديمه، ثم اسأل عن الدليل الذي يمكن أن يحسمه.','«جربنا الطلبات العادية. كيف نعرف إن كانت الطريقة تنجح مع الطلبات العاجلة أيضاً؟»']},
+      {en:['Validate the decision','Check the Musts first. A failed Must affects eligibility. If the new evidence changes a weighted criterion, update that rating using the original weights. Decide whether to keep, revise, or pause.','A failed requirement for trained shift coverage can stop a rollout. A change in reliability may instead change the comparison score.'],ar:['تحقّق من القرار','راجع الشروط الإلزامية أولاً. الإخفاق في شرط يؤثّر على الأهلية. وإذا غيّر الدليل الجديد أحد المعايير المرجّحة، حدّث تقييمه باستخدام الأوزان الأصلية. ثم قرّر إن كنت ستُبقي التوصية أو تعدّلها أو تؤجّلها.','عدم توفّر موظفين مدرّبين في وردية قد يوقف التطبيق. أما تغيّر الموثوقية فقد يغيّر نتيجة المقارنة.']},
+      {en:['Explain the evidence and trade-off','Address the concern that matters to the stakeholder. Give the most relevant evidence, explain what the team gives up, and say what still needs to be verified.','A simpler workflow can take less time to start while supporting fewer request types. Check whether any excluded type is a priority.'],ar:['اشرح الدليل وما ستتنازل عنه','خاطب ما يهم صاحب القرار. اذكر الدليل الأقرب إلى سؤاله، واشرح ما الذي سيخسره الفريق مقابل اختيار هذا الخيار، وما الذي لا يزال يحتاج إلى تحقق.','قد يبدأ مسار عمل أبسط بسرعة أكبر لكنه يدعم أنواعاً أقل من الطلبات. تحقّق إن كان أي نوع غير مدعوم من الأولويات.']},
+      {en:['Make a clear request in 60 seconds','State your recommendation, what you want approved, and who will verify any remaining condition. Let the stakeholder approve, approve with a condition, or ask for more evidence.','“We recommend ___. The evidence is ___. We accept ___. Before proceeding, ___ will verify ___.”'],ar:['قدّم طلباً واضحاً خلال 60 ثانية','اذكر توصيتك، وما الذي تطلب الموافقة عليه، ومن سيتحقّق من أي شرط متبقٍ. يمكن لصاحب القرار أن يوافق، أو يوافق بشرط، أو يطلب مزيداً من الأدلة.','«نوصي بـ ___. الدليل هو ___. نقبل مقابل ذلك ___. وقبل التنفيذ، سيتحقّق ___ من ___.»']},
+    ],
+  },
+];
+
+const storageKey = 'dad-decision-making-activities-v1';
+const byId = (id) => document.getElementById(id);
+const content = byId('content');
+const caseList = modules.flatMap(m=>m.cases);
+let storageError = false;
+let saved = {};
+try {
+  const raw = localStorage.getItem(storageKey);
+  if (raw) {
+    const data = JSON.parse(raw);
+    if (data && typeof data === 'object' && !Array.isArray(data)) saved = data;
+  }
+} catch {
+  storageError = true;
+}
+const draft = Object.create(null);
+for (const c of caseList) {
+  const entry = saved[c.id];
+  const answers = Object.create(null);
+  for (const [key,value] of Object.entries(entry?.answers ?? {})) {
+    if (typeof value === 'string') answers[key] = value;
+  }
+  if (c.uniqueChoices) {
+    const used=new Set();
+    const retained=Object.create(null);
+    for (const {fields:[f]} of c.rows) {
+      const value=answers[f.id];
+      if (f.choices.includes(value)&&!used.has(value)) {
+        retained[f.id]=value;
+        used.add(value);
+      }
+    }
+    draft[c.id] = {answers:retained,revealed:false};
+  } else {
+    draft[c.id] = {answers,revealed:entry?.revealed === true};
+  }
+}
+let moduleIndex = 0;
+let view = 'explanation';
+const caseIndices = [0,0,0];
+let language = 'en';
+try { if (localStorage.getItem(storageKey+'-language')==='ar') language='ar'; } catch {}
+const validated = new Set();
+
+function tr(text) {
+  if (language!=='ar') return text;
+  if (Object.hasOwn(arabic,text)) return arabic[text];
+  const dynamic = /^(.+) rating for Option ([ABC])$/.exec(text);
+  if (dynamic) return 'تقييم '+tr(dynamic[1])+' للخيار '+dynamic[2];
+  const total = /^Weighted total for Option ([ABC])$/.exec(text);
+  return total?'المجموع المرجّح للخيار '+total[1]:text;
+}
+
+function escT(text) { return escapeHtml(tr(text)); }
+
+function displayHeader() {
+  document.documentElement.lang=language;
+  document.documentElement.dir=language==='ar'?'rtl':'ltr';
+  byId('language').textContent=language==='ar'?'English':'العربية';
+  byId('language').setAttribute('lang',language==='ar'?'en':'ar');
+  byId('skip-link').textContent=tr('Skip to workshop content');
+  byId('brand').textContent=tr('DAD Academy');
+  byId('page-title').textContent=tr('Decision Making & Critical Thinking');
+  byId('page-intro').textContent=tr('Three modules and seven workplace exercises.');
+  document.title=tr('Decision Making & Critical Thinking')+' | '+tr('DAD Academy');
+  byId('module-nav').setAttribute('aria-label',tr('Modules'));
+  byId('view-nav').setAttribute('aria-label',tr('Module content'));
+  content.setAttribute('aria-label',tr('Workshop content'));
+}
+
+function escapeHtml(value) {
+  return String(value).replace(/[&<>"']/g, ch => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[ch]));
+}
+
+function tabs(nav, labels, current, choose, panel) {
+  nav.setAttribute('role','tablist');
+  nav.replaceChildren();
+  labels.forEach((label,i)=>{
+    const b = document.createElement('button');
+    b.type = 'button';
+    b.className = 'tab';
+    b.id = nav.id+'-tab-'+i;
+    b.setAttribute('role','tab');
+    b.setAttribute('aria-selected',String(i===current));
+    b.setAttribute('aria-controls',panel);
+    b.tabIndex = i===current ? 0 : -1;
+    b.innerHTML = label;
+    b.addEventListener('click',()=>choose(i));
+    b.addEventListener('keydown',e=>{
+      const step=language==='ar'?-1:1;
+      const next = {ArrowLeft:(i+labels.length-step)%labels.length,ArrowRight:(i+labels.length+step)%labels.length,Home:0,End:labels.length-1}[e.key];
+      if(next===undefined) return;
+      e.preventDefault();
+      choose(next);
+    });
+    nav.append(b);
+  });
+}
+
+function showModule(i) {
+  moduleIndex=i;
+  render('module-nav-tab-'+i);
+}
+
+function showView(next, focus = true) {
+  view=next;
+  render(focus ? 'view-nav-tab-'+(view==='explanation'?0:1) : '');
+}
+
+function showCase(i) {
+  caseIndices[moduleIndex]=i;
+  render('case-nav-tab-'+i);
+}
+
+function render(focusId='') {
+  displayHeader();
+  const m=modules[moduleIndex];
+  const index=caseIndices[moduleIndex];
+  tabs(byId('module-nav'),modules.map((module,i)=>tr('Module')+' '+(i+1)+'<small>'+escT(module.title)+'</small>'),moduleIndex,showModule,'module-panel');
+  byId('module-panel').setAttribute('aria-labelledby','module-nav-tab-'+moduleIndex);
+  tabs(byId('view-nav'),['Explanation','Exercises'].map(tr),view==='explanation'?0:1,i=>showView(i===0?'explanation':'exercises'),'content');
+  content.setAttribute('role','tabpanel');
+  content.setAttribute('aria-labelledby','view-nav-tab-'+(view==='explanation'?0:1));
+  if(view==='explanation') {
+    content.innerHTML = `
+      <h2>${escT(m.title)}</h2>
+      <p class="intro">${escT(m.intro)}</p>
+      <div class="callout"><strong>${escT('Running case · Internal request handovers')}</strong><p>${escapeHtml(lessonContent[moduleIndex].case[language])}</p></div>
+      <div class="lesson-grid">${lessonContent[moduleIndex].steps.map(step=>'<section><h3>'+escapeHtml(step[language][0])+'</h3><p>'+escapeHtml(step[language][1])+'</p><p class="example"><strong>'+escT('Example')+'</strong><br>'+escapeHtml(step[language][2])+'</p></section>').join('')}</div>
+      <div class="actions"><button type="button" class="button" id="go-exercises">${escT('Go to Exercises')}</button><button type="button" class="button secondary" data-action="export">${escT('Export My Answers')}</button></div>
+      <p class="message" id="message" role="status" aria-live="polite"></p>`;
+    byId('go-exercises').addEventListener('click',()=>showView('exercises'));
+  } else {
+    const c=m.cases[index];
+    const state=draft[c.id];
+    content.innerHTML = '<nav id="case-nav" class="tabs cases" aria-label="Exercises in this module"></nav><div id="case-panel" role="tabpanel" aria-labelledby="case-nav-tab-'+index+'">'+caseMarkup(c,state)+'</div>';
+    byId('case-nav').setAttribute('aria-label',tr('Exercises in this module'));
+    tabs(byId('case-nav'),m.cases.map((_,i)=>tr('Case')+' '+(i+1)),index,showCase,'case-panel');
+    const form=byId('case-form');
+    form.addEventListener('input',event=>{
+      const input=event.target;
+      if (!input.name || input.disabled) return;
+      state.answers[input.name]=input.value;
+      if (c.uniqueChoices) {
+        for (const {fields:[f]} of c.rows) {
+          const select=byId(f.id);
+          if (select) select.innerHTML=optionMarkup(f,state,true);
+        }
+      }
+      refreshCaseStatus(c);
+      if (validated.delete(c.id)) byId('validation-results').innerHTML='';
+      setMessage('');
+    });
+    form.addEventListener('submit',event=>{
+      event.preventDefault();
+      saveCase(c.id);
+    });
+    byId('validate-button')?.addEventListener('click',()=>validateCase(c));
+    byId('reset-all-button').addEventListener('click',resetAllAnswers);
+    byId('reveal-button')?.addEventListener('click',()=>revealCase(c));
+    refreshCaseStatus(c);
+  }
+  content.querySelector('[data-action="export"]').addEventListener('click',exportAnswers);
+  if(focusId) byId(focusId)?.focus();
+}
+
+function tableMarkup(headers, items) {
+  return '<div class="table-wrap"><table><thead><tr>'+headers.map(h=>'<th scope="col">'+escT(h)+'</th>').join('')+'</tr></thead><tbody>'+items.map(row=>'<tr>'+row.map((v,i)=>i===0?'<th scope="row">'+escT(v)+'</th>':'<td>'+escT(v)+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+}
+
+function optionMarkup(f,state,unique) {
+  const selected=state.answers[f.id]??'';
+  const used=unique?new Set(Object.entries(state.answers).filter(([key])=>key!==f.id).map(([,value])=>value)):null;
+  return '<option value="">'+escT('Select…')+'</option>'+f.choices.filter(value=>!used?.has(value)||value===selected).map(value=>'<option value="'+escapeHtml(value)+'"'+(value===selected?' selected':'')+'>'+escT(value)+'</option>').join('');
+}
+
+function inputMarkup(f, state, locked=false, unique=false) {
+  const name=escapeHtml(f.id);
+  const value=state.answers[f.id]??'';
+  const disabled=locked?' disabled':'';
+  if(f.choices) return '<select name="'+name+'" id="'+name+'"'+disabled+'>'+optionMarkup(f,state,unique)+'</select>';
+  if(f.number) return '<input name="'+name+'" id="'+name+'" type="text" inputmode="decimal" value="'+escapeHtml(value)+'"'+disabled+'>';
+  return '<textarea name="'+name+'" id="'+name+'" rows="2"'+disabled+'>'+escapeHtml(value)+'</textarea>';
+}
+
+function question(f,state,locked=false,unique=false) {
+  return '<label class="question" for="'+escapeHtml(f.id)+'"><span>'+escT(f.label)+'</span>'+inputMarkup(f,state,locked,unique)+'</label>';
+}
+
+function matrixMarkup(c,state) {
+  return '<div class="table-wrap"><table class="matrix"><thead><tr><th scope="col">'+escT('Criterion')+'</th><th scope="col">'+escT('Weight')+'</th><th scope="col">'+escT('A rating')+'</th><th scope="col">'+escT('B rating')+'</th><th scope="col">'+escT('C rating')+'</th></tr></thead><tbody>'+c.matrix.map(row=>'<tr><th scope="row">'+escT(row.label)+'</th><td>'+escapeHtml(row.weight)+'</td>'+row.fields.map(f=>'<td>'+inputMarkup(f,state).replace(' id=',' aria-label="'+escT(f.label)+'" id=')+'</td>').join('')+'</tr>').join('')+'</tbody></table></div>';
+}
+
+function caseMarkup(c,state) {
+  const locked=c.before && state.revealed;
+  const rowsMarkup=(c.rows??[]).map((row,i)=>'<fieldset class="response-row"><legend>'+(i+1)+'. '+escT(row.text)+'</legend><div class="input-grid">'+row.fields.map(f=>question(f,state,false,c.uniqueChoices)).join('')+'</div></fieldset>').join('');
+  const beforeMarkup=c.before?'<h3 class="stage-title">'+escT('Initial response')+'</h3>'+c.before.map(f=>question(f,state,locked)).join('')+(locked?'<p class="hint">'+escT('Your initial response is recorded above.')+'</p>':'<div class="actions"><button type="button" id="reveal-button" class="button">'+escT(c.revealLabel)+'</button></div>'):'';
+  const afterMarkup=(!c.before||state.revealed)
+    ? (c.revealTitle?'<section class="reveal" id="new-evidence" tabindex="-1"><h3>'+escT(c.revealTitle)+'</h3><p>'+escT(c.revealText)+'</p></section>':'')
+      +(c.afterInstruction?'<p class="hint">'+escT(c.afterInstruction)+'</p>':'')
+      +(c.matrix?matrixMarkup(c,state):'')
+      +(c.stakeholder?'<div class="callout"><strong>'+escT('Stakeholder challenge')+'</strong><p>'+escT(c.stakeholder)+'</p></div>':'')
+      +c.fields.map(f=>question(f,state)).join('')
+    : '';
+  return `
+    <div class="case-header"><h2>${escT(c.title)}</h2><span id="case-status" class="status-label"></span></div>
+    <p class="intro">${escT(c.brief)}</p>
+    ${c.callout?'<div class="callout">'+escT(c.callout)+'</div>':''}
+    ${c.firstTable?tableMarkup(c.firstTable.headers,c.firstTable.items):''}
+    <p>${escT(c.instruction)}</p>
+    <form id="case-form" autocomplete="off" novalidate>
+      ${rowsMarkup}${beforeMarkup}${afterMarkup}
+      <div class="actions">
+        <button type="submit" class="button secondary">${escT('Save Answers')}</button>
+        <button type="button" class="button" id="validate-button">${escT('Save & Validate Answers')}</button>
+        <button type="button" class="button secondary" data-action="export">${escT('Export My Answers')}</button>
+        <button type="button" class="button reset" id="reset-all-button">${escT('Reset All Answers')}</button>
+      </div>
+      <p class="message" id="message" role="status" aria-live="polite"></p>
+      <p class="hint">${escT('Save in this browser or export a copy to keep or share.')}</p>
+      <div id="validation-results" aria-live="polite" tabindex="-1">${validated.has(c.id)?resultsMarkup(c):''}</div>
+    </form>`;
+}
+
+function setMessage(value,error=false) {
+  const node=byId('message');
+  node.textContent=tr(value);
+  node.classList.toggle('error',error);
+}
+
+function serializedAnswers(answers) {
+  return Object.fromEntries(Object.entries(answers).filter(([,value])=>typeof value==='string' && value.trim()).sort(([a],[b])=>a.localeCompare(b)));
+}
+
+function snapshot(c) {
+  return {answers:serializedAnswers(draft[c].answers),revealed:draft[c].revealed};
+}
+
+function refreshCaseStatus(c) {
+  const status=byId('case-status');
+  const stored=saved[c.id];
+  const current=snapshot(c.id);
+  const hasResponse=Object.keys(current.answers).length>0;
+  const same=stored && JSON.stringify(serializedAnswers(stored.answers??{}))===JSON.stringify(current.answers) && stored.revealed===current.revealed;
+  status.dataset.state=same?'saved':hasResponse||stored?'draft':'empty';
+  status.textContent=tr(same?'Saved on this browser':hasResponse||stored?'Unsaved changes':'');
+}
+
+function persist(id) {
+  const next={...saved,[id]:snapshot(id)};
+  try {
+    localStorage.setItem(storageKey,JSON.stringify(next));
+    saved=next;
+    storageError=false;
+    return true;
+  } catch {
+    storageError=true;
+    return false;
+  }
+}
+
+function saveCase(id) {
+  if (!Object.keys(snapshot(id).answers).length && !saved[id]) {
+    setMessage('Enter at least one response before saving.',true);
+    return;
+  }
+  const ok=persist(id);
+  refreshCaseStatus(caseList.find(c=>c.id===id));
+  setMessage(ok?'Answers saved.':'This browser could not save locally. Export your answers to keep a copy.',!ok);
+}
+
+function revealCase(c) {
+  const state=draft[c.id];
+  const blank=c.before.find(f=>!state.answers[f.id]?.trim());
+  if (blank) {
+    setMessage('Complete your initial response before revealing the next step.',true);
+    byId(blank.id)?.focus();
+    return;
+  }
+  state.revealed=true;
+  const ok=persist(c.id);
+  render('new-evidence');
+  setMessage(ok?'Initial response saved.':'The next step is open. Export your answers to keep a copy.',!ok);
+}
+
+const ratingKey = (prefix,values) => Object.fromEntries(['A','B','C'].map((letter,i)=>[prefix+letter,values[i]]));
+const keyByCase = {
+  'm1-classify':Object.fromEntries(["Fact", "Assumption", "Evidence", "Validation", "Fact", "Assumption", "Validation", "Evidence"].map((answer,i)=>['classification'+(i+1),answer])),
+  'm1-bias':Object.fromEntries([
+    'Overweighting one criterion','Familiarity','Anchoring','Confirmation','Urgency','Sunk cost','Authority','Availability',
+  ].map((answer,i)=>['bias'+(i+1),answer])),
+  'm2-musts':{...Object.fromEntries(mustPrompts.map((_,i)=>['must'+i,i<3?'Must':'Want'])),eligible:'No'},
+  'm2-purchase':{purchase0:'Want',purchase1:'Must',purchase2:'Must',purchase3:'Want',purchase4:'Want',purchase5:'Must',eligible:'No'},
+  'm2-matrix':{
+    ...ratingKey('reliability',['1','3','5']),...ratingKey('effort',['5','3','1']),
+    ...ratingKey('coverage',['1','3','5']),...ratingKey('speed',['5','3','1']),
+    ...ratingKey('total',[2.80,3.00,3.20]),finalChoice:choicesABC[2],
+  },
+  'm3-handover':{...ratingKey('updatedRating',['1','5','3']),...ratingKey('total',[2.80,3.70,2.50]),changeType:'A weighted criterion'},
+  'm3-training':{option:'Keep the current form until both shifts are signed off'},
+};
+const writtenReview = {
+  'm2-musts':'Check whether your reason names the failed compatibility requirement and explains why an option that fails a Must stops before scoring.',
+  'm2-purchase':'Check whether your reason identifies the delivery deadline. Seven business days exceeds the five-business-day Must, even though the option is within budget and offers the preferred features.',
+  'm2-matrix':'Your first impression and reason are for reflection. The feedback checks the ratings, weighted totals, and highest-scoring option.',
+  'm3-handover':'Review your pitch. Does it request a clear decision, cite the repeat test, explain the difference in request coverage, and assign someone to verify priority request types?',
+  'm3-training':'Review your pitch. Does it explain the missed sign-off, address the shared record, and name who will confirm readiness before the common changeover?',
+};
+
+function numericResponse(value) {
+  const normalized=value.replace(/[٠-٩۰-۹]/g,digit=>String(digit.charCodeAt(0)%16)).replace(/[٫,]/g,'.');
+  return /^\d+(?:\.\d+)?$/.test(normalized)?Number(normalized):NaN;
+}
+
+function gradeCase(c) {
+  const answers=draft[c.id].answers;
+  const fields=[
+    ...(c.rows??[]).flatMap((row,i)=>row.fields.map(f=>({...f,label:(i+1)+'. '+tr(row.text)+' · '+tr(f.label)}))),
+    ...(c.matrix??[]).flatMap(row=>row.fields),
+    ...c.fields,
+  ];
+  return fields.filter(f=>Object.hasOwn(keyByCase[c.id],f.id)).map(f=>{
+    const expected=keyByCase[c.id][f.id];
+    const accepted=Array.isArray(expected)?expected:[expected];
+    const response=answers[f.id]?.trim()??'';
+    const correct=accepted.some(value=>typeof value==='number' ? response!==''&&Math.abs(numericResponse(response)-value)<0.005 : value===response);
+    return {label:f.label,response,expected:accepted,result:response?(correct?'Correct':'Incorrect'):'Not answered'};
+  });
+}
+
+function resultsMarkup(c) {
+  const results=gradeCase(c);
+  const count=result=>results.filter(r=>r.result===result).length;
+  const summary=['Correct','Incorrect','Not answered'].map(label=>escT(label)+' '+count(label)).join(' · ');
+  const rows=results.map(r=>{
+    const expected=r.expected.map(value=>typeof value==='number'?value.toFixed(2):escT(value)).join(' / ');
+    const statusClass=r.result==='Correct'?'correct':r.result==='Incorrect'?'incorrect':'';
+    return '<li><strong>'+escT(r.label)+'</strong><br><span class="'+statusClass+'">'+escT(r.result)+'</span>'
+      +(r.response?' · '+escT('Your answer')+' '+escT(r.response):'')
+      +(r.result==='Incorrect'?' · '+escT('Expected')+' '+expected:'')+'</li>';
+  }).join('');
+  const review=writtenReview[c.id];
+  const reviewMarkup=review?'<h3>'+escT('Review your written answers')+'</h3><p>'+escT(review)+'</p><p class="hint">'+escT('Written responses are for self-review and do not receive a right or wrong mark.')+'</p>':'';
+  return '<section class="validation"><h3>'+escT('Validation results')+'</h3><p>'+summary+'</p><ul>'+rows+'</ul>'+reviewMarkup+'</section>';
+}
+
+function validateCase(c) {
+  if (c.before&&!draft[c.id].revealed) {
+    setMessage('Record your initial response and open the next step before validating.',true);
+    return;
+  }
+  if (!Object.keys(snapshot(c.id).answers).length) {
+    setMessage('Enter at least one response before saving.',true);
+    return;
+  }
+  const ok=persist(c.id);
+  validated.add(c.id);
+  refreshCaseStatus(c);
+  byId('validation-results').innerHTML=resultsMarkup(c);
+  byId('validation-results').focus();
+  setMessage(ok?'Answers saved and checked.':'Answers checked. This browser could not save locally, so export a copy.',!ok);
+}
+
+function resetAllAnswers() {
+  if (!window.confirm(tr('Clear all answers across all seven cases and start again? This cannot be undone.'))) return;
+  try {
+    localStorage.removeItem(storageKey);
+    storageError=false;
+  } catch {
+    storageError=true;
+  }
+  saved={};
+  for (const c of caseList) {
+    draft[c.id]={answers:Object.create(null),revealed:false};
+  }
+  validated.clear();
+  moduleIndex=0;
+  caseIndices.fill(0);
+  view='exercises';
+  render('case-nav-tab-0');
+  setMessage(storageError?'Responses on this page were reset, but the browser could not clear previously saved answers.':'All answers were reset.',storageError);
+}
+
+function exportAnswers() {
+  const lines=[tr('DAD Academy'),tr('Decision Making & Critical Thinking'),tr('Workshop responses'),tr('Exported')+' '+new Date().toLocaleString(language),''];
+  let answerCount=0;
+  modules.forEach((m,i)=>{
+    lines.push(tr('Module')+' '+(i+1)+' · '+tr(m.title),'');
+    m.cases.forEach((c,index)=>{
+      lines.push(tr('Case')+' '+(index+1)+' · '+tr(c.title));
+      const state=draft[c.id];
+      const pairs=[];
+      const add=(f,prefix='')=>{
+        const answer=state.answers[f.id]?.trim();
+        if(answer) pairs.push([prefix+tr(f.label),f.choices?tr(answer):answer]);
+      };
+      for(const [i,row] of (c.rows??[]).entries()) {
+        for(const f of row.fields) add(f,(i+1)+'. '+tr(row.text)+' · ');
+      }
+      for(const f of c.before??[]) add(f,tr('Initial response')+' · ');
+      for(const row of c.matrix??[]) for(const f of row.fields) add(f);
+      for(const f of c.fields) add(f);
+      if(!pairs.length) lines.push(tr('No responses recorded.'));
+      for(const [prompt,answer] of pairs) lines.push(prompt,answer,'');
+      answerCount+=pairs.length;
+      lines.push('');
+    });
+  });
+  if (!answerCount) {
+    setMessage('Enter an answer before exporting.',true);
+    return;
+  }
+  const url=URL.createObjectURL(new Blob([lines.join('\n')],{type:'text/plain;charset=utf-8'}));
+  const link=document.createElement('a');
+  link.href=url;
+  link.download='DAD_Workshop_My_Answers.txt';
+  document.body.append(link);
+  link.click();
+  link.remove();
+  setTimeout(()=>URL.revokeObjectURL(url),3000);
+  setMessage(storageError?'Answers exported. Local saving is unavailable in this browser.':'Answers exported.');
+}
+
+byId('language').addEventListener('click',()=>{
+  language=language==='en'?'ar':'en';
+  try { localStorage.setItem(storageKey+'-language',language); } catch {}
+  render('language');
+});
+render();
+</script>
+</body>
+</html>
