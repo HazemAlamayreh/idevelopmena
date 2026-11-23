@@ -184,48 +184,115 @@ const SITUATION_LESSONS={
   'You cannot guarantee every outcome, but you can own a clear action and follow-through.','لا تضمن كل نتيجة، لكن تستطيع تحمل إجراء واضح ومتابعته.') ]}
 ]};
 
-let activeSituationLesson={};
-function getSituationAnswers(moduleId,lessonIndex) {
- return EI_STATE.situationAnswers?.[moduleId]?.[lessonIndex]||{};
+const MODULE_READING={
+1:bi([
+ 'Mindful leadership starts with noticing how an event becomes a reaction. An external event is followed by an interpretation, an emotional response, and an action. That action can create the next event. When this happens automatically, the first explanation that comes to mind can shape behavior before the facts have been checked.',
+ 'The first intervention is to separate the observable event from its meaning. An interpretation may be plausible without being confirmed. Recognizing this difference creates room to consider other explanations and check the relevant information before accepting a judgment about someone’s intentions.',
+ 'The second intervention is between emotion and action. The emotion can be acknowledged without allowing it to choose the tone, words, or next step. A brief pause helps the leader respond deliberately while continuing any immediate safety or operational responsibilities. The aim is a constructive response rather than suppression of feelings.',
+ 'Attention also affects the quality of a response. Switching between complex tasks can interrupt understanding and increase the chance of missing information. Giving a conversation or critical task full attention supports accurate decisions, clear handovers, and respectful working relationships.',
+ 'Mindfulness means returning attention to the present task or conversation. Replaying past friction or worrying about uncertain outcomes can draw attention away from information that is available now. Noticing distraction and deliberately refocusing helps the leader act on what is relevant and within their control.'
+],[
+ 'تبدأ القيادة الواعية بملاحظة كيف يتحول الحدث إلى رد فعل. يتبع الحدث الخارجي تفسير، ثم استجابة عاطفية، ثم تصرف قد يخلق حدثاً جديداً. عندما تجري هذه السلسلة تلقائياً، قد يقود التفسير الأول السلوك قبل التحقق من الحقائق.',
+ 'تكون نقطة التدخل الأولى بالفصل بين الحدث القابل للملاحظة والمعنى الذي نعطيه له. قد يبدو التفسير منطقياً دون أن يكون مؤكداً. يتيح إدراك هذا الفرق النظر في تفسيرات أخرى والتحقق من المعلومات قبل اعتماد حكم عن نية الآخرين.',
+ 'تأتي نقطة التدخل الثانية بين الشعور والتصرف. يمكن الاعتراف بالشعور دون تركه يحدد النبرة والكلمات والخطوة التالية. تساعد وقفة قصيرة على اختيار استجابة مقصودة مع استمرار مسؤوليات السلامة والعمل العاجلة. الهدف هو الاستجابة البناءة، لا قمع المشاعر.',
+ 'يؤثر الانتباه أيضاً في جودة الاستجابة. قد يؤدي الانتقال المتكرر بين المهام المعقدة إلى انقطاع الفهم وفقدان معلومات مهمة. يدعم التركيز الكامل في الحوار أو المهمة الحرجة دقة القرار ووضوح التسليم واحترام العلاقة المهنية.',
+ 'تعني اليقظة إعادة الانتباه إلى المهمة أو الحوار الحالي. قد يسحب استرجاع الخلافات السابقة أو القلق بشأن نتائج غير مؤكدة انتباه القائد من المعلومات المتاحة الآن. تساعد ملاحظة التشتت والعودة المقصودة للتركيز على التصرف فيما هو مهم وضمن السيطرة.'
+]),
+2:bi([
+ 'Emotional intelligence combines awareness of emotions with thoughtful action. A leader notices their own feelings, considers the concerns of others, and chooses behavior that serves the situation. Emotional information is useful, but it does not by itself establish another person’s intentions or determine the right decision.',
+ 'Separating fact from story is a central skill. Facts describe what was observed. Stories are the meanings, motives, or predictions attached to those observations. Testing the story helps prevent an assumption from becoming the basis for a defensive response.',
+ 'The course uses the Ego Self and Natural Self as reflective lenses. The Ego Self describes a defensive focus on status, comparison, and self-protection. The Natural Self describes a more deliberate stance of curiosity, empathy, and openness to evidence. These labels help notice a response pattern rather than classify a person permanently.',
+ 'Thinking distortions can strengthen an untested story. Mind reading assumes knowledge of another person’s thoughts. Fortune telling treats a future outcome as certain. Catastrophizing magnifies a difficulty into an extreme outcome. Overgeneralizing turns one event into an enduring pattern. Labeling reduces a person to a judgment. Harsh “should” statements impose rigid, unrealistic expectations.',
+ 'Recognizing these patterns creates space for a more balanced interpretation. Emotional mapping adds another useful distinction: both how an emotion feels and its level of activation matter. High activation may require slowing the response, while low energy and withdrawal may require a manageable step back into engagement. The purpose is to use awareness to guide action, not to judge emotions as good or bad.'
+],[
+ 'يجمع الذكاء العاطفي بين الوعي بالمشاعر والتصرف المدروس. يلاحظ القائد شعوره، ويأخذ مخاوف الآخرين بالحسبان، ويختار سلوكاً يخدم الموقف. تقدم المشاعر معلومات مفيدة، لكنها لا تثبت وحدها نية شخص آخر ولا تحدد القرار المناسب.',
+ 'يعد الفصل بين الحقيقة والقصة مهارة أساسية. تصف الحقائق ما تمت ملاحظته، بينما تمثل القصة المعاني والدوافع والتوقعات المرتبطة بتلك الملاحظات. يساعد اختبار القصة على منع الافتراض من التحول إلى أساس لاستجابة دفاعية.',
+ 'يستخدم الكورس الذات الأنا والذات الطبيعية كعدستين للتأمل. تصف الذات الأنا التركيز الدفاعي على المكانة والمقارنة وحماية النفس. وتصف الذات الطبيعية موقفاً أكثر قصداً يقوم على الفضول والتعاطف والانفتاح على الأدلة. تساعد هذه التسميات على ملاحظة نمط الاستجابة، لا على تصنيف الشخص بشكل دائم.',
+ 'قد تقوي أنماط التفكير المشوهة قصة غير مختبرة. تفترض قراءة الأفكار معرفة ما يفكر به الآخر. ويعامل التنبؤ بالمستقبل نتيجة قادمة كأنها مؤكدة. ويضخم التهويل الصعوبة إلى نتيجة متطرفة. ويحول التعميم المفرط حدثاً واحداً إلى نمط دائم. وتختزل التسميات الشخص في حكم. أما توقعات يجب الصارمة فتفرض مطالب جامدة وغير واقعية.',
+ 'يتيح التعرف على هذه الأنماط تفسيراً أكثر توازناً. ويضيف تحديد المنطقة العاطفية تمييزاً مهماً بين طبيعة الشعور ومستوى طاقته. قد تتطلب الطاقة المرتفعة إبطاء الاستجابة، بينما قد يتطلب الانسحاب وانخفاض الطاقة خطوة صغيرة للعودة إلى المشاركة. الهدف هو استخدام الوعي لتوجيه السلوك، لا الحكم على المشاعر بأنها جيدة أو سيئة.'
+]),
+3:bi([
+ 'Emotional strength means staying engaged and choosing a constructive response when feelings become difficult. It does not require hiding an emotion or promising an outcome that cannot be guaranteed. Clear communication and appropriate boundaries can continue while pressure is present.',
+ 'Anger can arise when expectations are unmet or when a judgment is made before the full picture is known. Managing it involves noticing the urge to react, checking the expectation and available evidence, and addressing the specific gap. A calm response can preserve accountability without turning frustration into personal criticism.',
+ 'Fear can signal a real risk or an uncertain prediction. Managing fear involves separating confirmed information from imagined outcomes and directing attention toward verification, preparation, and actions within control. Realistic planning allows uncertainty to be communicated without presenting either success or failure as inevitable.',
+ 'Shame can turn a specific mistake into a broad judgment about personal worth. Guilt can draw attention to an action that needs repair. Self-compassion supports honest reporting, correction, and learning; it does not remove responsibility. Remaining involved in the solution is more useful than withdrawing or relying only on explanations of external causes.',
+ 'Envy can arise through comparison with another person’s recognition or opportunity. It can be redirected toward understanding the relevant capability, recognizing existing strengths, and choosing a development goal. Another person’s success can provide information for learning without becoming a measure of personal value.',
+ 'Locus of control helps distinguish personal responsibility from outcomes that require coordination with others. Attention, tone, preparation, questions, and follow-through can be managed directly. The STOP tool supports this process: Step Back creates space; Think Again tests the first interpretation; Organize separates facts, assumptions, emotions, and options; Proceed turns that preparation into a clear action and follow-up.'
+],[
+ 'تعني القوة العاطفية الاستمرار في المشاركة واختيار استجابة بناءة عندما تصبح المشاعر صعبة. وهي لا تتطلب إخفاء الشعور أو الوعد بنتيجة لا يمكن ضمانها. يمكن المحافظة على تواصل واضح وحدود مناسبة حتى مع وجود الضغط.',
+ 'قد يظهر الغضب عند عدم تحقق التوقعات أو إصدار حكم قبل اكتمال الصورة. تتضمن إدارته ملاحظة الرغبة في رد الفعل، والتحقق من التوقع والأدلة، ومعالجة الفجوة المحددة. تحافظ الاستجابة الهادئة على المساءلة دون تحويل الإحباط إلى انتقاد شخصي.',
+ 'قد ينبه الخوف إلى خطر حقيقي أو يرتبط بتوقع غير مؤكد. تتضمن إدارته فصل المعلومات المؤكدة عن النتائج المتخيلة وتوجيه الانتباه نحو التحقق والاستعداد والإجراءات ضمن السيطرة. يتيح التخطيط الواقعي توضيح عدم اليقين دون تقديم النجاح أو الفشل كنتيجة حتمية.',
+ 'قد يحول الخجل خطأ محدداً إلى حكم شامل على القيمة الشخصية، بينما قد يلفت الذنب الانتباه إلى تصرف يحتاج إلى إصلاح. تدعم الرحمة بالذات الإبلاغ الصادق والتصحيح والتعلم، ولا تلغي المسؤولية. يبقى الاستمرار في الحل أكثر فائدة من الانسحاب أو الاكتفاء بتفسير الأسباب الخارجية.',
+ 'قد ينشأ الحسد من مقارنة النفس بتقدير شخص آخر أو فرصته. يمكن توجيهه نحو فهم القدرة المطلوبة، والاعتراف بنقاط القوة الموجودة، واختيار هدف تطوير. يقدم نجاح الآخر معلومة للتعلم دون أن يصبح مقياساً للقيمة الشخصية.',
+ 'يساعد مركز التحكم على التمييز بين المسؤولية الشخصية والنتائج التي تتطلب التنسيق مع الآخرين. يمكن إدارة الانتباه والنبرة والاستعداد والأسئلة والمتابعة مباشرة. وتدعم أداة STOP هذه العملية: تراجع خطوة لصنع مساحة، وأعد التفكير لاختبار التفسير الأول، ونظم الحقائق والافتراضات والمشاعر والخيارات، ثم تقدم بإجراء واضح ومتابعة محددة.'
+])};
+
+function combinedQuestions(id) {
+ const original=EI_CHECKS[id].map((q,i)=>({key:`core-${i}`,q:q.q,options:q.o,best:q.a}));
+ const moved=SITUATION_LESSONS[id].flatMap((lesson,li)=>lesson.questions.map((q,qi)=>({key:`s-${li}-${qi}`,q:q.q,options:{en:q.options.map(o=>o.en),ar:q.options.map(o=>o.ar)},best:q.best,context:bi(WORKED_EI[id][li][2],WORKED_EI[id][li][3])})));
+ return [...original,...moved];
 }
-function getSituationOrder(moduleId,lessonIndex,questionIndex) {
- const key=`${moduleId}-${lessonIndex}-${questionIndex}`;
- EI_STATE.situationOrders=EI_STATE.situationOrders||{};
- if(!EI_STATE.situationOrders[key]){EI_STATE.situationOrders[key]=shuffleEI([0,1,2]);saveEIState();}
- return EI_STATE.situationOrders[key];
-}
-function openSituationLesson(moduleId,index) {
- if(!SITUATION_LESSONS[moduleId]?.[index])return;
- activeSituationLesson[moduleId]=index;renderEI();
- document.getElementById('situation-lesson')?.scrollIntoView({block:'start',behavior:'auto'});
-}
-function answerSituation(moduleId,lessonIndex,questionIndex,choice) {
- const question=SITUATION_LESSONS[moduleId]?.[lessonIndex]?.questions[questionIndex];
- if(!question||![0,1,2].includes(choice))return;
- const all=EI_STATE.situationAnswers=EI_STATE.situationAnswers||{};
- all[moduleId]=all[moduleId]||{};all[moduleId][lessonIndex]=all[moduleId][lessonIndex]||{};
- const answers=all[moduleId][lessonIndex];
- if(answers[questionIndex]!==undefined)return;
- answers[questionIndex]=choice;
- if(answers[0]!==undefined&&answers[1]!==undefined) {
-  EI_STATE.lessons=EI_STATE.lessons||{};EI_STATE.lessons[moduleId]=EI_STATE.lessons[moduleId]||{};
-  EI_STATE.lessons[moduleId][lessonIndex]=true;
+function ensureCombinedCheck(id) {
+ EI_STATE.combinedChecks=EI_STATE.combinedChecks||{};
+ if(!EI_STATE.combinedChecks[id]) {
+  const old=EI_STATE.checks[id]||{},count=Math.min(EI_CHECKS[id].length,Math.max(0,old.i||(old.done?EI_CHECKS[id].length:0)));
+  const answers={};
+  SITUATION_LESSONS[id].forEach((l,li)=>l.questions.forEach((_,qi)=>{const answer=EI_STATE.situationAnswers?.[id]?.[li]?.[qi];if(answer!==undefined)answers[`s-${li}-${qi}`]=answer;}));
+  EI_STATE.combinedChecks[id]={answers,orders:{},legacyCoreCount:count,legacyCoreScore:Math.min(count,Math.max(0,old.s||0))};
  }
- updateEICompletion();renderEI();
+ return EI_STATE.combinedChecks[id];
 }
-function retrySituationLesson(moduleId,index) {
- // Repractice leaves earned completion and the assessment baseline intact.
- if(EI_STATE.situationAnswers?.[moduleId])delete EI_STATE.situationAnswers[moduleId][index];
- for(let q=0;q<2;q++)if(EI_STATE.situationOrders)delete EI_STATE.situationOrders[`${moduleId}-${index}-${q}`];
- saveEIState();renderEI();
+function combinedCheckSummary(id) {
+ const st=ensureCombinedCheck(id),bank=combinedQuestions(id);
+ const answered=q=>q.key.startsWith('core-')&&Number(q.key.slice(5))<st.legacyCoreCount||st.answers[q.key]!==undefined;
+ const count=bank.filter(answered).length;
+ const score=st.legacyCoreScore+bank.filter(q=>st.answers[q.key]!==undefined&&st.answers[q.key]===q.best).length;
+ return {st,bank,count,score,done:count===bank.length,next:bank.find(q=>!answered(q))};
+}
+function syncCombinedCheck(id) {
+ const s=combinedCheckSummary(id);
+ EI_STATE.checks[id]={i:s.count,s:s.score,done:s.done,bankVersion:'combined-v1'};
+ EI_CHECK_STATE=EI_STATE.checks;return s;
+}
+if(!EI_STATE.learnLayoutV2) {
+ EI_STATE.learnRead=EI_STATE.learnRead||{};
+ EI_STATE.legacyCompletedModules=EI_STATE.legacyCompletedModules||{};
+ for(const m of EI_MODS) {
+  if(EI_STATE.modules[m.id])EI_STATE.legacyCompletedModules[m.id]=true;
+  if(EI_STATE.legacyCompletedModules[m.id]||m.detail.en.every((_,i)=>EI_STATE.lessons?.[m.id]?.[i]))EI_STATE.learnRead[m.id]=true;
+  syncCombinedCheck(m.id);
+ }
+ EI_STATE.learnLayoutV2=true;saveEIState();
+}
+eiModuleTasks=function(id) {
+ const legacy=EI_STATE.legacyCompletedModules?.[id],read=!!(legacy||EI_STATE.learnRead?.[id]);
+ const practice=id===1?EI_STATE.practice.m1a!==undefined&&EI_STATE.practice.m1b!==undefined:id===2?!!EI_STATE.practice.distortionMatchDone:!!EI_STATE.simDone;
+ return {learned:Number(read),total:1,learn:read,check:!!(legacy||EI_STATE.checks[id]?.done),practice:!!(legacy||practice)};
+};
+function completeModuleReading(id) {
+ if(!MODULE_READING[id])return;
+ EI_STATE.learnRead=EI_STATE.learnRead||{};EI_STATE.learnRead[id]=true;updateEICompletion();renderEI();
 }
 renderDetailedLearn=function(m) {
- const bank=SITUATION_LESSONS[m.id];
- if(activeSituationLesson[m.id]===undefined){const first=bank.findIndex((_,i)=>!EI_STATE.lessons?.[m.id]?.[i]);activeSituationLesson[m.id]=first<0?0:first;}
- const index=activeSituationLesson[m.id],lesson=bank[index],worked=WORKED_EI[m.id][index],done=!!EI_STATE.lessons?.[m.id]?.[index],answers=getSituationAnswers(m.id,index);
- const answered=Number(answers[0]!==undefined)+Number(answers[1]!==undefined);
- return `<nav class="situation-navigation" aria-label="${localText(bi('Lessons','الدروس'))}">${bank.map((_,i)=>`<button class="secondary ${i===index?'situation-active':''} ${EI_STATE.lessons?.[m.id]?.[i]?'task-done':''}" aria-current="${i===index?'step':'false'}" onclick="openSituationLesson(${m.id},${i})">${localText(bi('Lesson','الدرس'))} ${i+1}${EI_STATE.lessons?.[m.id]?.[i]?' ✓':''}</button>`).join('')}</nav><section id="situation-lesson" class="eipanel situation-lesson ${done?'lesson-done':''}"><span class="ribbon">${localText(bi('LESSON','الدرس'))} ${index+1}/${bank.length}</span>${done?` <span class="completion-badge">${localText(bi('✓ Completed','✓ مكتمل'))}</span>`:''}<h3>${m.detail[lang][index].h}</h3><p class="situation-takeaway">${localText(lesson.take)}</p><div class="simevent"><b>${worked[lang==='ar'?1:0]}</b><p>${worked[lang==='ar'?3:2]}</p></div><p class="situation-instructions">${localText(bi('Answer both questions to complete this lesson.','أجب عن السؤالين لإكمال هذا الدرس.'))}</p>${lesson.questions.map((q,qi)=>{
-  const current=answers[qi],hasAnswer=current!==undefined,correct=current===q.best,order=getSituationOrder(m.id,index,qi);
-  return `<div class="situation-question"><h4>${qi+1}. ${localText(q.q)}</h4>${order.map((canonical,position)=>`<button class="simopt ${hasAnswer&&current===canonical?'situation-selected':''}" ${hasAnswer?'disabled':''} onclick="answerSituation(${m.id},${index},${qi},${canonical})">${String.fromCharCode(65+position)}. ${localText(q.options[canonical])}${hasAnswer&&current===canonical?` <span>${localText(bi('(Your choice)','(اختيارك)'))}</span>`:''}</button>`).join('')}${hasAnswer?`<div class="insight situation-feedback" role="status"><b>${localText(correct?bi('Useful response','استجابة مفيدة'):bi('Review this answer','راجع هذه الإجابة'))}</b>${correct?'':`<p>${localText(q.options[q.best])}</p>`}<p>${localText(q.why)}</p></div>`:''}</div>`;
- }).join('')}<div class="situation-footer"><span role="status">${answered}/2 ${localText(bi('answered','تمت الإجابة'))}${answered===2?' · '+localText(bi('✓ Lesson completed','✓ الدرس مكتمل')):''}</span><div class="match-actions">${answered===2?`<button class="secondary" onclick="retrySituationLesson(${m.id},${index})">${localText(bi('Try the Questions Again','جرب الأسئلة مجدداً'))}</button>`:''}${index<bank.length-1?`<button class="next" ${done?'':'disabled'} onclick="openSituationLesson(${m.id},${index+1})">${localText(bi('Next Lesson','الدرس التالي'))}</button>`:`<button class="next" ${done?'':'disabled'} onclick="eiTab='${m.id===3?'simulation':'practice'}';renderEI()">${localText(m.id===3?bi('Continue to Simulation','انتقل إلى المحاكاة'):bi('Continue to Practice','انتقل إلى التطبيق'))}</button>`}</div></div></section>`;
+ const done=eiModuleTasks(m.id).learn;
+ return `<section class="eipanel module-reading"><h3>${m.t[lang]}</h3>${MODULE_READING[m.id][lang].map(p=>`<p>${p}</p>`).join('')}<div class="match-actions"><button class="next lesson-completion" ${done?'disabled':''} onclick="completeModuleReading(${m.id})">${localText(done?bi('✓ Reading Completed','✓ تمت القراءة'):bi('Mark Reading Complete','تحديد الشرح كمكتمل'))}</button><button class="secondary" onclick="eiTab='check';renderEI()">${localText(bi('Knowledge Check','اختبار الفهم'))}</button></div></section>`;
 };
+renderEICheck=function(id) {
+ const s=syncCombinedCheck(id);saveEIState();
+ if(s.done)return `<section class="eipanel"><span class="completion-badge">${localText(bi('✓ Completed','✓ مكتمل'))}</span><h3>${localText(bi('Knowledge Check Complete','اكتمل اختبار الفهم'))}</h3><div class="metric"><b>${s.score}/${s.bank.length}</b><span>${Math.round(s.score/s.bank.length*100)}%</span></div><p>${localText(bi('This check includes the original questions and all situational questions previously shown in Learn.','يجمع هذا الاختبار الأسئلة الأصلية وجميع أسئلة المواقف التي كانت ضمن التعلّم.'))}</p><button class="secondary" onclick="resetCombinedCheck(${id})">${localText(bi('Retake Knowledge Check','إعادة اختبار الفهم'))}</button></section>`;
+ const q=s.next,st=s.st;
+ if(!st.orders[q.key]){st.orders[q.key]=shuffleEI(q.options.en.map((_,i)=>i));saveEIState();}
+ return `<section class="eipanel combined-check"><span class="ribbon">${localText(bi('KNOWLEDGE CHECK','اختبار الفهم'))}</span><h3>${localText(bi('Question','السؤال'))} ${s.count+1}/${s.bank.length}</h3><p>${localText(bi('All module questions are collected here.','جميع أسئلة الموديول مجمعة هنا.'))}</p><div class="module-progress-track" role="progressbar" aria-label="${localText(bi('Questions answered','الأسئلة المجابة'))}" aria-valuenow="${s.count}" aria-valuemin="0" aria-valuemax="${s.bank.length}"><span style="width:${s.count/s.bank.length*100}%"></span></div>${q.context?`<div class="simevent knowledge-context">${localText(q.context)}</div>`:''}<h4>${localText(q.q)}</h4>${st.orders[q.key].map((canonical,i)=>`<button class="simopt" onclick="answerCombinedCheck(${id},'${q.key}',${canonical})">${String.fromCharCode(65+i)}. ${q.options[lang][canonical]}</button>`).join('')}</section>`;
+};
+function answerCombinedCheck(id,key,choice) {
+ const s=combinedCheckSummary(id),q=s.next;
+ if(!q||q.key!==key||!Number.isInteger(choice)||choice<0||choice>=q.options.en.length)return;
+ s.st.answers[key]=choice;syncCombinedCheck(id);updateEICompletion();renderEI();
+}
+function resetCombinedCheck(id) {
+ if(!EI_CHECKS[id])return;
+ EI_STATE.combinedChecks[id]={answers:{},orders:{},legacyCoreCount:0,legacyCoreScore:0};
+ syncCombinedCheck(id);updateEICompletion();renderEI();
+}
+updateEICompletion();
+

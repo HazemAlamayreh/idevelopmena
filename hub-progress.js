@@ -59,9 +59,9 @@ function applyCourseReset(key) {
   qi=0;qscore=0;answered=false;wrong=[];assessType=null;ai=0;aAnswers=[];selected=null;
   window.caseAnswerVisible=null;window.quizOrder=[];window.assessOrder=[];
  }else{
-  EI_STATE={preDone:false,postDone:false,preScore:null,postScore:null,preDomains:{},postDomains:{},modules:{},checks:{},practice:{},simDone:false,lessons:{},completedSimulations:{},situationAnswers:{},situationOrders:{},completionV4:true,legacyCompletedModules:{}};
+  EI_STATE={preDone:false,postDone:false,preScore:null,postScore:null,preDomains:{},postDomains:{},modules:{},checks:{},practice:{},simDone:false,lessons:{},completedSimulations:{},situationAnswers:{},situationOrders:{},completionV4:true,legacyCompletedModules:{},learnRead:{},combinedChecks:{},learnLayoutV2:true};
   EI_CHECK_STATE=EI_STATE.checks;EI_PRACTICE=EI_STATE.practice;EI_ASSESS=null;
-  sim=null;matchGame=undefined;activeSituationLesson={};eiModule=null;eiTab='learn';
+  sim=null;matchGame=undefined;eiModule=null;eiTab='learn';
   updateEICompletion();
  }
 }
