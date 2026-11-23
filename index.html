@@ -876,6 +876,71 @@ function renderEITab(m){
 function renderDetailedLearn(m){
  return m.detail[lang].map((s,i)=>`<div class="eipanel"><span class="ribbon">${lang==='en'?'LESSON':'الدرس'} ${i+1}</span><h3>${s.h}</h3>${s.p.map(p=>`<p>${p}</p>`).join('')}${s.bul&&s.bul.length?`<ul>${s.bul.map(b=>`<li style="margin:8px 0;line-height:1.6;color:#44546a">${b}</li>`).join('')}</ul>`:''}</div>`).join('');
 }
+
+const EI_CHECKS={
+1:[
+{q:{en:"What is Intervention Point 1 mainly for?",ar:"ما الهدف الرئيسي من نقطة التدخل الأولى؟"},o:{en:["Challenge the first interpretation before accepting it as truth","Choose the final action after the emotion disappears","Change the external event before responding","Ask someone else to interpret the situation"],ar:["اختبر التفسير الأول قبل اعتباره حقيقة","اختر الفعل النهائي بعد اختفاء الشعور","غيّر الحدث الخارجي قبل الاستجابة","اطلب من شخص آخر تفسير الموقف"]},a:0},
+{q:{en:"What is Intervention Point 2 mainly for?",ar:"ما الهدف الرئيسي من نقطة التدخل الثانية؟"},o:{en:["Choose the response before emotion becomes action","Suppress emotion until the conversation ends","Avoid responding until the next day","Focus on changing the other person"],ar:["اختر الاستجابة قبل أن يتحول الشعور إلى فعل","اقمع الشعور حتى ينتهي الحوار","تجنب الرد حتى اليوم التالي","ركز على تغيير الشخص الآخر"]},a:0},
+{q:{en:"Why is multitasking a leadership problem?",ar:"لماذا يعد تعدد المهام مشكلة قيادية؟"},o:{en:["It increases switching, errors, missed information, and low attention","It always makes work slower than single-tasking","It reduces employee independence","It creates too many meetings"],ar:["يزيد الانتقال والأخطاء وفقدان المعلومات وضعف الانتباه","يجعل العمل دائماً أبطأ من المهمة الواحدة","يقلل استقلالية الموظف","يخلق اجتماعات كثيرة"]},a:0},
+{q:{en:"Mindfulness in this course means:",ar:"تعني اليقظة في هذا الكورس:"},o:{en:["Giving intentional attention to the present task or conversation","Removing difficult emotions from leadership","Thinking only about positive outcomes","Reducing the number of responsibilities"],ar:["توجيه الانتباه المقصود للمهمة أو الحوار الحالي","إزالة المشاعر الصعبة من القيادة","التفكير فقط بالنتائج الإيجابية","تقليل عدد المسؤوليات"]},a:0},
+{q:{en:"Which is the best example of separating fact from story?",ar:"ما أفضل مثال على فصل الحقيقة عن القصة؟"},o:{en:["Fact: the meeting happened without me; Story: they do not respect my role","Fact: they ignored me; Story: the meeting happened without me","Fact: they are disrespectful; Story: I was excluded","Fact: they planned against me; Story: my team was affected"],ar:["الحقيقة: حدث الاجتماع دوني؛ القصة: هم لا يحترمون دوري","الحقيقة: تجاهلوني؛ القصة: حدث الاجتماع دوني","الحقيقة: هم غير محترمين؛ القصة: تم استبعادي","الحقيقة: خططوا ضدي؛ القصة: الموضوع أثر على فريقي"]},a:0}
+],
+2:[
+{q:{en:"Which response reflects the Natural Self?",ar:"أي استجابة تعكس الذات الطبيعية؟"},o:{en:["Ask questions and explore the concern before deciding","Defend the recommendation to protect authority","Withdraw from the discussion","Attack the challenge to show confidence"],ar:["اسأل واستكشف القلق قبل القرار","دافع عن التوصية لحماية السلطة","انسحب من النقاش","هاجم التحدي لإظهار الثقة"]},a:0},
+{q:{en:"Emotional intelligence is NOT:",ar:"الذكاء العاطفي ليس:"},o:{en:["Suppressing feelings to maintain control","Understanding your emotional state","Reading what others may feel","Choosing action intentionally"],ar:["قمع المشاعر للمحافظة على السيطرة","فهم حالتك العاطفية","قراءة ما قد يشعر به الآخرون","اختيار الفعل بشكل مقصود"]},a:0},
+{q:{en:"'She thinks I am a bad manager' is:",ar:"العبارة: هي تعتقد أنني مدير سيئ، هي:"},o:{en:["Mind Reading","Catastrophizing","Overgeneralizing","Harsh Should"],ar:["قراءة أفكار","تضخيم","تعميم","يجب القاسية"]},a:0},
+{q:{en:"'He missed one deadline. He is irresponsible.' is:",ar:"تأخر عن موعد واحد، إنه غير مسؤول، هي:"},o:{en:["Labeling","Fortune Telling","Mind Reading","Catastrophizing"],ar:["وضع تسميات","تنبؤ","قراءة أفكار","تضخيم"]},a:0},
+{q:{en:"Why map emotions by pleasantness and activation?",ar:"لماذا نرسم المشاعر حسب الراحة ومستوى التنشيط؟"},o:{en:["To notice the emotional zone and choose a better response","To decide which emotions should disappear","To rank people by stability","To prove pleasant emotions are always better"],ar:["لملاحظة المنطقة العاطفية واختيار استجابة أفضل","لتحديد المشاعر التي يجب أن تختفي","لتصنيف الأشخاص حسب الاستقرار","لإثبات أن المشاعر المريحة دائماً أفضل"]},a:0}
+],
+3:[
+{q:{en:"Before reacting from anger, which question best matches the source?",ar:"قبل الرد من الغضب، أي سؤال يطابق المادة؟"},o:{en:["Do I have the full picture?","Who caused this first?","How quickly can I end this?","How do I guarantee this never happens again?"],ar:["هل لدي الصورة الكاملة؟","من تسبب بهذا أولاً؟","كيف أنهي هذا بسرعة؟","كيف أضمن ألا يحدث هذا أبداً؟"]},a:0},
+{q:{en:"Fear is often linked to:",ar:"يرتبط الخوف غالباً بـ:"},o:{en:["Catastrophizing, prediction, incomplete information, and future imagination","Low motivation and poor delegation","Confidence and high activation","Routine work and low energy"],ar:["التضخيم والتنبؤ ونقص المعلومات والخيال المستقبلي","ضعف الدافعية وسوء التفويض","الثقة والطاقة العالية","العمل الروتيني والطاقة المنخفضة"]},a:0},
+{q:{en:"The EI response to shame and guilt is to:",ar:"الاستجابة الذكية للخجل والذنب هي:"},o:{en:["Learn, repair what is needed, and stay engaged","Withdraw until confidence returns","Explain why the mistake was understandable","Avoid discussing the mistake"],ar:["تتعلم وتصلح المطلوب وتبقى منخرطاً","تنسحب حتى تعود الثقة","تشرح لماذا كان الخطأ مفهوماً","تتجنب مناقشة الخطأ"]},a:0},
+{q:{en:"A growth response to envy is:",ar:"استجابة النمو للحسد هي:"},o:{en:["What can I learn from their success?","Why were they recognized instead of me?","Will I be left behind?","How can I prove I deserve more?"],ar:["ماذا أتعلم من نجاحهم؟","لماذا تم تقديرهم بدلاً مني؟","هل سأتأخر؟","كيف أثبت أنني أستحق أكثر؟"]},a:0},
+{q:{en:"In STOP, Organize means:",ar:"في STOP، تعني Organize:"},o:{en:["Separate facts, assumptions, emotions, and possible actions","Create space from the trigger","Challenge the first interpretation","Choose the final response"],ar:["افصل الحقائق والافتراضات والمشاعر والخيارات","اصنع مساحة عن المحفز","اختبر التفسير الأول","اختر الاستجابة النهائية"]},a:0}
+]};
+let EI_CHECK_STATE={};
+function renderEICheck(id){
+ const qs=EI_CHECKS[id],st=EI_CHECK_STATE[id]||{i:0,s:0,done:false};
+ if(st.done)return `<div class="eipanel"><h3>${lang==='en'?'Knowledge Check Complete':'اكتمل اختبار الفهم'}</h3><div class="metric" style="max-width:180px"><span>${lang==='en'?'Score':'النتيجة'}</span><b>${st.s}/${qs.length}</b></div><button class="secondary" onclick="EI_CHECK_STATE[${id}]={i:0,s:0,done:false};renderEI()">${lang==='en'?'Retake':'إعادة'}</button></div>`;
+ const q=qs[st.i];
+ return `<div class="eipanel"><span class="ribbon">${lang==='en'?'KNOWLEDGE CHECK':'اختبار الفهم'}</span><h3>${lang==='en'?'Question':'سؤال'} ${st.i+1}/${qs.length}</h3><p style="font-weight:700;color:var(--navy)">${q.q[lang]}</p>${q.o[lang].map((o,i)=>`<button class="simopt" onclick="answerEICheck(${id},${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>`;
+}
+function answerEICheck(id,choice){
+ const qs=EI_CHECKS[id],st=EI_CHECK_STATE[id]||{i:0,s:0,done:false};
+ if(choice===qs[st.i].a)st.s++;
+ st.i++;
+ if(st.i>=qs.length)st.done=true;
+ EI_CHECK_STATE[id]=st;renderEI();
+}
+let EI_PRACTICE={};
+function renderEIPractice(id){
+ if(id===1){
+  const a=EI_PRACTICE.m1a,b=EI_PRACTICE.m1b;
+  return `<div class="eipanel"><span class="ribbon">${lang==='en'?'TRIGGER CHAIN PRACTICE':'تطبيق سلسلة المحفز'}</span><h3>${lang==='en'?'A team member misses a deadline without informing you.':'موظف يتأخر عن موعد دون إبلاغك.'}</h3><p>${lang==='en'?'Intervention Point 1 — choose what happens inside you first.':'نقطة التدخل الأولى — اختر ما يحدث داخلك أولاً.'}</p>${practiceBtns('m1a',[
+   {en:'Assume they do not respect deadlines.',ar:'افترض أنهم لا يحترمون المواعيد.'},
+   {en:'Pause and notice anger before deciding what the delay means.',ar:'توقف ولاحظ الغضب قبل تحديد معنى التأخير.'},
+   {en:'Escalate immediately because the behavior is unacceptable.',ar:'صعّد فوراً لأن السلوك غير مقبول.'},
+   {en:'Ignore the issue until the emotion disappears.',ar:'تجاهل الموضوع حتى يختفي الشعور.'}],1,a)}
+   <p style="margin-top:18px">${lang==='en'?'Intervention Point 2 — choose the conversation response.':'نقطة التدخل الثانية — اختر الاستجابة في الحوار.'}</p>${practiceBtns('m1b',[
+   {en:'Ask what happened and what prevented earlier communication.',ar:'اسأل ماذا حدث وما الذي منع التواصل المبكر.'},
+   {en:'Say you already explained the deadline and expect better.',ar:'قل إنك شرحت الموعد وتتوقع أفضل.'},
+   {en:'Complete the work yourself to protect the deadline.',ar:'أكمل العمل بنفسك لحماية الموعد.'},
+   {en:'Ask another colleague why this person keeps delaying.',ar:'اسأل زميلاً آخر لماذا يستمر هذا الشخص بالتأخير.'}],0,b)}</div>`;
+ }
+ const labelsAr={"Mind Reading":"قراءة أفكار","Fortune Telling":"تنبؤ","Labeling":"وضع تسميات","Harsh Should":"يجب القاسية"};
+ const qs=[
+  ["She probably believes I am a bad leader.",["Mind Reading","Fortune Telling","Labeling","Harsh Should"],0],
+  ["This presentation will definitely go badly.",["Mind Reading","Fortune Telling","Labeling","Harsh Should"],1],
+  ["He missed one deadline. He is irresponsible.",["Mind Reading","Fortune Telling","Labeling","Harsh Should"],2],
+  ["I should have explained it perfectly.",["Mind Reading","Fortune Telling","Labeling","Harsh Should"],3]
+ ];
+ return `<div class="eipanel"><span class="ribbon">${lang==='en'?'DISTORTION LAB':'مختبر التشوهات'}</span><h3>${lang==='en'?'Identify the dominant thinking pattern':'حدد نمط التفكير الأساسي'}</h3>${qs.map((q,i)=>`<div style="margin:16px 0"><b>${i+1}. ${q[0]}</b>${practiceBtns('d'+i,q[1].map(x=>({en:x,ar:labelsAr[x]})),q[2],EI_PRACTICE['d'+i])}</div>`).join('')}</div>`;
+}
+function practiceBtns(key,opts,best,current){
+ return opts.map((o,i)=>`<button class="simopt" style="${current===i?'border-color:var(--navy);background:#f2f6fb':''}" onclick="EI_PRACTICE['${key}']=${i};renderEI()">${String.fromCharCode(65+i)}. ${o[lang]}</button>`).join('');
+}
+
 function renderSim(){
  if(!sim)return `<div class="eipanel"><span class="ribbon">${lang==='en'?'DECISION SIMULATION':'محاكاة القرار'}</span><h3>${lang==='en'?'Lead Yourself Under Pressure':'قد نفسك تحت الضغط'}</h3><p>${lang==='en'?'Choose a pharma situation. No feedback appears while you decide. Poor choices silently increase pressure and make the next stage harder. One consolidated report appears only at the end.':'اختر موقفاً دوائياً. لن تظهر تغذية راجعة أثناء القرار. الاختيارات الأضعف تزيد الضغط بصمت وتجعل المرحلة التالية أصعب. يظهر تقرير واحد فقط في النهاية.'}</p><div class="simchoices">${Object.keys(SIMS).map(k=>`<button onclick="startSim('${k}')">${SIMS[k].lab[lang]}</button>`).join('')}</div></div>`;
  const s=SIMS[sim.key];
