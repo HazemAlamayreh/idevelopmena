@@ -271,7 +271,7 @@ pickSim=function(displayIndex) {
  const choice=sim.orders[sim.i][displayIndex],stage=sim.i;
  if(choice===SIMQ[stage].best){sim.score++;sim.pressure=Math.max(0,sim.pressure-1);}else sim.pressure++;
  sim.choices.push(choice);sim.history.push({stage,choice,pressure:sim.pressure});sim.i++;
- if(sim.i>=SIMQ.length)sim.done=true;
+ if(sim.i>=SIMQ.length){sim.done=true;recordEISimulationCompletion();}
  renderEI();
 };
 const originalSimEI=renderSim;
@@ -337,7 +337,27 @@ renderEIModule=function() {
  const t=eiModuleTasks(eiModule),done=EI_STATE.modules[eiModule];
  const badge=`<span class="completion-badge">${localText(done?bi('✓ Completed','✓ مكتمل'):bi('In Progress','قيد التقدم'))}</span>`;
  const result=originalModuleProgressEI().replace('<section class="eihero">',`<section class="eihero ${done?'completed-hero':''}">${badge}`);
- const tasks=[{ok:t.learn,label:bi(`Lessons (${t.learned}/${t.total})`,`الدروس (${t.learned}/${t.total})`),tab:'learn'},{ok:t.check,label:bi('Knowledge Check','اختبار الفهم'),tab:'check'},{ok:t.practice,label:eiModule===3?bi('Simulation Report','تقرير المحاكاة'):bi('Practice Activity','نشاط التطبيق'),tab:eiModule===3?'simulation':'practice'}];
+ const tasks=[{ok:t.learn,label:bi(`Lessons (${t.learned}/${t.total})`,`الدروس (${t.learned}/${t.total})`),tab:'learn'},{ok:t.check,label:bi('Knowledge Check','اختبار الفهم'),tab:'check'},{ok:t.practice,label:eiModule===3?bi('Decision Simulation','محاكاة القرار'):bi('Practice Activity','نشاط التطبيق'),tab:eiModule===3?'simulation':'practice'}];
  return result+`<section class="eipanel completion-checklist ${done?'completed-card':''}" aria-live="polite"><h3>${localText(done?bi('✓ Module Completed','✓ الموديول مكتمل'):bi('Your Module Progress','تقدمك في الموديول'))}</h3><div class="completion-tasks">${tasks.map(x=>`<button class="secondary ${x.ok?'task-done':''}" onclick="eiTab='${x.tab}';renderEI()">${x.ok?'✓':'○'} ${localText(x.label)}</button>`).join('')}</div><p>${localText(done?bi('Your completion is saved. You can return to review this module anytime.','تم حفظ الإكمال. يمكنك العودة لمراجعة الموديول في أي وقت.'):bi('Mark each lesson complete and finish the knowledge check and practice activity to complete this module.','حدد كل درس كمكتمل وأنهِ اختبار الفهم ونشاط التطبيق لإكمال الموديول.'))}</p><button class="next" onclick="eiModule=null;renderEI()">${localText(bi('Back to Course','العودة للكورس'))}</button></section>`;
 };
 updateEICompletion();
+
+function recordEISimulationCompletion() {
+ if(!sim?.done||!SIMS[sim.key])return;
+ EI_STATE.completedSimulations=EI_STATE.completedSimulations||{};
+ EI_STATE.completedSimulations[sim.key]=true;
+ EI_STATE.simDone=true;updateEICompletion();
+}
+const simulationWithConsequencesEI=renderSim;
+renderSim=function() {
+ if(sim)return simulationWithConsequencesEI();
+ const done=!!EI_STATE.simDone;
+ return `<section class="eipanel ${done?'completed-card':''}"><span class="ribbon">${localText(bi('DECISION SIMULATION','محاكاة القرار'))}</span>${done?` <span class="completion-badge" role="status">${localText(bi('✓ Completed','✓ مكتمل'))}</span>`:''}<h3>${localText(bi('Lead Yourself Under Pressure','قد نفسك تحت الضغط'))}</h3><p>${localText(bi('Choose a pharma situation. No feedback appears while you decide. Poor choices silently increase pressure and make the next stage harder. One consolidated report appears only at the end.','اختر موقفاً دوائياً. لن تظهر تغذية راجعة أثناء القرار. الاختيارات الأضعف تزيد الضغط بصمت وتجعل المرحلة التالية أصعب. يظهر تقرير واحد فقط في النهاية.'))}</p>${done?`<p>${localText(bi('Your completion is saved. Repeat a completed situation or try another.','تم حفظ إكمالك. يمكنك إعادة موقف مكتمل أو تجربة موقف آخر.'))}</p>`:''}<div class="simchoices">${Object.keys(SIMS).map(key=>{const completed=!!EI_STATE.completedSimulations?.[key];return `<button class="${completed?'completed-card':''}" onclick="startSim('${key}')">${SIMS[key].lab[lang]}${completed?`<br><span>${localText(bi('✓ Completed','✓ مكتمل'))}</span>`:''}</button>`;}).join('')}</div></section>`;
+};
+const reportWithConsequencesEI=renderReport;
+renderReport=function(s) {
+ recordEISimulationCompletion();
+ return reportWithConsequencesEI(s).replace('<span class="ribbon">',`<span class="completion-badge" role="status">${localText(bi('✓ Completed','✓ مكتمل'))}</span> <span class="ribbon">`);
+};
+const simulationTabNameEI=tabName;
+tabName=function(tab){return (tab==='simulation'&&EI_STATE.simDone?'✓ ':'')+simulationTabNameEI(tab);};
