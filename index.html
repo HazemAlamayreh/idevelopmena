@@ -627,24 +627,24 @@ function renderCaseWorkspace(cfg){
  return `<div class="case-workspace ${submitted?'case-locked':''}">
    <span class="ribbon">${lang==='en'?'YOUR WORKSPACE':'مساحة عملك'}</span>
    <h3>${cfg.title[lang]}</h3>
-   ${cfg.items.map(item=>renderCaseItem(item,saved[item.id],submitted)).join('')}
+   ${cfg.items.map((item,index)=>renderCaseItem(item,saved[item.id],submitted,answerVisible&&answerCfg?answerCfg.points[lang][index]:null)).join('')}
    <div class="case-actions">
      ${!submitted?`<button class="next" onclick="submitCase()">${lang==='en'?'Submit Case':'إرسال الحالة'}</button><button class="secondary" onclick="save()">💾 ${lang==='en'?'Save Responses':'حفظ الإجابات'}</button><button class="secondary" onclick="clearCaseResponses()">${lang==='en'?'Clear Responses':'مسح الإجابات'}</button>`
-       :`${answerCfg?`<button class="next" onclick="toggleCaseAnswer()">${answerVisible?(lang==='en'?'Hide Suggested Answer':'إخفاء الإجابة المقترحة'):(lang==='en'?'View Suggested Answer':'عرض الإجابة المقترحة')}</button>`:''}<button class="secondary" onclick="restartCase()">${lang==='en'?'Start Again':'ابدأ من جديد'}</button>`}
+       :`${answerCfg?`<button class="next" onclick="toggleCaseAnswer()">${answerVisible?(lang==='en'?'Hide Suggested Answers':'إخفاء الإجابات المقترحة'):(lang==='en'?'Show Suggested Answers':'عرض الإجابات المقترحة')}</button>`:''}<button class="secondary" onclick="restartCase()">${lang==='en'?'Start Again':'ابدأ من جديد'}</button>`}
    </div>
-   <div class="case-submit-note" id="caseSaved">${submitted?(lang==='en'?'Case submitted. Your original response is locked for comparison.':'تم إرسال الحالة. إجابتك الأصلية مقفلة للمقارنة.'):(lang==='en'?'Responses save automatically on this browser/device.':'يتم حفظ الإجابات تلقائياً على هذا المتصفح/الجهاز.')}</div>
-   ${answerVisible&&answerCfg?renderSuggestedCaseAnswer(answerCfg):''}
+   <div class="case-submit-note" id="caseSaved">${submitted?(lang==='en'?'Case submitted. Your original responses are locked for comparison.':'تم إرسال الحالة. إجاباتك الأصلية مقفلة للمقارنة.'):(lang==='en'?'Responses save automatically on this browser/device.':'يتم حفظ الإجابات تلقائياً على هذا المتصفح/الجهاز.')}</div>
  </div>`;
 }
-function renderCaseItem(item,value,submitted){
+function renderCaseItem(item,value,submitted,suggestedAnswer){
+ const suggestedHtml=submitted&&suggestedAnswer?`<div class="case-answer-panel" style="margin-top:12px"><h4 style="margin:0 0 8px">${lang==='en'?'Suggested Answer':'الإجابة المقترحة'}</h4><p style="margin:0;line-height:1.65">${suggestedAnswer}</p></div>`:'';
  if(item.type==='text'){
-   return `<div class="case-item"><label>${item.q[lang]}</label><textarea ${submitted?'disabled':''} placeholder="${item.placeholder[lang]}" oninput="saveCaseValue('${item.id}',this.value)">${value||''}</textarea></div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label><textarea ${submitted?'disabled':''} placeholder="${item.placeholder[lang]}" oninput="saveCaseValue('${item.id}',this.value)">${value||''}</textarea>${suggestedHtml}</div>`;
  }
  if(item.type==='dropdown'){
-   return `<div class="case-item"><label>${item.q[lang]}</label><select ${submitted?'disabled':''} onchange="saveCaseValue('${item.id}',this.value)">${item.options[lang].map((o,i)=>`<option value="${i===0?'':o.replace(/"/g,'&quot;')}" ${value===o?'selected':''}>${o}</option>`).join('')}</select></div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label><select ${submitted?'disabled':''} onchange="saveCaseValue('${item.id}',this.value)">${item.options[lang].map((o,i)=>`<option value="${i===0?'':o.replace(/"/g,'&quot;')}" ${value===o?'selected':''}>${o}</option>`).join('')}</select>${suggestedHtml}</div>`;
  }
  if(item.type==='mcq'){
-   return `<div class="case-item"><label>${item.q[lang]}</label>${item.options[lang].map((o,i)=>`<button ${submitted?'disabled':''} class="case-choice ${value===o?'selected':''}" onclick="selectCaseChoice('${item.id}',${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div>`;
+   return `<div class="case-item"><label>${item.q[lang]}</label>${item.options[lang].map((o,i)=>`<button ${submitted?'disabled':''} class="case-choice ${value===o?'selected':''}" onclick="selectCaseChoice('${item.id}',${i},this)">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}${suggestedHtml}</div>`;
  }
  return '';
 }
