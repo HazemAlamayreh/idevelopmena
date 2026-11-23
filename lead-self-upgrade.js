@@ -189,7 +189,8 @@ renderDetailedLearn=function(m) {
  return m.detail[lang].map((lesson,i)=>{
   const source=originalLearnEI({detail:{[lang]:[lesson]}}).replace(/(LESSON|الدرس) 1/,`$1 ${i+1}`);
   const w=WORKED_EI[m.id][i],ar=lang==='ar',steps=w[ar?5:4];
-  return source+`<section class="eipanel pharma-example"><span class="ribbon">${localText(bi('WORKED PHARMA EXAMPLE','مثال دوائي محلول'))}</span><h3>${w[ar?1:0]}</h3><p>${w[ar?3:2]}</p><h4>${localText(bi('Apply it step by step','التطبيق خطوة بخطوة'))}</h4><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol><div class="insight"><b>${localText(bi('Words you can use','عبارة يمكنك استخدامها'))}</b><p>${w[ar?7:6]}</p></div><p><b>${localText(bi('Why this helps:','لماذا يفيد ذلك:'))}</b> ${w[ar?9:8]}</p></section>`;
+  const done=!!EI_STATE.lessons?.[m.id]?.[i];
+  return source+`<section class="eipanel pharma-example ${done?'lesson-done':''}"><span class="ribbon">${localText(bi('WORKED PHARMA EXAMPLE','مثال دوائي محلول'))}</span><h3>${w[ar?1:0]}</h3><p>${w[ar?3:2]}</p><h4>${localText(bi('Apply it step by step','التطبيق خطوة بخطوة'))}</h4><ol>${steps.map(s=>`<li>${s}</li>`).join('')}</ol><div class="insight"><b>${localText(bi('Words you can use','عبارة يمكنك استخدامها'))}</b><p>${w[ar?7:6]}</p></div><p><b>${localText(bi('Why this helps:','لماذا يفيد ذلك:'))}</b> ${w[ar?9:8]}</p><button class="next lesson-completion" data-lesson="${m.id}-${i}" ${done?'disabled':''} onclick="completeEILesson(${m.id},${i})">${done?localText(bi('✓ Completed','✓ مكتمل')):localText(bi('Mark Lesson Complete','تحديد الدرس كمكتمل'))}</button></section>`;
  }).join('');
 };
 
@@ -289,3 +290,54 @@ renderReport=function(s) {
  const pct=Math.round(sim.score/4*100);
  return `<section class="simcard"><span class="ribbon">${localText(bi('YOUR SIMULATION REPORT','تقرير المحاكاة'))}</span><h3>${s.title[lang]}</h3><div class="reportgrid"><div class="metric">${localText(bi('Decision Quality','جودة القرار'))}<b>${pct}%</b></div><div class="metric">${localText(bi('Pressure at Close','الضغط عند النهاية'))}<b>${Math.min(100,25+sim.pressure*20)}%</b></div></div><p>${localText(bi('This practice result describes this attempt, not a diagnosis or a fixed personality type.','تصف نتيجة التدريب هذه المحاولة، وليست تشخيصاً أو نمط شخصية ثابتاً.'))}</p>${sim.history.map(h=>{const q=SIMQ[h.stage],opts=(q.opts[sim.key]||q.opts.all)[lang];return `<div class="decision"><h4>${localText(bi('Decision','قرار'))} ${h.stage+1}</h4><p><b>${localText(bi('Your choice:','اختيارك:'))}</b> ${opts[h.choice]}</p><p><b>${localText(bi('What happened next:','ما حدث بعد ذلك:'))}</b> ${simConsequence(sim.key,h.stage,h.choice,h.pressure)}</p><p><b>${localText(bi('Recommended response:','الاستجابة الموصى بها:'))}</b> ${opts[q.best]}</p><div class="insight">${localText(simExplanationEI[h.stage])}</div></div>`;}).join('')}<div class="match-actions"><button class="next" onclick="startSim('${sim.key}')">${localText(bi('Repeat This Situation','أعد نفس الموقف'))}</button><button class="secondary" onclick="sim=null;renderEI()">${localText(bi('Try Another Situation','جرّب موقفاً آخر'))}</button><button class="secondary" onclick="window.print()">${localText(bi('Print / Save Report','طباعة / حفظ التقرير'))}</button></div></section>`;
 };
+
+// Preserve completed work from previous versions while tracking individual lessons.
+if(!EI_STATE.completionV4) {
+ EI_STATE.lessons=EI_STATE.lessons||{};
+ EI_STATE.legacyCompletedModules={};
+ for(const m of EI_MODS)if(EI_STATE.modules[m.id]) {
+  EI_STATE.legacyCompletedModules[m.id]=true;
+  EI_STATE.lessons[m.id]=Object.fromEntries(m.detail.en.map((_,i)=>[i,true]));
+ }
+ EI_STATE.completionV4=true;saveEIState();
+}
+function eiModuleTasks(id) {
+ const m=EI_MODS.find(x=>x.id===id),legacy=EI_STATE.legacyCompletedModules?.[id];
+ const learned=m.detail.en.filter((_,i)=>EI_STATE.lessons?.[id]?.[i]).length;
+ const practice=id===1?EI_STATE.practice.m1a!==undefined&&EI_STATE.practice.m1b!==undefined:id===2?!!EI_STATE.practice.distortionMatchDone:!!EI_STATE.simDone;
+ return {learned,total:m.detail.en.length,learn:learned===m.detail.en.length,check:!!(legacy||EI_STATE.checks[id]?.done),practice:!!(legacy||practice)};
+}
+const completionWithPracticeEI=updateEICompletion;
+updateEICompletion=function() {
+ completionWithPracticeEI();
+ for(const m of EI_MODS) {
+  const t=eiModuleTasks(m.id);
+  EI_STATE.modules[m.id]=!!(EI_STATE.legacyCompletedModules?.[m.id]||(t.learn&&t.check&&t.practice));
+ }
+ saveEIState();
+};
+function completeEILesson(id,index) {
+ const m=EI_MODS.find(x=>x.id===id);
+ if(!m||!Number.isInteger(index)||index<0||index>=m.detail.en.length)return;
+ EI_STATE.lessons=EI_STATE.lessons||{};EI_STATE.lessons[id]=EI_STATE.lessons[id]||{};
+ EI_STATE.lessons[id][index]=true;updateEICompletion();renderEI();
+ const next=document.querySelector(`[data-lesson="${id}-${index}"]`);
+ if(next)next.focus();
+}
+function renderEIPreCard() {
+ const done=EI_STATE.preDone;
+ return `<section class="eipanel assessment-progress ${done?'completed-card':''}"><span class="completion-badge">${localText(done?bi('✓ Completed','✓ مكتمل'):bi('Not Started','لم يبدأ'))}</span><h3>${localText(bi('Pre-Assessment','التقييم القبلي'))}</h3><p>${localText(done?bi('Your first completed result is saved as your baseline.','تم حفظ نتيجة محاولتك الأولى المكتملة كخط أساس.'):bi('Complete this once to establish your learning baseline.','أكمل هذا التقييم مرة واحدة لتحديد خط أساس التعلم.'))}</p>${done?`<p class="baseline-score">${EI_STATE.preScore??'—'}%</p><button class="secondary" onclick="showEIResults()">${localText(bi('View Results','عرض النتائج'))}</button>`:`<button class="next" onclick="startEIAssess('pre')">${localText(bi('Start Pre-Assessment','ابدأ التقييم القبلي'))}</button>`}</section>`;
+}
+function renderEIProgressCard(m) {
+ const t=eiModuleTasks(m.id),done=EI_STATE.modules[m.id],started=t.learned>0||t.check||t.practice;
+ return `<button type="button" class="eimod ei-progress-card ${done?'completed-card':started?'started-card':''}" onclick="eiModule=${m.id};eiTab='learn';renderEI()"><span class="completion-badge">${localText(done?bi('✓ Completed','✓ مكتمل'):started?bi('In Progress','قيد التقدم'):bi('Not Started','لم يبدأ'))}</span><span class="ribbon">${localText(bi('MODULE','الوحدة'))} ${m.id}</span><h3>${m.t[lang]}</h3><p>${m.c[lang]}</p><p>${t.learned}/${t.total} ${localText(bi('lessons completed','دروس مكتملة'))}</p><div class="module-progress-track" aria-hidden="true"><span style="width:${Math.round((t.learned+Number(t.check)+Number(t.practice))/(t.total+2)*100)}%"></span></div><span class="module-open">${localText(done?bi('Review Module','مراجعة الوحدة'):bi('Continue Module','متابعة الوحدة'))}</span></button>`;
+}
+const originalModuleProgressEI=renderEIModule;
+renderEIModule=function() {
+ const t=eiModuleTasks(eiModule),done=EI_STATE.modules[eiModule];
+ const badge=`<span class="completion-badge">${localText(done?bi('✓ Completed','✓ مكتمل'):bi('In Progress','قيد التقدم'))}</span>`;
+ const result=originalModuleProgressEI().replace('<section class="eihero">',`<section class="eihero ${done?'completed-hero':''}">${badge}`);
+ const tasks=[{ok:t.learn,label:bi(`Lessons (${t.learned}/${t.total})`,`الدروس (${t.learned}/${t.total})`),tab:'learn'},{ok:t.check,label:bi('Knowledge Check','اختبار الفهم'),tab:'check'},{ok:t.practice,label:eiModule===3?bi('Simulation Report','تقرير المحاكاة'):bi('Practice Activity','نشاط التطبيق'),tab:eiModule===3?'simulation':'practice'}];
+ return result+`<section class="eipanel completion-checklist ${done?'completed-card':''}" aria-live="polite"><h3>${localText(done?bi('✓ Module Completed','✓ الموديول مكتمل'):bi('Your Module Progress','تقدمك في الموديول'))}</h3><div class="completion-tasks">${tasks.map(x=>`<button class="secondary ${x.ok?'task-done':''}" onclick="eiTab='${x.tab}';renderEI()">${x.ok?'✓':'○'} ${localText(x.label)}</button>`).join('')}</div><p>${localText(done?bi('Your completion is saved. You can return to review this module anytime.','تم حفظ الإكمال. يمكنك العودة لمراجعة الموديول في أي وقت.'):bi('Mark each lesson complete and finish the knowledge check and practice activity to complete this module.','حدد كل درس كمكتمل وأنهِ اختبار الفهم ونشاط التطبيق لإكمال الموديول.'))}</p><button class="next" onclick="eiModule=null;renderEI()">${localText(bi('Back to Course','العودة للكورس'))}</button></section>`;
+};
+updateEICompletion();

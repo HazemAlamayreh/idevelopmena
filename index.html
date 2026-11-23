@@ -846,13 +846,15 @@ const EI_POST=[
 {d:"Intentional Action",q:{en:"In STOP, what comes immediately before Proceed?",ar:"في STOP، ماذا يأتي مباشرة قبل Proceed؟"},o:{en:["Organize facts, assumptions, emotions, and options","Step Back from the trigger","Think Again and challenge the interpretation","Focus on how others should respond"],ar:["نظم الحقائق والافتراضات والمشاعر والخيارات","ابتعد عن المحفز","أعد التفكير واختبر التفسير","ركز على كيف يجب أن يستجيب الآخرون"]},a:0}
 ];
 let EI_ASSESS=null;
-function startEIAssess(type){EI_ASSESS={type:type,i:0,s:0,ans:[]};renderEIAssess()}
+function startEIAssess(type){if(type==='pre'&&EI_STATE.preDone){showEIResults();return}EI_ASSESS={type:type,i:0,s:0,ans:[]};renderEIAssess()}
 function renderEIAssess(){
  const arr=EI_ASSESS.type==='pre'?EI_PRE:EI_POST,q=arr[EI_ASSESS.i];
  let r=document.getElementById('eiCourse');
  r.innerHTML=`<div class="eiwrap"><div class="eitop"><button class="eiback" onclick="EI_ASSESS=null;renderEI()">← ${lang==='en'?'Exit Assessment':'الخروج من التقييم'}</button><span class="pill">${EI_ASSESS.type==='pre'?(lang==='en'?'Pre-Assessment':'التقييم القبلي'):(lang==='en'?'Post-Assessment':'التقييم البعدي')} • ${EI_ASSESS.i+1}/${arr.length}</span></div><div class="simcard"><span class="ribbon">${q.d}</span><h3 style="color:var(--navy)">${q.q[lang]}</h3>${q.o[lang].map((o,i)=>`<button class="simopt" onclick="answerEIAssess(${i})">${String.fromCharCode(65+i)}. ${o}</button>`).join('')}</div></div>`;
 }
 function answerEIAssess(choice){
+ if(!EI_ASSESS)return;
+ if(EI_ASSESS.type==='pre'&&EI_STATE.preDone){EI_ASSESS=null;showEIResults();return}
  const arr=EI_ASSESS.type==='pre'?EI_PRE:EI_POST,q=arr[EI_ASSESS.i],ok=choice===q.a;
  if(ok)EI_ASSESS.s++;EI_ASSESS.ans.push({d:q.d,ok:ok});EI_ASSESS.i++;
  if(EI_ASSESS.i>=arr.length){
@@ -917,8 +919,8 @@ function renderEI(){
 function renderEIHome(){
  const allMods=!!(EI_STATE.modules[1]&&EI_STATE.modules[2]&&EI_STATE.modules[3]);
  return `<section class="eihero"><span class="ribbon">${lang==='en'?'LEAD SELF':'قيادة الذات'}</span><h2 class="display">${lang==='en'?'Emotional Intelligence — Lead Self':'الذكاء العاطفي — قيادة الذات'}</h2><p>${lang==='en'?'Before we lead others, we must first learn to lead ourselves. The course moves from awareness, to understanding, to regulation — recognizing automatic reactions, practicing mindfulness, understanding emotional patterns, and choosing intentional leadership responses.':'قبل أن نقود الآخرين علينا أولاً أن نتعلم قيادة أنفسنا. ينتقل الكورس من الوعي إلى الفهم ثم التنظيم: التعرف على ردود الفعل التلقائية، ممارسة اليقظة، فهم الأنماط العاطفية، واختيار استجابات قيادية مقصودة.'}</p><div class="pills"><span class="pill">${lang==='en'?'Self-Awareness':'الوعي الذاتي'}</span><span class="pill">${lang==='en'?'Emotional Regulation':'تنظيم المشاعر'}</span><span class="pill">${lang==='en'?'Cognitive Flexibility':'المرونة المعرفية'}</span><span class="pill">${lang==='en'?'Resilience':'الصمود'}</span><span class="pill">${eiCourseProgress()}% ${lang==='en'?'Complete':'مكتمل'}</span></div></section>
- <div class="eipanel" style="margin-top:14px"><h3>${lang==='en'?'Pre-Assessment':'التقييم القبلي'}</h3><p>${lang==='en'?'Establish your baseline across reaction awareness, mindful attention, self-awareness, cognitive flexibility, and intentional action.':'حدد خط الأساس في الوعي بردود الفعل والانتباه الواعي والوعي الذاتي والمرونة المعرفية والفعل المقصود.'}</p><button class="next" onclick="startEIAssess('pre')">${EI_STATE.preDone?(lang==='en'?'Retake Pre-Assessment':'إعادة التقييم القبلي'):(lang==='en'?'Start Pre-Assessment':'ابدأ التقييم القبلي')}</button></div>
- <div class="eimods">${EI_MODS.map(m=>`<div class="eimod" onclick="eiModule=${m.id};eiTab='learn';renderEI()"><span class="ribbon">MODULE ${m.id}</span><h3>${m.t[lang]}</h3><p>${m.c[lang]}</p><div class="pills"><span class="pill">${EI_STATE.modules[m.id]?(lang==='en'?'Completed':'مكتمل'):(lang==='en'?'In Progress':'قيد التقدم')}</span></div><b style="color:var(--red)">${lang==='en'?'Open Module':'فتح الوحدة'} →</b></div>`).join('')}</div>
+ ${renderEIPreCard()}
+ <div class="eimods">${EI_MODS.map(renderEIProgressCard).join('')}</div>
  <div class="eipanel" style="margin-top:14px"><h3>${lang==='en'?'Post-Assessment':'التقييم البعدي'}</h3><p>${lang==='en'?'Different questions measure the same competency areas for a meaningful before/after comparison.':'أسئلة مختلفة تقيس نفس مجالات الكفاءة لعمل مقارنة قبل/بعد أكثر معنى.'}</p><button class="next" ${allMods?'':'disabled'} onclick="startEIAssess('post')">${EI_STATE.postDone?(lang==='en'?'Retake Post-Assessment':'إعادة التقييم البعدي'):(lang==='en'?'Start Post-Assessment':'ابدأ التقييم البعدي')}</button>${EI_STATE.preDone||EI_STATE.postDone?`<button class="secondary" style="margin-left:8px" onclick="showEIResults()">${lang==='en'?'View Results':'عرض النتائج'}</button>`:''}</div>`;
 }
 function renderEIModule(){const m=EI_MODS.find(x=>x.id===eiModule),tabs=m.id===3?['learn','slides','simulation','check']:['learn','slides','check','practice'];return `<section class="eihero"><span class="ribbon">MODULE ${m.id}</span><h2 class="display">${m.t[lang]}</h2><p>${m.c[lang]}</p></section><div class="eitabs">${tabs.map(t=>`<button class="${eiTab===t?'active':''}" onclick="eiTab='${t}';if('${t}'!=='simulation')sim=null;renderEI()">${tabName(t)}</button>`).join('')}</div>${renderEITab(m)}`}
