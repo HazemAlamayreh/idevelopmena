@@ -246,7 +246,14 @@ function simConsequence(key,stage,choice,pressure) {
   else if(stage===2)complication=localText(bi(`${o} now requests a joint update with ${p}; separate explanations about ${t} will no longer be sufficient.`,`${o} يطلب الآن تحديثاً مشتركاً مع ${p}؛ لم تعد التفسيرات المنفصلة بشأن ${t} كافية.`));
   else complication=localText(bi(`${o} schedules another review of ${t} because the earlier conflicting commitments still need reconciliation.`,`${o} يحدد مراجعة إضافية بشأن ${t} لأن الالتزامات المتعارضة السابقة ما زالت تحتاج إلى توحيد.`));
  }
- const result=localText(outcomes[stage][choice])+' '+localText(s.next[stage])+(complication?' '+complication:'');
+ const salesOpening=[
+  bi('Your manager explains that the meeting requires a particular presentation capability. Your colleague asks for your help preparing a section you know well.','يوضح مديرك أن الاجتماع يتطلب قدرة عرض محددة. يطلب زميلك مساعدتك بتجهيز جزء تعرفه جيداً.'),
+  bi('You keep comparing your results with your colleague’s and miss part of their preparation request. They repeat the request, unsure whether you are willing to help.','تستمر بمقارنة نتائجك بنتائج زميلك وتفوتك بعض تفاصيل طلب التحضير. يعيد الزميل الطلب وهو غير متأكد من رغبتك بالمساعدة.'),
+  bi('You step back from the shared preparation task. Your supervisor asks who will cover your contribution, and the presentation now has an unassigned section.','تنسحب من مهمة التحضير المشتركة. يسأل مشرفك عمن سيغطي مساهمتك، وأصبح في العرض جزء دون مسؤول.'),
+  bi('Colleagues begin speculating about the selection. The selected colleague hears that you questioned it, and asks whether your concern is about their capability or the selection process.','يبدأ الزملاء بالتكهن بسبب الاختيار. يسمع الزميل المختار أنك ناقشته ويسأل هل قلقك متعلق بقدرته أم بعملية الاختيار.')
+ ];
+ const outcome=key==='sales'&&stage===0?salesOpening[choice]:outcomes[stage][choice];
+ const result=localText(outcome)+' '+localText(s.next[stage])+(complication?' '+complication:'');
  return ar?result:result.replace(/(^|[.!?]\s+)([a-z])/g,(_,prefix,letter)=>prefix+letter.toUpperCase());
 }
 const simExplanationEI=[
