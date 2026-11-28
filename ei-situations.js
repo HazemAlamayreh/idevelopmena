@@ -1,4 +1,4 @@
-/* Concise, situation-led Learn lessons; the three-module structure is unchanged. */
+/* Lead Self reading interactions and workplace knowledge checks. */
 const SQ=(en,ar,options,whyEn,whyAr)=>({q:bi(en,ar),options:options.map(x=>bi(x[0],x[1])),why:bi(whyEn,whyAr),best:0});
 const SITUATION_LESSONS={
 1:[
@@ -227,32 +227,84 @@ const MODULE_READING={
  'يساعد مركز التحكم على التمييز بين المسؤولية الشخصية والنتائج التي تتطلب التنسيق مع الآخرين. يمكن إدارة الانتباه والنبرة والاستعداد والأسئلة والمتابعة مباشرة. وتدعم أداة STOP هذه العملية: تراجع خطوة لصنع مساحة، وأعد التفكير لاختبار التفسير الأول، ونظم الحقائق والافتراضات والمشاعر والخيارات، ثم تقدم بإجراء واضح ومتابعة محددة.'
 ])};
 
+const EXTRA_WORKPLACE_CHECKS={
+ 1:[
+  {context:bi('During a project review, your manager asks to see the source behind a figure. You feel your jaw tighten and start to explain why your team is being singled out.','خلال مراجعة مشروع، يطلب مديرك مصدر أحد الأرقام. تلاحظ شدّ الفك وتبدأ بتفسير سبب استهداف فريقك دون غيره.'),
+   ...SQ('What would interrupt the automatic reaction at this moment?','ما التصرف الذي يوقف رد الفعل التلقائي في هذه اللحظة؟',[
+    ['Pause and clarify which figure needs a source before responding.','توقف لحظة وحدد الرقم المطلوب مصدره قبل أن ترد.'],
+    ['Explain the team’s previous results before discussing the figure.','اشرح نتائج الفريق السابقة قبل مناقشة الرقم.'],
+    ['Suggest comparing how the other teams document their figures.','اقترح مقارنة طريقة توثيق الأرقام لدى الفرق الأخرى.']],
+    'The request is observable. Being singled out is an interpretation you can test.','طلب المصدر حقيقة يمكن ملاحظتها. أما استهداف فريقك فهو تفسير يمكنك التحقق منه.')},
+  {context:bi('An employee is explaining a recurring scheduling problem during a one-to-one. Your inbox shows several new messages and you realize you missed part of their explanation.','يشرح موظف مشكلة متكررة في الجدول خلال لقاء فردي. تظهر رسائل جديدة في بريدك وتدرك أن جزءاً من شرحه فاتك.'),
+   ...SQ('How do you recover the conversation?','كيف تستعيد تركيزك في الحوار؟',[
+    ['Silence the alerts, summarize what you heard, and ask them to fill the gap.','أوقف التنبيهات، ولخّص ما سمعته، واطلب توضيح الجزء الذي فاتك.'],
+    ['Use the schedule to fill in the missing detail and continue the conversation.','استنتج التفصيل الناقص من الجدول ثم أكمل الحوار.'],
+    ['Ask for a written summary so you can answer after reviewing your inbox.','اطلب ملخصاً مكتوباً لترد بعد مراجعة البريد.']],
+    'A brief recap restores attention and lets the employee confirm what you understood.','يعيد التلخيص القصير انتباهك ويتيح للموظف تأكيد ما فهمته.')},
+ ],
+ 2:[
+  {context:bi('A colleague questions your staffing proposal in a meeting. Afterward they say their team has two planned absences that are missing from the schedule.','يناقش زميل اقتراح توزيع الموظفين في اجتماع. بعد الاجتماع يوضح أن فريقه لديه غيابان مخططان لا يظهران في الجدول.'),
+   ...SQ('Which response best uses the information they shared?','أي رد يستفيد أكثر من المعلومة التي شاركها الزميل؟',[
+    ['Acknowledge the missing absences and review the coverage assumptions together.','اعترف بأن الغياب لم يظهر وراجع افتراضات التغطية معه.'],
+    ['Keep the proposed coverage and document their concern for the next review.','أبقِ التغطية المقترحة وسجّل ملاحظته للمراجعة القادمة.'],
+    ['Ask them to manage the absences locally so the current plan can proceed.','اطلب منه معالجة الغياب داخل فريقه كي تستمر الخطة الحالية.']],
+    'Curiosity surfaces a constraint and gives both teams a chance to adapt the plan.','الفضول يكشف قيداً لم يكن واضحاً ويعطي الفريقين فرصة لتعديل الخطة.')},
+  {context:bi('A manager has not replied to your proposal. A teammate says a further delay is possible. Your own first thought is “She thinks I lack experience.”','لم ترد المديرة على اقتراحك. يقول زميل إن مزيداً من التأخير وارد. أول ما يخطر لك هو «هي تعتقد أن خبرتي غير كافية».'),
+   ...SQ('Which reply checks that assumption without losing momentum?','أي رد يختبر هذا الافتراض ويحافظ على سير العمل؟',[
+    ['Ask whether more information would help and confirm when feedback is needed.','اسأل إن كانت تحتاج معلومات إضافية وحدد موعد الحصول على الملاحظات.'],
+    ['Send your track record as context and ask whether it changes her view.','أرسل سجل إنجازاتك واسأل إن كان يغير رأيها.'],
+    ['Ask your teammate to infer her position from similar proposals.','اطلب من زميلك استنتاج موقفها من مقترحات مشابهة.']],
+    'You can check what the manager needs without assuming you know her judgment.','يمكنك التحقق مما تحتاجه المديرة دون افتراض أنك تعرف حكمها عليك.')},
+ ],
+};
+const WORKPLACE_CHECK_VERSION='workplace-v1';
+
 function combinedQuestions(id) {
- const original=EI_CHECKS[id].map((q,i)=>({key:`core-${i}`,q:q.q,options:q.o,best:q.a}));
- const moved=SITUATION_LESSONS[id].flatMap((lesson,li)=>lesson.questions.map((q,qi)=>({key:`s-${li}-${qi}`,q:q.q,options:{en:q.options.map(o=>o.en),ar:q.options.map(o=>o.ar)},best:q.best,context:bi(WORKED_EI[id][li][2],WORKED_EI[id][li][3])})));
- return [...original,...moved];
+ const fromWorkshop=SITUATION_LESSONS[id].flatMap((lesson,li)=>lesson.questions.map((q,qi)=>({
+  ...q,key:`s-${li}-${qi}`,context:bi(WORKED_EI[id][li][2],WORKED_EI[id][li][3]),
+ })));
+ return [...fromWorkshop,...(EXTRA_WORKPLACE_CHECKS[id]||[]).map((q,i)=>({...q,key:`w-${i}`}))];
+}
+function emptyWorkplaceAttempt() {
+ return {version:WORKPLACE_CHECK_VERSION,answers:{},orders:{}};
 }
 function ensureCombinedCheck(id) {
  EI_STATE.combinedChecks=EI_STATE.combinedChecks||{};
- if(!EI_STATE.combinedChecks[id]) {
-  const old=EI_STATE.checks[id]||{},count=Math.min(EI_CHECKS[id].length,Math.max(0,old.i||(old.done?EI_CHECKS[id].length:0)));
-  const answers={};
-  SITUATION_LESSONS[id].forEach((l,li)=>l.questions.forEach((_,qi)=>{const answer=EI_STATE.situationAnswers?.[id]?.[li]?.[qi];if(answer!==undefined)answers[`s-${li}-${qi}`]=answer;}));
-  EI_STATE.combinedChecks[id]={answers,orders:{},legacyCoreCount:count,legacyCoreScore:Math.min(count,Math.max(0,old.s||0))};
+ const previous=EI_STATE.combinedChecks[id];
+ if(previous?.version===WORKPLACE_CHECK_VERSION)return previous;
+ const st=emptyWorkplaceAttempt();
+ const last=EI_STATE.checks[id];
+ if(last?.done) {
+  st.previousResult={score:last.s,total:last.i||EI_CHECKS[id].length};
+ } else {
+  for(const q of combinedQuestions(id)) {
+   const [,lesson,question]=q.key.split('-');
+   const answer=previous?.answers?.[q.key]??EI_STATE.situationAnswers?.[id]?.[lesson]?.[question];
+   if(Number.isInteger(answer)&&answer>=0&&answer<q.options.length) {
+    st.answers[q.key]=answer;
+   }
+  }
  }
- return EI_STATE.combinedChecks[id];
+ EI_STATE.combinedChecks[id]=st;
+ return st;
 }
 function combinedCheckSummary(id) {
  const st=ensureCombinedCheck(id),bank=combinedQuestions(id);
- const answered=q=>q.key.startsWith('core-')&&Number(q.key.slice(5))<st.legacyCoreCount||st.answers[q.key]!==undefined;
- const count=bank.filter(answered).length;
- const score=st.legacyCoreScore+bank.filter(q=>st.answers[q.key]!==undefined&&st.answers[q.key]===q.best).length;
- return {st,bank,count,score,done:count===bank.length,next:bank.find(q=>!answered(q))};
+ const count=bank.filter(q=>Object.hasOwn(st.answers,q.key)).length;
+ const score=bank.filter(q=>st.answers[q.key]===q.best).length;
+ return {st,bank,count,score,done:count===bank.length||!!st.previousResult,next:bank.find(q=>!Object.hasOwn(st.answers,q.key))};
 }
 function syncCombinedCheck(id) {
  const s=combinedCheckSummary(id);
- EI_STATE.checks[id]={i:s.count,s:s.score,done:s.done,bankVersion:'combined-v1'};
- EI_CHECK_STATE=EI_STATE.checks;return s;
+ const result=s.st.previousResult;
+ EI_STATE.checks[id]={
+  i:result?.total??s.count,
+  s:result?.score??s.score,
+  done:s.done,
+  bankVersion:WORKPLACE_CHECK_VERSION,
+ };
+ EI_CHECK_STATE=EI_STATE.checks;
+ return s;
 }
 if(!EI_STATE.learnLayoutV2) {
  EI_STATE.learnRead=EI_STATE.learnRead||{};
@@ -260,39 +312,118 @@ if(!EI_STATE.learnLayoutV2) {
  for(const m of EI_MODS) {
   if(EI_STATE.modules[m.id])EI_STATE.legacyCompletedModules[m.id]=true;
   if(EI_STATE.legacyCompletedModules[m.id]||m.detail.en.every((_,i)=>EI_STATE.lessons?.[m.id]?.[i]))EI_STATE.learnRead[m.id]=true;
-  syncCombinedCheck(m.id);
  }
- EI_STATE.learnLayoutV2=true;saveEIState();
+ EI_STATE.learnLayoutV2=true;
 }
+for(const m of EI_MODS)syncCombinedCheck(m.id);
 eiModuleTasks=function(id) {
  const legacy=EI_STATE.legacyCompletedModules?.[id],read=!!(legacy||EI_STATE.learnRead?.[id]);
  const practice=id===1?EI_STATE.practice.m1a!==undefined&&EI_STATE.practice.m1b!==undefined:id===2?!!EI_STATE.practice.distortionMatchDone:!!EI_STATE.simDone;
  return {learned:Number(read),total:1,learn:read,check:!!(legacy||EI_STATE.checks[id]?.done),practice:!!(legacy||practice)};
 };
+
+const LEARN_VISUALS={
+ 1:{file:'reaction-cycle',position:1,width:860,height:487,page:13,
+  title:bi('The automatic reaction cycle','دورة رد الفعل التلقائي'),
+  alt:bi('A cycle from trigger through thoughts and emotions to reaction and a new event, with two places to pause.','دورة تبدأ بالمحفز وتنتقل إلى الأفكار والمشاعر ثم رد الفعل وحدث جديد، مع نقطتين للتوقف.'),
+  steps:[
+   [bi('Notice the trigger','لاحظ المحفّز'),bi('In the weekly meeting, a colleague says the new roster leaves Thursday uncovered. This is the event you can describe as it happened.','في الاجتماع الأسبوعي، يقول زميل إن جدول المناوبات الجديد لا يغطي يوم الخميس. هذا هو الحدث كما وقع.')],
+   [bi('Check your first interpretation','تحقّق من تفسيرك الأول'),bi('“They are questioning my ability” is one interpretation. A more useful starting point is that they may have noticed a real coverage gap.','«هو يشكك في قدرتي» تفسير محتمل. نقطة بداية أنفع هي أنه ربما لاحظ فجوة فعلية في التغطية.')],
+   [bi('Pause before you act','توقّف قبل أن تتصرف'),bi('Notice the urge to defend the roster. Take a breath before speaking, then invite the colleague to point to the uncovered hours.','لاحظ الرغبة في الدفاع عن الجدول. خذ نفساً قبل الرد، ثم اطلب من زميلك تحديد الساعات غير المغطّاة.')],
+   [bi('See the next event','لاحظ الحدث التالي'),bi('The team checks Thursday together. The conversation moves from defending the roster to agreeing who can cover the gap.','يراجع الفريق تغطية الخميس معاً. ينتقل الحوار إلى الاتفاق على من يستطيع سد الفجوة.')],
+  ]},
+ 2:{file:'leadership-lens',position:2,width:948,height:461,page:34,
+  title:bi('One event, two interpretations','نفس الحدث بتفسيرين مختلفين'),
+  alt:bi('A colleague challenges a recommendation. A defensive reading leads to argument, while a curious reading leads to exploring the concern.','زميل يعترض على توصية. التفسير الدفاعي يقود إلى الجدال، بينما يدعو التفسير الفضولي إلى استكشاف الملاحظة.'),
+  steps:[
+   [bi('The shared fact','الحقيقة المشتركة'),bi('A colleague challenges your recommendation in a meeting. You can hear the objection, but their reason still needs to be understood.','يعترض زميل على توصيتك في اجتماع. سمعت الاعتراض، وما زلت بحاجة إلى فهم سببه.')],
+   [bi('The defensive lens','المنظور الدفاعي'),bi('Reading the comment as a threat can lead you to defend the recommendation immediately. The concern that prompted the objection may never surface.','عندما تعتبر التعليق تهديداً، قد تدافع فوراً عن التوصية. وقد يبقى السبب وراء الاعتراض غير واضح.')],
+   [bi('The curious lens','منظور الفضول'),bi('Treat the objection as information. Invite the colleague to explain the risk they see, then decide whether the recommendation needs to change.','تعامل مع الاعتراض كمعلومة. اطلب من زميلك توضيح الخطر الذي يراه، ثم قرر إن كانت التوصية بحاجة إلى تعديل.')],
+  ]},
+ 3:{file:'stop-protocol',position:5,width:939,height:324,page:69,
+  title:bi('Open the STOP steps','استكشف خطوات STOP'),
+  alt:bi('STOP stands for Step Back, Think Again, Organize and Proceed.','ترمز STOP إلى: تراجع خطوة، أعد التفكير، نظّم، ثم تقدّم.'),
+  steps:[
+   [bi('S · Step Back','S · تراجع خطوة'),bi('When a delivery delay comes in, slow your pace before responding. Acknowledge the pressure and keep urgent work moving.','عندما يصلك خبر تأخر التسليم، أبطئ وتيرة ردك. لاحظ الضغط وتابع الإجراءات العاجلة.')],
+   [bi('T · Think Again','T · أعد التفكير'),bi('Catch the idea that the whole schedule is lost. Check what has been confirmed and what is still a prediction.','لاحظ فكرة أن الجدول كله تعطل. ميّز بين ما تأكّد وما زال مجرد توقّع.')],
+   [bi('O · Organize','O · نظّم'),bi('Write down the confirmed delay, the stock status you need to verify, and the person who owns that check.','حدد التأخير المؤكد، وحالة المخزون التي تحتاج إلى التحقق منها، والشخص المسؤول عن ذلك.')],
+   [bi('P · Proceed','P · تقدّم'),bi('Communicate the action you can own. Give the team a named follow-up owner and an update time.','أبلغ الفريق بالإجراء الذي تستطيع تحمّل مسؤوليته. حدّد من سيتابع وموعد التحديث.')],
+  ]},
+};
+const LEARN_TOPICS={
+ 1:[bi('From an event to a reaction','من الحدث إلى رد الفعل'),bi('Two opportunities to pause','لحظتان للتوقّف'),bi('Attention in everyday work','الانتباه في العمل اليومي')],
+ 2:[bi('Understand emotions at work','فهم المشاعر في العمل'),bi('Fact, story and leadership lens','الحقيقة والتفسير ومنظور القيادة'),bi('Thinking patterns and emotional energy','أنماط التفكير وطاقة المشاعر')],
+ 3:[bi('Respond to anger and fear','التعامل مع الغضب والخوف'),bi('Work through shame, guilt and envy','التعامل مع الخجل والذنب والحسد'),bi('Focus on what you can influence','ركّز على ما تستطيع التأثير فيه')],
+};
+function renderThinkingExamples() {
+ return `<details class="learn-worked"><summary>${localText(bi('Explore the six thinking patterns','استكشف أنماط التفكير الستة'))}</summary>
+ <dl class="learn-thinking">${DISTORTIONS.map(pattern=>`<dt>${localText(pattern.label)}</dt><dd><q>${localText(pattern.statement)}</q><span>${localText(pattern.why)}</span></dd>`).join('')}</dl></details>`;
+}
+const LEARN_READ_GROUPS={1:[[0],[1,2],[3,4]],2:[[0],[1,2],[3,4]],3:[[0,1,2],[3,4],[5]]};
+
+function renderLearnVisual(visual) {
+ return `<aside class="learn-explore"><h4>${localText(visual.title)}</h4>
+ <div class="learn-reveals">${visual.steps.map(([label,body])=>`<details><summary>${localText(label)}</summary><p>${localText(body)}</p></details>`).join('')}</div>
+ <details class="learn-source"><summary>${localText(bi('View the original diagram','عرض الرسم من المادة الأصلية'))}</summary>
+ <figure><img src="assets/ei-learn/${visual.file}.webp" width="${visual.width}" height="${visual.height}" loading="lazy" alt="${localText(visual.alt)}"><figcaption>${localText(bi('Lead Self source material · page','مادة قيادة الذات الأصلية · صفحة'))} ${visual.page}</figcaption></figure></details></aside>`;
+}
 function completeModuleReading(id) {
  if(!MODULE_READING[id])return;
- EI_STATE.learnRead=EI_STATE.learnRead||{};EI_STATE.learnRead[id]=true;updateEICompletion();renderEI();
+ EI_STATE.learnRead=EI_STATE.learnRead||{};
+ EI_STATE.learnRead[id]=true;
+ updateEICompletion();
+ const expanded=[...document.querySelectorAll('.module-reading details')].map(item=>item.open);
+ renderEI();
+ document.querySelectorAll('.module-reading details').forEach((item,i)=>{item.open=expanded[i];});
+ document.querySelector('.module-reading .secondary')?.focus();
 }
 renderDetailedLearn=function(m) {
- const done=eiModuleTasks(m.id).learn;
- return `<section class="eipanel module-reading"><h3>${m.t[lang]}</h3>${MODULE_READING[m.id][lang].map(p=>`<p>${p}</p>`).join('')}<div class="match-actions"><button class="next lesson-completion" ${done?'disabled':''} onclick="completeModuleReading(${m.id})">${localText(done?bi('✓ Reading Completed','✓ تمت القراءة'):bi('Mark Reading Complete','تحديد الشرح كمكتمل'))}</button><button class="secondary" onclick="eiTab='check';renderEI()">${localText(bi('Knowledge Check','اختبار الفهم'))}</button></div></section>`;
+ const id=m.id,done=eiModuleTasks(id).learn,visual=LEARN_VISUALS[id];
+ const paragraphs=MODULE_READING[id][lang];
+ const content=LEARN_READ_GROUPS[id].map((group,i)=>`<div class="learn-topic">
+   <h4>${localText(LEARN_TOPICS[id][i])}</h4>
+   ${group.map(j=>`<p>${paragraphs[j]}</p>${visual.position===j?renderLearnVisual(visual):''}${id===2&&j===3?renderThinkingExamples():''}`).join('')}
+ </div>`).join('');
+ const example=WORKED_EI[id][id===3?2:0],ar=lang==='ar';
+ return `<section class="eipanel module-reading"><h3>${localText(bi('Learn at your own pace','تعلّم على راحتك'))}</h3>
+ <p class="learn-intro">${localText(bi('Read through the page and open each example or diagram as you go.','اقرأ الشرح بالترتيب وافتح الأمثلة والرسومات أثناء القراءة حسب حاجتك.'))}</p>
+ ${content}
+ <details class="learn-worked"><summary>${localText(bi('See a worked example','شاهد مثالاً محلولاً'))} · ${example[ar?1:0]}</summary>
+ <p>${example[ar?3:2]}</p><ol>${example[ar?5:4].map(step=>`<li>${step}</li>`).join('')}</ol><blockquote>${example[ar?7:6]}</blockquote><p>${example[ar?9:8]}</p></details>
+ <div class="match-actions"><button class="next lesson-completion" ${done?'disabled':''} onclick="completeModuleReading(${id})">${localText(done?bi('✓ Reading Completed','✓ تمت القراءة'):bi('Mark Reading Complete','تحديد الشرح كمكتمل'))}</button><button class="secondary" onclick="eiTab='check';renderEI()">${localText(bi('Knowledge Check','اختبار الفهم'))}</button></div></section>`;
 };
 renderEICheck=function(id) {
- const s=syncCombinedCheck(id);saveEIState();
- if(s.done)return `<section class="eipanel"><span class="completion-badge">${localText(bi('✓ Completed','✓ مكتمل'))}</span><h3>${localText(bi('Knowledge Check Complete','اكتمل اختبار الفهم'))}</h3><div class="metric"><b>${s.score}/${s.bank.length}</b><span>${Math.round(s.score/s.bank.length*100)}%</span></div><p>${localText(bi('This check includes the original questions and all situational questions previously shown in Learn.','يجمع هذا الاختبار الأسئلة الأصلية وجميع أسئلة المواقف التي كانت ضمن التعلّم.'))}</p><button class="secondary" onclick="resetCombinedCheck(${id})">${localText(bi('Retake Knowledge Check','إعادة اختبار الفهم'))}</button></section>`;
+ const s=syncCombinedCheck(id);
+ saveEIState();
+ if(s.done) {
+  const previous=s.st.previousResult;
+  const score=previous?.score??s.score,total=previous?.total??s.bank.length;
+  return `<section class="eipanel combined-check"><span class="completion-badge">${localText(bi('✓ Completed','✓ مكتمل'))}</span>
+   <h3>${localText(bi('Knowledge Check Complete','اكتمل اختبار الفهم'))}</h3>
+   <div class="metric"><b>${score}/${total}</b><span>${Math.round(score/total*100)}%</span></div>
+   ${previous?`<p>${localText(bi('Your previous result is saved. The updated check has 12 workplace scenarios.','نتيجتك السابقة محفوظة. الاختبار المحدّث يحتوي على 12 سؤالاً من واقع العمل.'))}</p>`:`<details class="learn-worked"><summary>${localText(bi('Review the answer explanations','راجع شرح الإجابات'))}</summary><ol>${s.bank.map(q=>`<li><b>${localText(q.q)}</b><p>${localText(q.options[q.best])}</p><p>${localText(q.why)}</p></li>`).join('')}</ol></details>`}
+   <button class="secondary" onclick="resetCombinedCheck(${id})">${localText(bi('Retake Knowledge Check','إعادة اختبار الفهم'))}</button></section>`;
+ }
  const q=s.next,st=s.st;
- if(!st.orders[q.key]){st.orders[q.key]=shuffleEI(q.options.en.map((_,i)=>i));saveEIState();}
- return `<section class="eipanel combined-check"><span class="ribbon">${localText(bi('KNOWLEDGE CHECK','اختبار الفهم'))}</span><h3>${localText(bi('Question','السؤال'))} ${s.count+1}/${s.bank.length}</h3><p>${localText(bi('All module questions are collected here.','جميع أسئلة الموديول مجمعة هنا.'))}</p><div class="module-progress-track" role="progressbar" aria-label="${localText(bi('Questions answered','الأسئلة المجابة'))}" aria-valuenow="${s.count}" aria-valuemin="0" aria-valuemax="${s.bank.length}"><span style="width:${s.count/s.bank.length*100}%"></span></div>${q.context?`<div class="simevent knowledge-context">${localText(q.context)}</div>`:''}<h4>${localText(q.q)}</h4>${st.orders[q.key].map((canonical,i)=>`<button class="simopt" onclick="answerCombinedCheck(${id},'${q.key}',${canonical})">${String.fromCharCode(65+i)}. ${q.options[lang][canonical]}</button>`).join('')}</section>`;
+ if(!st.orders[q.key]) {
+  st.orders[q.key]=shuffleEI(q.options.map((_,i)=>i));saveEIState();
+ }
+ return `<section class="eipanel combined-check"><span class="ribbon">${localText(bi('KNOWLEDGE CHECK','اختبار الفهم'))}</span>
+ <h3 tabindex="-1">${localText(bi('Question','السؤال'))} ${s.count+1}/${s.bank.length}</h3>
+ <div class="module-progress-track" role="progressbar" aria-label="${localText(bi('Questions answered','الأسئلة المجابة'))}" aria-valuenow="${s.count}" aria-valuemin="0" aria-valuemax="${s.bank.length}"><span style="width:${s.count/s.bank.length*100}%"></span></div>
+ <div class="simevent knowledge-context">${localText(q.context)}</div><h4>${localText(q.q)}</h4>
+ ${st.orders[q.key].map((canonical,i)=>`<button class="simopt" onclick="answerCombinedCheck(${id},'${q.key}',${canonical})">${i+1}. ${localText(q.options[canonical])}</button>`).join('')}</section>`;
 };
 function answerCombinedCheck(id,key,choice) {
  const s=combinedCheckSummary(id),q=s.next;
- if(!q||q.key!==key||!Number.isInteger(choice)||choice<0||choice>=q.options.en.length)return;
+ if(s.done||!q||q.key!==key||!Number.isInteger(choice)||choice<0||choice>=q.options.length)return;
  s.st.answers[key]=choice;syncCombinedCheck(id);updateEICompletion();renderEI();
+ document.querySelector('.combined-check h3')?.focus();
 }
 function resetCombinedCheck(id) {
  if(!EI_CHECKS[id])return;
- EI_STATE.combinedChecks[id]={answers:{},orders:{},legacyCoreCount:0,legacyCoreScore:0};
+ EI_STATE.combinedChecks[id]=emptyWorkplaceAttempt();
  syncCombinedCheck(id);updateEICompletion();renderEI();
+ document.querySelector('.combined-check h3')?.focus();
 }
 updateEICompletion();
-

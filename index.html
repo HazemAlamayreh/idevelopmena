@@ -122,7 +122,7 @@ body[dir=rtl] .case-choice{text-align:right}
 @media(max-width:900px){.coursegrid,.eimods{grid-template-columns:1fr}.simchoices{grid-template-columns:repeat(2,1fr)}.reportgrid{grid-template-columns:repeat(2,1fr)}}
 </style>
 <link rel="stylesheet" href="lead-self-upgrade.css?v=completion-20261123">
-<link rel="stylesheet" href="ei-situations.css?v=module-learn-20261123">
+<link rel="stylesheet" href="ei-situations.css?v=interactive-ei-v1">
 <link rel="stylesheet" href="hub-progress.css?v=20261123">
 </head>
 <body lang="en" dir="ltr">
@@ -925,11 +925,10 @@ function renderEIHome(){
  <div class="eimods">${EI_MODS.map(renderEIProgressCard).join('')}</div>
  <div class="eipanel" style="margin-top:14px"><h3>${lang==='en'?'Post-Assessment':'التقييم البعدي'}</h3><p>${lang==='en'?'Different questions measure the same competency areas for a meaningful before/after comparison.':'أسئلة مختلفة تقيس نفس مجالات الكفاءة لعمل مقارنة قبل/بعد أكثر معنى.'}</p><button class="next" ${allMods?'':'disabled'} onclick="startEIAssess('post')">${EI_STATE.postDone?(lang==='en'?'Retake Post-Assessment':'إعادة التقييم البعدي'):(lang==='en'?'Start Post-Assessment':'ابدأ التقييم البعدي')}</button>${EI_STATE.preDone||EI_STATE.postDone?`<button class="secondary" style="margin-left:8px" onclick="showEIResults()">${lang==='en'?'View Results':'عرض النتائج'}</button>`:''}</div>`;
 }
-function renderEIModule(){const m=EI_MODS.find(x=>x.id===eiModule),tabs=m.id===3?['learn','slides','simulation','check']:['learn','slides','check','practice'];return `<section class="eihero"><span class="ribbon">MODULE ${m.id}</span><h2 class="display">${m.t[lang]}</h2><p>${m.c[lang]}</p></section><div class="eitabs">${tabs.map(t=>`<button class="${eiTab===t?'active':''}" onclick="eiTab='${t}';if('${t}'!=='simulation')sim=null;renderEI()">${tabName(t)}</button>`).join('')}</div>${renderEITab(m)}`}
-function tabName(t){return ({learn:{en:'Learn',ar:'التعلّم'},slides:{en:'Slides',ar:'الشرائح'},check:{en:'Knowledge Check',ar:'اختبار الفهم'},practice:{en:'Practice',ar:'تطبيق'},simulation:{en:'Pressure Simulation',ar:'محاكاة الضغط'}})[t][lang]}
+function renderEIModule(){const m=EI_MODS.find(x=>x.id===eiModule),tabs=m.id===3?['learn','simulation','check']:['learn','check','practice'];return `<section class="eihero"><span class="ribbon">MODULE ${m.id}</span><h2 class="display">${m.t[lang]}</h2><p>${m.c[lang]}</p></section><div class="eitabs">${tabs.map(t=>`<button class="${eiTab===t?'active':''}" onclick="eiTab='${t}';if('${t}'!=='simulation')sim=null;renderEI()">${tabName(t)}</button>`).join('')}</div>${renderEITab(m)}`}
+function tabName(t){return ({learn:{en:'Learn',ar:'التعلّم'},check:{en:'Knowledge Check',ar:'اختبار الفهم'},practice:{en:'Practice',ar:'تطبيق'},simulation:{en:'Pressure Simulation',ar:'محاكاة الضغط'}})[t][lang]}
 function renderEITab(m){
  if(eiTab==='learn')return renderDetailedLearn(m);
- if(eiTab==='slides')return `<div class="eipanel"><h3>${lang==='en'?'Source Slides':'شرائح المصدر'}</h3><p>${lang==='en'?'The original Lead Self deck remains the visual source. The detailed Learn content follows the deck sequence and terminology. The original PDF viewer will be connected separately when the slide asset is available in the site repository.':'يبقى عرض Lead Self الأصلي هو المصدر البصري. يتبع محتوى التعلّم التفصيلي تسلسل ومصطلحات العرض. سيتم ربط عارض PDF الأصلي عندما يصبح ملف الشرائح متاحاً داخل مستودع الموقع.'}</p></div>`;
  if(eiTab==='check')return renderEICheck(m.id);
  if(eiTab==='practice')return renderEIPractice(m.id);
  return renderSim();
@@ -1034,7 +1033,7 @@ function renderReport(s){
 
 renderHub();
 </script>
-<script src="lead-self-upgrade.js?v=module-learn-20261123"></script>
-<script src="ei-situations.js?v=module-learn-20261123"></script>
-<script src="hub-progress.js?v=module-learn-20261123"></script>
+<script src="lead-self-upgrade.js?v=interactive-ei-v1"></script>
+<script src="ei-situations.js?v=interactive-ei-v1"></script>
+<script src="hub-progress.js?v=interactive-ei-v1"></script>
 </body></html>

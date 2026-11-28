@@ -73,13 +73,6 @@ updateEICompletion=function() {
  saveEIState();
 };
 
-const originalTabEI=renderEITab;
-renderEITab=function(m) {
- if(eiTab!=='slides')return originalTabEI(m);
- const starts={1:7,2:28,3:48};
- return `<section class="eipanel"><h3>${localText(bi('Original Lead Self Slides','شرائح قيادة الذات الأصلية'))}</h3><p>${localText(bi('The complete 69-page source deck is connected below. Open the PDF to jump directly to this module.','تم ربط العرض الأصلي الكامل المكون من 69 صفحة أدناه. افتح PDF للانتقال مباشرة إلى هذه الوحدة.'))}</p><p><a class="next" href="assets/lead-self.pdf#page=${starts[m.id]}" target="_blank" rel="noopener">${localText(bi('Open Module Slides','افتح شرائح الوحدة'))}</a> <a class="secondary" href="assets/lead-self.pdf" download="Lead_Self.pdf">${localText(bi('Download PDF','تنزيل PDF'))}</a></p><iframe class="source-pdf" src="assets/lead-self.pdf#page=${starts[m.id]}" title="${localText(bi('Lead Self source slides','شرائح قيادة الذات'))}"></iframe><p>${localText(bi('If your device does not show the embedded viewer, use Open Module Slides.','إذا لم يظهر العارض على جهازك، استخدم زر فتح شرائح الوحدة.'))}</p></section>`;
-};
-
 // Each lesson has a worked example, a short application sequence, and usable language.
 const WORKED_EI={
 1:[
