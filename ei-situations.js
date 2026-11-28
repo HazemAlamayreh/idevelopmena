@@ -351,7 +351,7 @@ const LEARN_VISUALS={
   ]},
 };
 const LEARN_TOPICS={
- 1:[bi('From an event to a reaction','من الحدث إلى رد الفعل'),bi('Two opportunities to pause','لحظتان للتوقّف'),bi('Attention in everyday work','الانتباه في العمل اليومي')],
+ 1:[bi('From an event to a reaction','من الحدث إلى رد الفعل'),bi('Two opportunities to pause','لحظتان للتوقّف'),bi('Multitasking and attention at work','تعدّد المهام والانتباه في العمل')],
  2:[bi('Understand emotions at work','فهم المشاعر في العمل'),bi('Fact, story and leadership lens','الحقيقة والتفسير ومنظور القيادة'),bi('Thinking patterns and emotional energy','أنماط التفكير وطاقة المشاعر')],
  3:[bi('Respond to anger and fear','التعامل مع الغضب والخوف'),bi('Work through shame, guilt and envy','التعامل مع الخجل والذنب والحسد'),bi('Focus on what you can influence','ركّز على ما تستطيع التأثير فيه')],
 };
@@ -382,7 +382,12 @@ renderDetailedLearn=function(m) {
  const paragraphs=MODULE_READING[id][lang];
  const content=LEARN_READ_GROUPS[id].map((group,i)=>`<div class="learn-topic">
    <h4>${localText(LEARN_TOPICS[id][i])}</h4>
-   ${group.map(j=>`<p>${paragraphs[j]}</p>${visual.position===j?renderLearnVisual(visual):''}${id===2&&j===3?renderThinkingExamples():''}`).join('')}
+   ${id===1&&group.includes(3)?`<aside class="learn-explore">
+    <h4>${localText(bi('Before you read: try the Multitasking activity','قبل ما تقرأ: جرّب نشاط تعدّد المهام'))}</h4>
+    <p>${localText(bi('Open the conversation and start by asking ChatGPT what your answers reveal about how you multitask. Answer the questions honestly, based on what you actually do at work. At the end, ask it to summarize the main points it noticed. Then come back and read the explanation below.','اضغط على الرابط وافتح المحادثة. اطلب من ChatGPT يساعدك تفهم كيف بتتعامل مع أكثر من مهمة بالشغل، وجاوب عن الأسئلة بصراحة حسب اللي بتعمله فعلاً. بالآخر، اطلب منه يلخّص لك أهم النقاط اللي لاحظها من إجاباتك. بعدها ارجع وكمل الشرح تحت.'))}</p>
+    <a class="next" href="https://chatgpt.com/share/6b0ac03e-7d40-83ed-8e08-48a7abf44018" target="_blank" rel="noopener">${localText(bi('Open the Multitasking conversation','افتح محادثة تعدّد المهام'))}</a>
+   </aside>`:''}
+   ${group.map(j=>`<p>${paragraphs[j]}</p>${visual.position===j?renderLearnVisual(visual):''}${id===2&&j===3?renderThinkingExamples():''}${id===1&&j===3?`<details class="learn-worked"><summary>${localText(bi('Engineering example: a shift handover','مثال من الهندسة: تسليم الوردية'))}</summary><p>${localText(bi('A maintenance engineer reads an email during a shift handover and misses that the line is still waiting for a readiness check. He closes the email, repeats back what he heard, and confirms who owns the pending check before passing on the equipment status.','خلال تسليم الوردية، قرأ مهندس الصيانة إيميلاً وفاته إن الخط لسه بانتظار فحص الجاهزية. سكّر الإيميل، ولخّص اللي سمعه، وتأكّد مين مسؤول عن الفحص المتبقي قبل ما ينقل حالة الخط للوردية التالية.'))}</p></details>`:''}`).join('')}
  </div>`).join('');
  const example=WORKED_EI[id][id===3?2:0],ar=lang==='ar';
  return `<section class="eipanel module-reading"><h3>${localText(bi('Learn at your own pace','تعلّم على راحتك'))}</h3>
