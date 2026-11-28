@@ -1,0 +1,2568 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The Quick Emotional Intelligence Self-Assessment | Learning Hub</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;500;600;700;800&family=Poppins:wght@600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{
+  --navy:#001B4D;
+  --blue:#48BAE2;
+  --teal:#167a8b;
+  --red:#C8102E;
+  --ink:#11233f;
+  --muted:#526476;
+  --bg:#f6f9fc;
+  --line:#dce7f1;
+  --green:#197647;
+  --green-bg:#edf9f1;
+  --amber:#b45309;
+  --amber-bg:#fffbeb;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{
+  margin:0;
+  background:var(--bg);
+  color:var(--ink);
+  font-family:Inter,Arial,sans-serif;
+  line-height:1.6;
+}
+body[dir="rtl"]{font-family:Cairo,Tahoma,sans-serif}
+.display{font-family:Poppins,Inter,sans-serif;letter-spacing:.1px}
+body[dir="rtl"] .display{font-family:Cairo,Tahoma,sans-serif}
+
+header{
+  height:76px;
+  background:#fff;
+  border-bottom:1px solid var(--line);
+  position:sticky;
+  top:0;
+  z-index:40;
+}
+.headerrow{
+  max-width:1180px;
+  height:100%;
+  margin:auto;
+  padding:0 24px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:16px;
+}
+.brand{display:flex;align-items:center;gap:13px}
+.mark{
+  width:45px;
+  height:45px;
+  border-radius:50%;
+  border:2px solid var(--blue);
+  display:grid;
+  place-items:center;
+  color:var(--navy);
+  font-family:Poppins,sans-serif;
+  font-weight:700;
+  font-size:19px;
+}
+.brand h1{margin:0;color:var(--navy);font-size:21px;line-height:1.1}
+.brand p{margin:3px 0 0;color:#6b7a90;font-size:11.5px;font-weight:500}
+.header-right{display:flex;align-items:center;gap:12px}
+.author-pill{
+  display:inline-flex;
+  align-items:center;
+  gap:6px;
+  background:#f1f6fb;
+  border:1px solid #d4e3f0;
+  color:var(--navy);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12.5px;
+  font-weight:700;
+  text-decoration:none;
+  transition:all .15s;
+}
+.author-pill:hover{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+.lang{
+  display:flex;
+  background:#eef5fa;
+  border-radius:10px;
+  padding:3px;
+}
+.lang button{
+  border:0;
+  background:transparent;
+  padding:7px 12px;
+  border-radius:8px;
+  font-weight:700;
+  font-size:13px;
+  color:#44546a;
+  cursor:pointer;
+}
+.lang .active{
+  background:#fff;
+  color:var(--navy);
+  box-shadow:0 2px 7px #001b4d18;
+}
+
+.wrap{max-width:1120px;margin:auto;padding:26px 22px 56px}
+.hero{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:22px;
+  padding:28px 30px;
+  margin-bottom:18px;
+  box-shadow:0 8px 28px #001b4d08;
+}
+.eyebrow{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  color:var(--red);
+  font-size:12px;
+  font-weight:800;
+  text-transform:uppercase;
+  letter-spacing:.08em;
+}
+.eyebrow:before{
+  content:"";
+  width:5px;
+  height:24px;
+  background:var(--red);
+  border-radius:4px;
+}
+.hero h2{
+  color:var(--navy);
+  font-size:32px;
+  line-height:1.15;
+  margin:12px 0 10px;
+}
+.hero h2 .red{color:var(--red)}
+.hero p{color:var(--muted);margin:0;max-width:820px;font-size:15px}
+
+.scale-strip{
+  display:flex;
+  flex-wrap:wrap;
+  gap:8px;
+  margin-top:16px;
+}
+.scale-pill{
+  background:#eff7fa;
+  border:1px solid #cde2ee;
+  color:var(--navy);
+  padding:6px 12px;
+  border-radius:999px;
+  font-size:12.5px;
+  font-weight:700;
+}
+
+.hub-progress{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:20px 22px;
+  margin-bottom:18px;
+  box-shadow:0 6px 20px #001b4d06;
+}
+.hub-progress.completed-card{
+  background:var(--green-bg);
+  border:2px solid #218150;
+}
+.hub-progress-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  flex-wrap:wrap;
+}
+.completion-badge{
+  display:inline-flex;
+  align-items:center;
+  padding:6px 13px;
+  background:#e8edf4;
+  color:var(--navy);
+  border-radius:999px;
+  font-size:12.5px;
+  font-weight:800;
+}
+.hub-started{background:#e4f2fa;color:#08557e}
+.completed-card .completion-badge{background:var(--green);color:#fff}
+.module-progress-track{
+  height:9px;
+  background:#dce6ec;
+  border-radius:999px;
+  margin:14px 0 16px;
+  overflow:hidden;
+}
+.module-progress-track span{
+  display:block;
+  height:100%;
+  background:linear-gradient(90deg,var(--blue),var(--navy));
+  transition:width .25s ease;
+}
+.completed-card .module-progress-track span{background:#218150}
+
+.participant-grid{
+  display:grid;
+  grid-template-columns:repeat(4,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:16px;
+}
+.field label{
+  display:block;
+  font-size:12px;
+  font-weight:700;
+  color:var(--muted);
+  margin-bottom:5px;
+}
+.field input,.field select,.field textarea{
+  width:100%;
+  border:1px solid #cbd9e6;
+  border-radius:10px;
+  padding:10px 12px;
+  font:inherit;
+  font-size:14px;
+  color:var(--ink);
+  background:#fff;
+}
+.field input:focus,.field select:focus,.field textarea:focus{
+  outline:2px solid var(--blue);
+  border-color:var(--navy);
+}
+
+.hub-actions{
+  display:flex;
+  flex-wrap:wrap;
+  gap:10px;
+  align-items:center;
+  justify-content:space-between;
+}
+.btn-group{display:flex;flex-wrap:wrap;gap:10px;align-items:center}
+.btn-primary{
+  border:0;
+  background:var(--navy);
+  color:#fff;
+  border-radius:10px;
+  padding:10px 16px;
+  font:inherit;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .15s, transform .1s;
+}
+.btn-primary:hover{background:#04296e}
+.btn-primary:active{transform:translateY(1px)}
+.btn-teal{
+  border:0;
+  background:var(--teal);
+  color:#fff;
+  border-radius:10px;
+  padding:10px 18px;
+  font:inherit;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+  transition:background .15s;
+}
+.btn-teal:hover{background:#116270}
+.btn-secondary{
+  border:1px solid #cbd7e2;
+  background:#fff;
+  color:var(--navy);
+  border-radius:10px;
+  padding:10px 15px;
+  font:inherit;
+  font-size:13.5px;
+  font-weight:700;
+  cursor:pointer;
+}
+.btn-secondary:hover{background:#f2f7fb}
+.btn-danger{color:var(--red)}
+.save-note{font-size:12.5px;font-weight:700;color:var(--green)}
+
+.completed-bar{
+  background:#fff;
+  border:1px solid #cde2ee;
+  border-radius:14px;
+  padding:12px 16px;
+  margin-bottom:16px;
+  display:flex;
+  flex-wrap:wrap;
+  align-items:center;
+  justify-content:space-between;
+  gap:10px;
+}
+.completed-chips{display:flex;flex-wrap:wrap;gap:8px;align-items:center}
+.done-chip{
+  background:var(--green-bg);
+  border:1px solid #9dd5b6;
+  color:#145c37;
+  padding:5px 11px;
+  border-radius:999px;
+  font-size:12.5px;
+  font-weight:700;
+}
+
+.domain-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:18px;
+  padding:22px 24px;
+  margin-bottom:18px;
+  box-shadow:0 6px 20px #001b4d06;
+  scroll-margin-top:96px;
+}
+.domain-card.is-hidden{display:none}
+.domain-head{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--line);
+  margin-bottom:14px;
+}
+.domain-head h3{
+  margin:4px 0 0;
+  color:var(--navy);
+  font-size:21px;
+}
+.ribbon{
+  display:inline-block;
+  background:#e9f7fc;
+  color:#087ca5;
+  border-radius:999px;
+  padding:4px 10px;
+  font-size:11px;
+  font-weight:800;
+  letter-spacing:.04em;
+}
+.q-count-pill{
+  background:#f1f6fa;
+  color:var(--navy);
+  border-radius:999px;
+  padding:6px 12px;
+  font-size:13px;
+  font-weight:800;
+}
+
+.statement-row{
+  display:grid;
+  grid-template-columns:1fr auto;
+  align-items:center;
+  gap:16px;
+  padding:13px 10px;
+  border-bottom:1px solid #edf3f8;
+  border-radius:10px;
+  transition:background .15s;
+}
+.statement-row:last-child{border-bottom:0}
+.statement-row:hover{background:#f9fcfe}
+.statement-text{
+  display:flex;
+  gap:10px;
+  align-items:flex-start;
+  font-size:15px;
+  color:#1b2c46;
+}
+.q-num{
+  min-width:26px;
+  height:26px;
+  border-radius:50%;
+  background:#eaf6fb;
+  color:var(--navy);
+  font-size:12px;
+  font-weight:800;
+  display:grid;
+  place-items:center;
+  flex-shrink:0;
+  margin-top:1px;
+}
+.statement-row.answered .q-num{
+  background:var(--navy);
+  color:#fff;
+}
+.rating-group{
+  display:flex;
+  gap:6px;
+  flex-shrink:0;
+}
+.rate-btn{
+  width:42px;
+  height:40px;
+  border-radius:10px;
+  border:1.5px solid #cbd9e6;
+  background:#fff;
+  color:var(--navy);
+  font:inherit;
+  font-weight:800;
+  font-size:14.5px;
+  cursor:pointer;
+  transition:all .14s ease;
+}
+.rate-btn:hover{
+  border-color:var(--blue);
+  background:#f0f9fd;
+}
+.rate-btn.selected{
+  background:var(--navy);
+  border-color:var(--navy);
+  color:#fff;
+  box-shadow:0 3px 10px #001b4d26;
+}
+.rate-btn:focus-visible{
+  outline:3px solid var(--blue);
+  outline-offset:2px;
+}
+
+.analysis-card{
+  background:linear-gradient(135deg,#001B4D,#063970);
+  color:#fff;
+  border-radius:20px;
+  padding:34px 26px;
+  text-align:center;
+  margin-bottom:20px;
+  box-shadow:0 14px 36px #001b4d24;
+  scroll-margin-top:96px;
+}
+.spinner-ring{
+  width:52px;
+  height:52px;
+  border:4px solid rgba(255,255,255,.22);
+  border-top-color:var(--blue);
+  border-radius:50%;
+  margin:0 auto 16px;
+  animation:spin .85s linear infinite;
+}
+@keyframes spin{to{transform:rotate(360deg)}}
+.analysis-card h3{margin:0 0 8px;font-size:23px;color:#fff}
+.analysis-step{
+  font-size:14.5px;
+  color:#cbe4f8;
+  min-height:24px;
+  margin:0 auto 16px;
+  font-weight:600;
+}
+.analysis-bar{
+  max-width:420px;
+  height:8px;
+  background:rgba(255,255,255,.16);
+  border-radius:999px;
+  margin:0 auto;
+  overflow:hidden;
+}
+.analysis-bar span{
+  display:block;
+  height:100%;
+  background:var(--blue);
+  transition:width .35s ease;
+}
+
+.results-locked{
+  background:#fff;
+  border:1.5px dashed #bfd4e6;
+  border-radius:18px;
+  padding:26px;
+  text-align:center;
+  margin-bottom:20px;
+}
+.results-locked h3{margin:6px 0 8px;color:var(--navy);font-size:21px}
+.results-locked p{margin:0 auto;max-width:560px;color:var(--muted);font-size:14.5px}
+
+.results-panel{
+  background:#fff;
+  border:2px solid #218150;
+  border-radius:20px;
+  padding:26px;
+  margin-bottom:20px;
+  box-shadow:0 10px 28px #001b4d0c;
+  scroll-margin-top:96px;
+  animation:fadeSlideIn .4s ease;
+}
+@keyframes fadeSlideIn{
+  from{opacity:0;transform:translateY(10px)}
+  to{opacity:1;transform:translateY(0)}
+}
+.results-header-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.results-grid{
+  display:grid;
+  grid-template-columns:1.1fr .9fr;
+  gap:22px;
+  align-items:center;
+  margin-top:16px;
+}
+.score-cards{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+}
+.score-card{
+  background:#f8fbfe;
+  border:1px solid var(--line);
+  border-radius:14px;
+  padding:15px;
+}
+.score-card h4{margin:0 0 6px;color:var(--navy);font-size:15px}
+.score-val{font-size:28px;font-weight:800;color:var(--navy);line-height:1.1}
+.score-val span{font-size:14px;color:var(--muted);font-weight:600}
+.tier-tag{
+  display:inline-block;
+  margin-top:8px;
+  padding:4px 10px;
+  border-radius:999px;
+  font-size:11.5px;
+  font-weight:800;
+}
+.tier-low{background:#fee2e2;color:#991b1b}
+.tier-mid{background:var(--amber-bg);color:var(--amber)}
+.tier-high{background:var(--green-bg);color:var(--green)}
+
+.total-banner{
+  background:linear-gradient(135deg,var(--navy),#06457f);
+  color:#fff;
+  border-radius:14px;
+  padding:16px 20px;
+  margin-top:14px;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:12px;
+}
+.total-banner b{font-size:28px;color:var(--blue)}
+
+.map-box{
+  background:#f9fcfe;
+  border:1px solid var(--line);
+  border-radius:16px;
+  padding:14px;
+  text-align:center;
+}
+.map-box svg{width:100%;max-width:360px;height:auto;display:block;margin:auto}
+
+.scoring-key{
+  display:grid;
+  grid-template-columns:repeat(3,minmax(0,1fr));
+  gap:10px;
+  margin-top:16px;
+  padding-top:16px;
+  border-top:1px solid var(--line);
+}
+.key-item{
+  background:#f8fbfe;
+  border:1px solid var(--line);
+  border-radius:12px;
+  padding:11px 13px;
+  font-size:12.5px;
+}
+.key-item strong{display:block;color:var(--navy);margin-bottom:3px}
+
+/* Educational Deep-Dive Cards */
+.edu-section{
+  margin-top:24px;
+  padding-top:22px;
+  border-top:2px solid #e6eff6;
+}
+.edu-section-head{
+  margin-bottom:16px;
+}
+.edu-section-head h4{
+  margin:6px 0 4px;
+  color:var(--navy);
+  font-size:21px;
+}
+.edu-section-head p{
+  margin:0;
+  color:var(--muted);
+  font-size:14px;
+}
+.edu-grid{
+  display:grid;
+  grid-template-columns:1fr;
+  gap:16px;
+}
+.edu-card{
+  background:#fbfdff;
+  border:1px solid #d5e4f0;
+  border-inline-start:5px solid var(--navy);
+  border-radius:16px;
+  padding:20px 22px;
+}
+.edu-card-top{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  gap:10px;
+  flex-wrap:wrap;
+  margin-bottom:10px;
+}
+.edu-card-top h5{
+  margin:0;
+  color:var(--navy);
+  font-size:18px;
+}
+.edu-definition{
+  margin:0 0 14px;
+  color:#253852;
+  font-size:14.5px;
+  line-height:1.7;
+}
+.edu-cols{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:12px;
+  margin-bottom:12px;
+}
+.edu-box{
+  background:#fff;
+  border:1px solid #e1ebf3;
+  border-radius:12px;
+  padding:13px 15px;
+}
+.edu-box h6{
+  margin:0 0 6px;
+  font-size:13px;
+  font-weight:800;
+  color:var(--navy);
+}
+.edu-box.strength-box{border-top:3px solid var(--green)}
+.edu-box.weakness-box{border-top:3px solid var(--red)}
+.edu-box.science-box{border-top:3px solid var(--blue);background:#f4fafe}
+.edu-box.action-box{border-top:3px solid var(--teal);background:#f3faf9}
+.edu-box ul{
+  margin:0;
+  padding-inline-start:18px;
+  font-size:13.5px;
+  color:#31445e;
+}
+.edu-box li{margin:4px 0}
+.edu-box p{
+  margin:0;
+  font-size:13.5px;
+  color:#31445e;
+  line-height:1.65;
+}
+
+.reflection-card{
+  background:#fff;
+  border:1px solid var(--line);
+  border-radius:20px;
+  padding:26px;
+  box-shadow:0 6px 20px #001b4d06;
+}
+.reflection-top-row{
+  display:flex;
+  justify-content:space-between;
+  align-items:flex-start;
+  gap:14px;
+  flex-wrap:wrap;
+}
+.reflection-card h3{margin:6px 0 6px;color:var(--navy);font-size:22px}
+.reflection-grid{
+  display:grid;
+  grid-template-columns:repeat(2,minmax(0,1fr));
+  gap:16px;
+  margin-top:16px;
+}
+.reflection-block{
+  background:#f9fbfd;
+  border:1px solid #e1ebf3;
+  border-radius:14px;
+  padding:16px;
+}
+.reflection-block.full{grid-column:1 / -1}
+.reflection-block label{
+  display:block;
+  font-weight:700;
+  color:var(--navy);
+  font-size:14px;
+  margin-bottom:8px;
+}
+.reflection-block textarea{
+  width:100%;
+  min-height:84px;
+  border:1px solid #cbd9e6;
+  border-radius:10px;
+  padding:10px 12px;
+  font:inherit;
+  font-size:14px;
+  resize:vertical;
+  background:#fff;
+}
+.suggestions-wrap{
+  margin-top:9px;
+}
+.sug-title{
+  font-size:11.5px;
+  font-weight:800;
+  color:var(--teal);
+  margin-bottom:6px;
+  display:block;
+}
+.sug-list{
+  display:flex;
+  flex-wrap:wrap;
+  gap:6px;
+}
+.sug-chip{
+  border:1px solid #c3dce8;
+  background:#eff7fa;
+  color:var(--navy);
+  border-radius:999px;
+  padding:5px 11px;
+  font:inherit;
+  font-size:12px;
+  font-weight:600;
+  cursor:pointer;
+  text-align:start;
+  transition:all .14s;
+}
+.sug-chip:hover{
+  background:var(--navy);
+  color:#fff;
+  border-color:var(--navy);
+}
+
+footer{
+  max-width:1120px;
+  margin:28px auto 0;
+  padding:0 22px 34px;
+  text-align:center;
+  color:#66788d;
+  font-size:12.5px;
+  line-height:1.7;
+}
+footer a{
+  color:var(--navy);
+  font-weight:700;
+  text-decoration:underline;
+}
+footer a:hover{color:var(--red)}
+
+dialog.reset-dialog{
+  max-width:460px;
+  width:calc(100% - 32px);
+  border:1px solid #cad7e3;
+  border-radius:18px;
+  padding:24px;
+  color:var(--navy);
+  box-shadow:0 20px 60px #001b4d35;
+}
+dialog.reset-dialog::backdrop{background:#001b4d70}
+dialog.reset-dialog h4{margin:0 0 8px;font-size:20px}
+dialog.reset-dialog p{margin:0 0 18px;color:var(--muted);font-size:14.5px}
+
+@media(max-width:860px){
+  .participant-grid,.results-grid,.reflection-grid,.scoring-key,.edu-cols{grid-template-columns:1fr}
+  .statement-row{grid-template-columns:1fr;gap:10px}
+  .rating-group{justify-content:flex-start}
+  .author-pill{display:none}
+}
+@media print{
+  header,.hub-actions,.completed-bar,.suggestions-wrap,.btn-primary,.btn-secondary,.btn-teal{display:none!important}
+  body{background:#fff}
+  .domain-card.is-hidden{display:block!important}
+  .wrap{padding:0}
+  .hero,.hub-progress,.domain-card,.results-panel,.reflection-card,.edu-card{box-shadow:none;break-inside:avoid}
+}
+</style>
+</head>
+<body lang="en" dir="ltr">
+
+<header>
+  <div class="headerrow">
+    <div class="brand">
+      <div class="mark">LH</div>
+      <div>
+        <h1 class="display">Learning <span style="color:var(--red)">Hub</span></h1>
+        <p id="brandSub">Learning Hub • Capability Development</p>
+      </div>
+    </div>
+    <div class="header-right">
+      <a class="author-pill" href="https://www.linkedin.com/in/hazem-al-amayreh-038aa1a4" target="_blank" rel="noopener noreferrer" id="headerAuthorLink">
+        <span>Hazem Amyreh</span>
+        <span aria-hidden="true">↗</span>
+      </a>
+      <div class="lang">
+        <button id="enBtn" class="active" onclick="setLang('en')">EN</button>
+        <button id="arBtn" onclick="setLang('ar')">عربي</button>
+      </div>
+    </div>
+  </div>
+</header>
+
+<main class="wrap">
+  <section class="hero">
+    <div class="eyebrow" id="heroEyebrow">SELF-ASSESSMENT • EMOTIONAL INTELLIGENCE</div>
+    <h2 class="display" id="heroTitle">The Quick <span class="red">Emotional Intelligence</span> Self-Assessment</h2>
+    <p id="heroDesc">Rate how closely each statement represents your typical behavior. Completed domains automatically fold away and scroll you smoothly to the next section. Once all 40 statements are answered, you will receive a full educational report, your Emotional Map, and a downloadable Action Plan.</p>
+    <div class="scale-strip" id="scaleStrip"></div>
+  </section>
+
+  <section class="hub-progress" id="progressCard">
+    <div class="hub-progress-top">
+      <span class="completion-badge" id="statusBadge">Not Started</span>
+      <strong id="progressText" style="color:var(--navy);font-size:14px">0 / 40 Answered (0%)</strong>
+    </div>
+    <div class="module-progress-track">
+      <span id="progressFill" style="width:0%"></span>
+    </div>
+    <div class="participant-grid">
+      <div class="field">
+        <label for="pName" id="lblName">Participant Name</label>
+        <input type="text" id="pName" placeholder="Enter your full name" oninput="saveMeta()">
+      </div>
+      <div class="field">
+        <label for="pDate" id="lblDate">Assessment Date</label>
+        <input type="date" id="pDate" onchange="saveMeta()">
+      </div>
+      <div class="field">
+        <label for="pRole" id="lblRole">Role / Department</label>
+        <input type="text" id="pRole" placeholder="e.g., Team Lead / Operations" oninput="saveMeta()">
+      </div>
+      <div class="field">
+        <label for="pOrg" id="lblOrg">Organization</label>
+        <input type="text" id="pOrg" placeholder="Organization name" oninput="saveMeta()">
+      </div>
+    </div>
+    <div class="hub-actions">
+      <div class="btn-group">
+        <button type="button" class="btn-primary" onclick="manualSave()" id="btnSave">Save Progress</button>
+        <button type="button" class="btn-teal" onclick="downloadUnifiedReport()" id="btnUnifiedDownload">Download Complete Report (Results & Action Plan)</button>
+        <button type="button" class="btn-secondary btn-danger" onclick="document.getElementById('resetDialog').showModal()" id="btnReset">Reset All</button>
+      </div>
+      <span class="save-note" id="saveStatus"></span>
+    </div>
+  </section>
+
+  <div id="completedBarContainer"></div>
+  <div id="domainsContainer"></div>
+  <div id="resultsContainer"></div>
+
+  <section class="reflection-card" id="reflectionSection">
+    <div class="reflection-top-row">
+      <div>
+        <span class="ribbon" id="refRibbon">FOR REFLECTION & ACTION PLAN</span>
+        <h3 class="display" id="refTitle">Personal Reflection & Action Plan</h3>
+        <p style="color:var(--muted);margin:0;font-size:14px" id="refSub">Select your highest and lowest domains from the lists below, then click any suggested prompt or write your own reflections.</p>
+      </div>
+      <button type="button" class="btn-teal" onclick="downloadUnifiedReport()" id="btnRefUnified">Download Complete Report (Results & Action Plan)</button>
+    </div>
+
+    <div class="reflection-grid">
+      <div class="reflection-block">
+        <label for="highestDomainSelect" id="lblHighest">My highest emotional intelligence domain is:</label>
+        <select id="highestDomainSelect" onchange="onReflectionDomainChange()">
+          <option value="">-- Select Domain --</option>
+        </select>
+      </div>
+
+      <div class="reflection-block">
+        <label for="refHighExample" id="lblHighEx">An example of how I display this EQ competency in my life/work is:</label>
+        <textarea id="refHighExample" oninput="saveReflection()"></textarea>
+        <div class="suggestions-wrap" id="sugHighEx"></div>
+      </div>
+
+      <div class="reflection-block">
+        <label for="lowestDomainSelect" id="lblLowest">My lowest emotional intelligence domain is:</label>
+        <select id="lowestDomainSelect" onchange="onReflectionDomainChange()">
+          <option value="">-- Select Domain --</option>
+        </select>
+      </div>
+
+      <div class="reflection-block">
+        <label for="refLowSelf" id="lblLowSelf">Examples of how this affects me in my life/work are:</label>
+        <textarea id="refLowSelf" oninput="saveReflection()"></textarea>
+        <div class="suggestions-wrap" id="sugLowSelf"></div>
+      </div>
+
+      <div class="reflection-block">
+        <label for="refLowOthers" id="lblLowOthers">Examples of how this affects others in my life/work are:</label>
+        <textarea id="refLowOthers" oninput="saveReflection()"></textarea>
+        <div class="suggestions-wrap" id="sugLowOthers"></div>
+      </div>
+
+      <div class="reflection-block">
+        <label for="refBenefit" id="lblBenefit">Improving in this area would benefit me in the following ways:</label>
+        <textarea id="refBenefit" oninput="saveReflection()"></textarea>
+        <div class="suggestions-wrap" id="sugBenefit"></div>
+      </div>
+
+      <div class="reflection-block full">
+        <label for="refDevelop" id="lblDevelop">Possible ways of developing in this area are:</label>
+        <textarea id="refDevelop" oninput="saveReflection()"></textarea>
+        <div class="suggestions-wrap" id="sugDevelop"></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div id="footerAuthor">
+    Prepared & Facilitated by <strong>Hazem Amyreh (حازم العمايرة)</strong> •
+    <a href="https://www.linkedin.com/in/hazem-al-amayreh-038aa1a4" target="_blank" rel="noopener noreferrer">Connect on LinkedIn</a>
+  </div>
+  <div id="footerText" style="margin-top:4px">© 2026 Learning Hub • Adapted from The Quick Emotional Intelligence Self-Assessment (Courtesy of Paul Mohapel). Data is stored locally on your browser.</div>
+</footer>
+
+<dialog class="reset-dialog" id="resetDialog">
+  <h4 class="display" id="dlgTitle">Reset all assessment responses?</h4>
+  <p id="dlgBody">This will clear all 40 ratings, participant details, and reflection notes saved on this browser.</p>
+  <div class="btn-group">
+    <button type="button" class="btn-secondary" onclick="document.getElementById('resetDialog').close()" id="dlgCancel">Cancel</button>
+    <button type="button" class="btn-primary" style="background:var(--red)" onclick="confirmReset()" id="dlgConfirm">Reset Everything</button>
+  </div>
+</dialog>
+
+<script>
+const STORAGE_KEY = 'lh_quick_eq_assessment_v4';
+const AUTHOR_LINKEDIN = 'https://www.linkedin.com/in/hazem-al-amayreh-038aa1a4';
+
+const DOMAINS = [
+  {
+    id: 'sa',
+    name: { en: 'Self-Awareness', ar: 'الوعي بالذات' },
+    mapLabel: { en: 'Emotional Self-Awareness', ar: 'الوعي العاطفي بالذات' },
+    statements: [
+      { en: 'I am able to stand apart from my thoughts and feelings and examine them', ar: 'أستطيع أن أقف على مسافة من أفكاري ومشاعري وأتأملها بموضوعية' },
+      { en: 'My feelings are clear to me at any given moment', ar: 'مشاعري واضحة لي في أي لحظة' },
+      { en: 'Emotions play an important part in my life', ar: 'تلعب المشاعر دوراً مهماً في حياتي' },
+      { en: 'My moods impact the people around me', ar: 'تؤثر حالتي المزاجية في الأشخاص من حولي' },
+      { en: 'I find it easy to put words to my feelings', ar: 'أجد سهولة في التعبير عن مشاعري بالكلمات' },
+      { en: 'My moods are easily affected by external events', ar: 'تتأثر حالتي المزاجية بسهولة بالأحداث الخارجية' },
+      { en: "I can easily sense when I'm going to be angry", ar: 'أستطيع بسهولة أن أشعر متى سأغضب' },
+      { en: 'I readily tell others my true feelings', ar: 'أعبّر للآخرين بوضوح عن مشاعري الحقيقية' },
+      { en: 'I find it easy to describe my feelings', ar: 'أجد سهولة في وصف مشاعري بدقة' },
+      { en: "Even when I'm upset, I'm aware of what's happening to me", ar: 'حتى عندما أكون منزعجاً، أكون واعياً لما يحدث بداخلي' }
+    ],
+    edu: {
+      definition: {
+        en: 'Self-Awareness is the foundational ability to observe your own thoughts, physical cues, and emotional states in real time—separating observable facts from the internal story you tell yourself, and recognizing how your mood affects both your decisions and the people around you.',
+        ar: 'الوعي بالذات (Self-Awareness) هو القدرة الأساسية على مراقبة أفكارك، وإشاراتك الجسدية، وحالتك الشعورية في اللحظة الحالية، والفصل بين الحقيقة الواقعية والتفسير الذهني الذي تصنعه، مع إدراك كيف تؤثر حالتك المزاجية في قراراتك وفي الأشخاص من حولك.'
+      },
+      science: {
+        en: 'Neuroscience and behavioral psychology (such as Affect Labeling research by Matthew Lieberman and Daniel Kahneman’s dual-system thinking) show that simply putting accurate words to an emotion reduces amygdala reactivity and engages the prefrontal cortex. When you name what you feel (“I am feeling pressured right now”), automatic emotional hijacking loses intensity and shifts into conscious evaluation.',
+        ar: 'تُظهر أبحاث علم الأعصاب وعلم النفس السلوكي (مثل دراسات تسمية المشاعر Affect Labeling ونموذج التفكير السريع والبطيء) أن مجرد وضع كلمات دقيقة لوصف الشعور يقلل نشاط اللوزة الدماغية المسؤولة عن الانفعال السريع وينشّط قشرة الفص الجبهي المسؤولة عن التفكير المنطقي. عندما تسمي شعورك بدقة، ينتقل الدماغ من التفاعل التلقائي إلى التقييم الواعي.'
+      },
+      strengths: {
+        high: {
+          en: [
+            'High clarity in recognizing internal emotional shifts before they escalate.',
+            'Strong ability to articulate feelings honestly and transparently.',
+            'Clear awareness of how your energy and mood influence team dynamics.'
+          ],
+          ar: [
+            'وضوح عالٍ في التقاط التغيرات الشعورية الداخلية قبل تصاعدها.',
+            'قدرة قوية على التعبير عن المشاعر بصدق ووضوح.',
+            'إدراك واعٍ لكيفية تأثير طاقتك ومزاجك في أجواء الفريق.'
+          ]
+        },
+        mid: {
+          en: [
+            'You generally recognize your core emotions during normal workdays.',
+            'You understand that emotions matter in decision-making and relationships.'
+          ],
+          ar: [
+            'تتعرف غالباً على مشاعرك الأساسية خلال أيام العمل الاعتيادية.',
+            'تدرك أهمية دور المشاعر في اتخاذ القرار وبناء العلاقات.'
+          ]
+        },
+        low: {
+          en: [
+            'Opportunity to build stronger moment-to-moment emotional vocabulary.',
+            'Room to spot early physical warning signs before stress peaks.'
+          ],
+          ar: [
+            'فرصة كبيرة لبناء مفردات شعورية أدق في المواقف اليومية.',
+            'إمكانية تطوير التقاط العلامات الجسدية المبكرة قبل وصول التوتر لذروته.'
+          ]
+        }
+      },
+      weaknesses: {
+        high: {
+          en: [
+            'Over-analyzing your own feelings during fast-paced situations if not paired with action.',
+            'Becoming overly sensitive to minor external mood shifts.'
+          ],
+          ar: [
+            'المبالغة في تحليل المشاعر الذاتية في المواقف السريعة إذا لم تُترجم إلى فعل.',
+            'التأثر الزائد أحياناً بالتغيرات البسيطة في المحيط الخارجي.'
+          ]
+        },
+        mid: {
+          en: [
+            'Under high deadline pressure, subtle frustration can go unnoticed until it affects your tone.',
+            'External events can occasionally shift your mood without immediate awareness.'
+          ],
+          ar: [
+            'تحت ضغط المواعيد النهائية، قد يتسلل الإحباط دون ملاحظة حتى يؤثر في نبرة صوتك.',
+            'الأحداث الخارجية المفاجئة قد تغيّر مزاجك أحياناً دون انتباه فوري.'
+          ]
+        },
+        low: {
+          en: [
+            'Difficulty separating objective facts from initial emotional assumptions.',
+            'Delayed recognition of anger or stress until a reactive response has already occurred.',
+            'Limited visibility into how your unexpressed mood impacts colleagues.'
+          ],
+          ar: [
+            'صعوبة الفصل بين الحقيقة المجردة والافتراضات العاطفية الأولية.',
+            'تأخر ملاحظة الغضب أو التوتر إلى ما بعد صدور رد الفعل.',
+            'قلة الانتباه لكيفية انعكاس حالتك المزاجية غير المعلنة على الزملاء.'
+          ]
+        }
+      },
+      actions: {
+        en: [
+          'Practice "Affect Labeling": pause 3 times a day and name your exact emotion using two words (e.g., "cautiously optimistic" or "mentally overloaded").',
+          'Separate "Fact vs. Story": in tense moments, write down what actually happened versus what you assumed the other person meant.',
+          'Track physical triggers (tight jaw, shallow breathing, fast speech) as early dashboard alerts.'
+        ],
+        ar: [
+          'تطبيق "تسمية الشعور" (Affect Labeling): توقف 3 مرات يومياً وسمِّ شعورك الدقيق بكلمتين محددتين بدلاً من "متوتر" أو "عادي".',
+          'الفصل بين "الحقيقة والقصة": في المواقف الضاغطة، اسأل نفسك: ما الحدث الملموس الذي وقع؟ وما التفسير الذي افترضته؟',
+          'مراقبة الإشارات الجسدية المبكرة (شد الفك، تسارع النفس، سرعة الكلام) كإنذار مبكر قبل الانفعال.'
+        ]
+      }
+    },
+    suggestions: {
+      highEx: {
+        en: [
+          'Pausing during tense meetings to name what I am feeling before responding.',
+          'Recognizing early signs of frustration and adjusting my tone constructively.',
+          'Clearly articulating my perspective and emotional state during team feedback.'
+        ],
+        ar: [
+          'التوقف لحظة خلال الاجتماعات المتوترة لتسمية شعوري قبل الرد.',
+          'ملاحظة العلامات المبكرة للإحباط وتعديل نبرتي بشكل بنّاء.',
+          'التعبير بوضوح عن وجهة نظري وحالتي الشعورية أثناء جلسات التغذية الراجعة.'
+        ]
+      },
+      lowSelf: {
+        en: [
+          'Reacting impulsively under tight deadlines before noticing my stress triggers.',
+          'Struggling to pinpoint why I feel drained or irritated after difficult conversations.',
+          'Letting external setbacks shift my mood and focus for the rest of the day.'
+        ],
+        ar: [
+          'رد الفعل السريع تحت ضغط المواعيد قبل ملاحظة محفزات التوتر لدي.',
+          'صعوبة تحديد سبب شعوري بالاستنزاف أو الانزعاج بعد الحوارات الصعبة.',
+          'السماح للعقبات الخارجية بتغيير مزاجي وتركيزي لبقية اليوم.'
+        ]
+      },
+      lowOthers: {
+        en: [
+          'Colleagues may feel uncertain about how I am reacting to their ideas or updates.',
+          'Unnoticed shifts in my mood can unintentionally create tension in the team.',
+          'Others may misread my silence as disinterest or disapproval.'
+        ],
+        ar: [
+          'قد يشعر الزملاء بعدم الوضوح حول كيفية تفاعلي مع أفكارهم أو تحديثاتهم.',
+          'التغيرات غير الملحوظة في مزاجي قد تخلق توتراً غير مقصود لدى الفريق.',
+          'قد يفسر الآخرون صمتي على أنه عدم اهتمام أو رفض.'
+        ]
+      },
+      benefit: {
+        en: [
+          'Greater emotional clarity and steadier decision-making under pressure.',
+          'Earlier recognition of stress triggers before they escalate into reactive behavior.',
+          'More authentic and transparent communication with colleagues and family.'
+        ],
+        ar: [
+          'وضوح عاطفي أكبر واتخاذ قرارات أكثر اتزاناً تحت الضغط.',
+          'اكتشاف محفزات التوتر مبكراً قبل أن تتحول إلى ردود فعل متسرعة.',
+          'تواصل أكثر صدقاً وشفافية مع الزملاء والأسرة.'
+        ]
+      },
+      develop: {
+        en: [
+          'Keep a brief daily emotion check-in log naming triggers, physical cues, and feelings.',
+          'Practice a 5-second pause before replying in high-stakes or frustrating situations.',
+          'Ask a trusted colleague or mentor for honest feedback on how my mood comes across.'
+        ],
+        ar: [
+          'تدوين ملاحظة يومية سريعة لتسمية المحفزات والعلامات الجسدية والمشاعر.',
+          'التدرب على التوقف 5 ثوانٍ قبل الرد في المواقف الضاغطة أو المحبطة.',
+          'طلب تغذية راجعة صادقة من زميل موثوق حول انعكاس مزاجي على الآخرين.'
+        ]
+      }
+    }
+  },
+  {
+    id: 'sm',
+    name: { en: 'Self-Management', ar: 'إدارة الذات' },
+    mapLabel: { en: 'Emotional Management', ar: 'الإدارة العاطفية' },
+    statements: [
+      { en: 'I accept responsibility for my reactions', ar: 'أتحمل مسؤولية ردود أفعالي' },
+      { en: 'I find it easy to make goals and stick with them', ar: 'أجد سهولة في وضع الأهداف والالتزام بها' },
+      { en: 'I am an emotionally balanced person', ar: 'أنا شخص متوازن عاطفياً' },
+      { en: 'I am a very patient person', ar: 'أنا شخص صبور جداً' },
+      { en: 'I can accept critical comments from others without becoming angry', ar: 'أستطيع تقبّل الملاحظات النقدية من الآخرين دون أن أغضب' },
+      { en: 'I maintain my composure, even during stressful times', ar: 'أحافظ على هدوئي واتزاني حتى في الأوقات العصيبة' },
+      { en: 'If an issue does not affect me directly, I don’t let it bother me', ar: 'إذا لم تكن المسألة تمسني مباشرة، لا أدعها تزعجني' },
+      { en: 'I can restrain myself when I feel anger towards someone', ar: 'أستطيع ضبط نفسي عندما أشعر بالغضب تجاه شخص ما' },
+      { en: 'I control urges to overindulge in things that could damage my well being', ar: 'أتحكم في رغبات الإفراط في أمور قد تضر بصحتي أو توازني' },
+      { en: 'I direct my energy into creative work or hobbies', ar: 'أوجّه طاقتي نحو العمل الإبداعي أو الهوايات المفيدة' }
+    ],
+    edu: {
+      definition: {
+        en: 'Self-Management is your ability to interrupt automatic emotional reactions and deliberately choose constructive responses—staying composed under stress, receiving critical feedback without defensiveness, taking ownership of your behavior, and channeling energy toward meaningful goals.',
+        ar: 'إدارة الذات (Self-Management) هي قدرتك على كسر حلقة ردود الفعل التلقائية واختيار استجابة واعية وبنّاءة؛ عبر الحفاظ على اتزانك تحت الضغط، وتقبّل النقد دون دفاعية، وتحمّل مسؤولية سلوكك، وتوجيه طاقتك نحو أهداف واضحة.'
+      },
+      science: {
+        en: 'Behavioral science explains human reactivity through the "Automatic Reaction Cycle" (Trigger → Automatic Interpretation → Emotion → Impulsive Action → New Problem). Cognitive reappraisal research (James Gross) and Locus of Control theory show that inserting a deliberate pause between stimulus and response shifts you from reactive autopilot ("Ego Self") to intentional problem-solving ("Natural Self"), protecting both cognitive clarity and cortisol recovery.',
+        ar: 'يفسّر علم السلوك الانفعالات عبر "دورة رد الفعل التلقائي" (Automatic Reaction Cycle: محفّز ← تفسير تلقائي ← شعور ← رد فعل متسرع ← مشكلة جديدة). وتُثبت أبحاث إعادة التقييم المعرفي (Cognitive Reappraisal) ونظرية مركز التحكم (Locus of Control) أن إدخال وقفة مقصودة بين المحفّز والاستجابة ينقلك من وضع الطيار الآلي الدفاعي إلى التفكير الواعي وحل المشكلات.'
+      },
+      strengths: {
+        high: {
+          en: [
+            'Strong composure and emotional steadiness during crises or shifting priorities.',
+            'High accountability for your own reactions without blaming external circumstances.',
+            'Ability to receive critical feedback calmly and channel energy constructively.'
+          ],
+          ar: [
+            'ثبات واتزان انفعالي قوي أثناء الأزمات وتغيّر الأولويات.',
+            'تحمّل عالٍ لمسؤولية ردود أفعالك دون إلقاء اللوم على الظروف.',
+            'قدرة على استقبال الملاحظات النقدية بهدوء وتوجيه الطاقة نحو الحلول.'
+          ]
+        },
+        mid: {
+          en: [
+            'You maintain balance in routine situations and recover well after minor setbacks.',
+            'You set clear personal goals and generally exercise self-restraint.'
+          ],
+          ar: [
+            'تحافظ على توازنك في المواقف الاعتيادية وتستعيد هدوءك بعد العقبات البسيطة.',
+            'تضع أهدافاً واضحة وتمتلك قدراً جيداً من ضبط النفس.'
+          ]
+        },
+        low: {
+          en: [
+            'Strong potential to build a reliable pause habit before responding under pressure.',
+            'Opportunity to conserve mental energy by letting go of issues outside your control.'
+          ],
+          ar: [
+            'فرصة كبيرة لبناء عادة التوقف الواعي قبل الرد تحت الضغط.',
+            'إمكانية توفير طاقتك الذهنية عبر عدم الانشغال بالأمور الخارجة عن سيطرتك.'
+          ]
+        }
+      },
+      weaknesses: {
+        high: {
+          en: [
+            'Suppressing valid frustration too long instead of addressing issues early and assertively.',
+            'Appearing overly detached when others expect visible emotional warmth.'
+          ],
+          ar: [
+            'كبت الإحباط المشروع لفترة طويلة بدلاً من معالجة الموقف مبكراً بحزم وهدوء.',
+            'الظهور بمظهر هادئ أكثر من اللازم في مواقف يتوقع فيها الآخرون تفاعلاً عاطفياً.'
+          ]
+        },
+        mid: {
+          en: [
+            'Accumulated stress or repeated interruptions can erode patience late in the day.',
+            'Critical comments delivered bluntly may still trigger internal defensiveness.'
+          ],
+          ar: [
+            'تراكم الضغوط أو المقاطعات المتكررة قد يقلل من صبرك في نهاية اليوم.',
+            'الملاحظات النقدية المباشرة قد تثير بداخلك شعوراً بالدفاعية أحياناً.'
+          ]
+        },
+        low: {
+          en: [
+            'Automatic reactivity: responding immediately from frustration before checking facts.',
+            'Difficulty letting go of minor irritations or issues that do not directly concern you.',
+            'Inconsistent follow-through on goals when emotional stress or fatigue rises.'
+          ],
+          ar: [
+            'التلقائية في رد الفعل: الاستجابة الفورية بدافع الانزعاج قبل التحقق من الحقائق.',
+            'صعوبة تجاوز المضايقات البسيطة أو الأمور التي لا تمسك بشكل مباشر.',
+            'تراجع الالتزام بالأهداف عند ارتفاع الضغط النفسي أو الإرهاق.'
+          ]
+        }
+      },
+      actions: {
+        en: [
+          'Apply the STOP Protocol when triggered: Step Back (breathe), Think Again (challenge the automatic story), Organize (separate facts from assumptions), Proceed (choose one constructive action).',
+          'Practice Cognitive Reappraisal: when receiving criticism, ask "What 10% of this feedback can make me stronger?"',
+          'Protect daily energy recharge (physical movement, creative hobbies, screen breaks) so self-control reserves stay full.'
+        ],
+        ar: [
+          'تطبيق بروتوكول STOP عند الانفعال: تراجع خطوة (تنفس)، أعد التفكير (اختبر التفسير التلقائي)، نظّم (افصل الحقائق عن الافتراضات)، تقدّم (اختر خطوة عملية واحدة).',
+          'ممارسة إعادة التقييم المعرفي: عند سماع نقد، اسأل نفسك: "ما الجزء المفيد في هذه الملاحظة لتطوير أدائي؟"',
+          'تخصيص وقت يومي لتجديد الطاقة (رياضة، هوايات إبداعية، راحة ذهنية) للحفاظ على مخزون ضبط النفس.'
+        ]
+      }
+    },
+    suggestions: {
+      highEx: {
+        en: [
+          'Staying calm and solution-focused when project plans change unexpectedly.',
+          'Receiving constructive criticism openly without becoming defensive.',
+          'Channeling high-pressure periods into structured priorities and steady execution.'
+        ],
+        ar: [
+          'الحفاظ على الهدوء والتركيز على الحلول عند تغيّر خطط العمل فجأة.',
+          'تقبّل النقد البنّاء بانفتاح دون اتخاذ موقف دفاعي.',
+          'توجيه فترات الضغط العالي نحو أولويات منظمة وتنفيذ متزن.'
+        ]
+      },
+      lowSelf: {
+        en: [
+          'Feeling impatient or overwhelmed when multiple urgent tasks compete for attention.',
+          'Holding onto frustration after receiving critical feedback or facing delays.',
+          'Losing consistency on long-term personal goals when daily stress rises.'
+        ],
+        ar: [
+          'الشعور بنفاد الصبر أو الإرهاق عند تداخل المهام العاجلة في وقت واحد.',
+          'الاحتفاظ بالإحباط لفترة طويلة بعد تلقي ملاحظات نقدية أو مواجهة تأخير.',
+          'فقدان الاستمرارية في الأهداف طويلة المدى عند ارتفاع ضغط العمل اليومي.'
+        ]
+      },
+      lowOthers: {
+        en: [
+          'Team members may hesitate to share bad news or critical feedback openly.',
+          'Visible impatience can rush discussions and lower psychological safety.',
+          'Inconsistent follow-through under stress can create uncertainty for collaborators.'
+        ],
+        ar: [
+          'قد يتردد أعضاء الفريق في مشاركة الأخبار الصعبة أو الملاحظات النقدية بصراحة.',
+          'إظهار نفاد الصبر قد يسرّع النقاشات ويقلل الأمان النفسي.',
+          'تذبذب المتابعة تحت الضغط قد يخلق عدم وضوح لدى المتعاونين معي.'
+        ]
+      },
+      benefit: {
+        en: [
+          'Stronger composure, resilience, and patience during high-pressure situations.',
+          'Greater consistency in achieving personal and professional milestones.',
+          'More constructive responses to criticism and unexpected obstacles.'
+        ],
+        ar: [
+          'ثبات ومرونة وصبر أكبر في المواقف عالية الضغط.',
+          'استمرارية أعلى في تحقيق الأهداف الشخصية والمهنية.',
+          'استجابات أكثر بناءً تجاه النقد والعقبات غير المتوقعة.'
+        ]
+      },
+      develop: {
+        en: [
+          'Use the STOP protocol (Step back, Think again, Organize, Proceed) before reacting.',
+          'Break large goals into weekly milestones with scheduled energy-recovery habits.',
+          'Practice reframing critical feedback as useful data rather than a personal judgment.'
+        ],
+        ar: [
+          'تطبيق خطوات STOP (تراجع خطوة، أعد التفكير، نظّم، تقدّم) قبل رد الفعل.',
+          'تقسيم الأهداف الكبيرة إلى محطات أسبوعية مع عادات منتظمة لاستعادة الطاقة.',
+          'التدرب على إعادة صياغة النقد كمعلومة مفيدة للتطوير وليس حكماً شخصياً.'
+        ]
+      }
+    }
+  },
+  {
+    id: 'soa',
+    name: { en: 'Social Awareness', ar: 'الوعي الاجتماعي' },
+    mapLabel: { en: 'Social Emotional Awareness', ar: 'الوعي العاطفي الاجتماعي' },
+    statements: [
+      { en: 'I consider the impact of my decisions on other people', ar: 'أراعي تأثير قراراتي على الآخرين' },
+      { en: 'I can easily tell if the people around me are becoming annoyed', ar: 'أستطيع بسهولة ملاحظة ما إذا بدأ من حولي يشعرون بالانزعاج' },
+      { en: "When people's moods change, I sense it", ar: 'عندما يتغير مزاج الناس، أشعر بذلك بسرعة' },
+      { en: 'I am able to be supportive when giving bad news to others', ar: 'أستطيع تقديم الدعم والتعاطف عند نقل أخبار صعبة للآخرين' },
+      { en: 'I am generally able to understand the way other people feel', ar: 'أستطيع بشكل عام فهم الطريقة التي يشعر بها الآخرون' },
+      { en: 'My friends can tell me intimate things about themselves', ar: 'يشعر أصدقائي بالارتياح لمشاركتي أمورهم الخاصة' },
+      { en: 'It is hard for me to see other people suffer', ar: 'يصعب عليّ رؤية الآخرين يعانون أو يتألمون' },
+      { en: 'I usually know when to speak and when to be silent', ar: 'أعرف عادةً متى أتحدث ومتى ألتزم الصمت' },
+      { en: 'I care what happens to other people', ar: 'أهتم بما يحدث للآخرين' },
+      { en: "When people's plans change, I understand", ar: 'عندما تتغير خطط الآخرين، أتفهم ظروفهم' }
+    ],
+    edu: {
+      definition: {
+        en: 'Social Awareness is your capacity to accurately read the emotional climate around you—noticing unspoken shifts in tone, energy, and body language, understanding others’ perspectives with genuine empathy, knowing when to listen in silence, and weighing how your decisions impact people.',
+        ar: 'الوعي الاجتماعي (Social Awareness) هو قدرتك على قراءة المناخ العاطفي من حولك بدقة؛ عبر ملاحظة التغيرات غير المعلنة في نبرة الصوت والطاقة ولغة الجسد، وفهم وجهات نظر الآخرين بتعاطف حقيقي، ومعرفة متى تتحدث ومتى تنصت، ومراعاة أثر قراراتك في الناس.'
+      },
+      science: {
+        en: 'Social neuroscience highlights the role of mirror neuron networks and "Theory of Mind" (perspective-taking) in human cooperation. Research by Paul Ekman and Daniel Goleman demonstrates that over 70% of emotional meaning in tense workplace conversations is carried through vocal tone, pacing, and micro-expressions rather than words alone—and that cognitive empathy (understanding another’s view without losing objectivity) drives higher psychological safety.',
+        ar: 'تُبرز أبحاث علم الأعصاب الاجتماعي دور الخلايا العصبية المرآتية (Mirror Neurons) ونظرية العقل (فهم منظور الآخر) في التعاون البشري. وتؤكد دراسات بول إيكمان ودانيال جولمان أن الجزء الأكبر من الرسالة العاطفية في الحوارات المهنية ينتقل عبر نبرة الصوت وسرعة الكلام وتعبيرات الوجه لا الكلمات وحدها، وأن التعاطف المعرفي يرفع الأمان النفسي في بيئة العمل.'
+      },
+      strengths: {
+        high: {
+          en: [
+            'High sensitivity to subtle mood shifts, unspoken hesitation, or annoyance in others.',
+            'Strong interpersonal trust—people feel safe sharing sensitive concerns with you.',
+            'Thoughtful consideration of human impact before finalizing decisions.'
+          ],
+          ar: [
+            'حساسية عالية لالتقاط تغيرات المزاج الدقيقة أو التردد غير المعلن لدى الآخرين.',
+            'ثقة إنسانية عالية تجعل الناس يرتاحون لمشاركتك أمورهم الخاصة.',
+            'مراعاة واعية للأثر الإنساني قبل اعتماد القرارات المهمة.'
+          ]
+        },
+        mid: {
+          en: [
+            'You show genuine care for colleagues and adapt reasonably when plans change.',
+            'You are supportive when delivering difficult updates.'
+          ],
+          ar: [
+            'تُظهر اهتماماً حقيقياً بزملائك وتتكيف بشكل جيد عند تغيّر الخطط.',
+            'تتحلى بالدعم والتعاطف عند نقل الأخبار أو التحديثات الصعبة.'
+          ]
+        },
+        low: {
+          en: [
+            'Clear task focus that can be paired with deliberate listening habits.',
+            'High upside in reading room dynamics and non-verbal cues more consistently.'
+          ],
+          ar: [
+            'تركيز واضح على المهام يمكن تعزيزه بعادات استماع أكثر عمقاً.',
+            'فرصة كبيرة لتطوير قراءة ديناميكيات المجموعة والإشارات غير اللفظية.'
+          ]
+        }
+      },
+      weaknesses: {
+        high: {
+          en: [
+            'Absorbing others’ stress or suffering to the point of emotional exhaustion (empathy fatigue).',
+            'Delaying tough but necessary decisions out of excessive worry about how others will feel.'
+          ],
+          ar: [
+            'امتصاص توتر الآخرين ومعاناتهم لدرجة الإرهاق العاطفي (إجهاد التعاطف).',
+            'تأجيل قرارات حاسمة وضرورية بدافع القلق الزائد على مشاعر الآخرين.'
+          ]
+        },
+        mid: {
+          en: [
+            'When rushing through busy schedules, you may miss quiet cues from less outspoken teammates.',
+            'Occasionally speaking to fix a problem before the other person feels fully heard.'
+          ],
+          ar: [
+            'عند الانشغال بجدول مزدحم، قد تفوتك الإشارات الهادئة من الأشخاص الأقل حديثاً.',
+            'المبادرة أحياناً لتقديم الحل قبل أن يشعر الطرف الآخر بأنه سُمع بالكامل.'
+          ]
+        },
+        low: {
+          en: [
+            'Missing early signs that colleagues or stakeholders are becoming frustrated or disengaged.',
+            'Delivering direct messages without calibrating tone or timing to the recipient’s state.',
+            'Focusing primarily on task logic while overlooking the emotional impact of decisions.'
+          ],
+          ar: [
+            'تفويت العلامات المبكرة لشعور الزملاء أو أصحاب المصلحة بالانزعاج أو الانسحاب.',
+            'تقديم رسائل مباشرة دون مواءمة النبرة والتوقيت مع حالة الطرف الآخر.',
+            'التركيز على منطق المهمة فقط مع إغفال الأثر العاطفي للقرارات.'
+          ]
+        }
+      },
+      actions: {
+        en: [
+          'Use the "80/20 Listening Rule": listen 80% of the time in sensitive conversations and reflect back both content and feeling before offering solutions.',
+          'Run a 60-second Stakeholder Impact Check before key decisions: "Who is affected, how might they feel, and how should I communicate this?"',
+          'Observe the room in meetings—notice facial expressions, posture, and silence, and invite quieter participants to share.'
+        ],
+        ar: [
+          'تطبيق قاعدة "الاستماع 80/20": أنصت بنسبة 80% في الحوارات الحساسة ولخّص الفكرة والشعور قبل طرح الحلول.',
+          'إجراء "فحص الأثر الإنساني" لمدة دقيقة قبل القرارات المهمة: "من سيتأثر؟ كيف سيشعر؟ وكيف أبلغه بأفضل طريقة؟"',
+          'مراقبة لغة الجسد والصمت في الاجتماعات ودعوة المشاركين الهادئين لإبداء آرائهم.'
+        ]
+      }
+    },
+    suggestions: {
+      highEx: {
+        en: [
+          'Picking up on unspoken hesitation in a meeting and inviting quieter voices to share.',
+          'Delivering sensitive updates with empathy while considering how the news affects the person.',
+          'Adapting smoothly when a colleague’s schedule or priorities change unexpectedly.'
+        ],
+        ar: [
+          'ملاحظة التردد غير المعلن في الاجتماعات ودعوة الأصوات الهادئة للمشاركة.',
+          'تقديم التحديثات الحساسة بتعاطف مع مراعاة أثرها على الشخص المقابل.',
+          'التكيف بسلاسة عندما تتغير جداول الزملاء أو أولوياتهم بشكل مفاجئ.'
+        ]
+      },
+      lowSelf: {
+        en: [
+          'Focusing so heavily on task execution that I miss subtle emotional cues in the room.',
+          'Moving quickly to solutions before fully understanding the other person’s concern.',
+          'Feeling caught off guard when colleagues react strongly to a decision.'
+        ],
+        ar: [
+          'التركيز الشديد على إنجاز المهام لدرجة تفويت الإشارات العاطفية الدقيقة في الحوار.',
+          'الانتقال السريع إلى الحلول قبل فهم قلق الطرف الآخر بالكامل.',
+          'الشعور بالمفاجأة عندما يبدي الزملاء رد فعل قوي تجاه قرار ما.'
+        ]
+      },
+      lowOthers: {
+        en: [
+          'Others may feel unheard or perceive my communication as overly task-driven.',
+          'Stakeholders might feel excluded when decisions are made without assessing their impact.',
+          'Colleagues may hold back concerns if they sense I am rushing past their perspective.'
+        ],
+        ar: [
+          'قد يشعر الآخرون بأنهم غير مسموعين أو أن تواصلي يركز على المهام فقط.',
+          'قد يشعر أصحاب المصلحة بالاستبعاد عند اتخاذ قرارات دون تقييم أثرها عليهم.',
+          'قد يحتفظ الزملاء بمخاوفهم إذا شعروا أنني أتجاوز وجهة نظرهم بسرعة.'
+        ]
+      },
+      benefit: {
+        en: [
+          'Deeper empathy, stronger trust, and smoother stakeholder alignment.',
+          'Better timing and sensitivity when delivering difficult messages or feedback.',
+          'Fewer misunderstandings caused by overlooked non-verbal cues.'
+        ],
+        ar: [
+          'تعاطف أعمق وثقة أقوى وتوافق أفضل مع أصحاب المصلحة.',
+          'توقيت وحساسية أفضل عند نقل الرسائل الصعبة أو التغذية الراجعة.',
+          'تقليل سوء الفهم الناتج عن إغفال الإشارات غير اللفظية.'
+        ]
+      },
+      develop: {
+        en: [
+          'Practice active listening: summarize the other person’s point and feeling before replying.',
+          'Before finalizing key decisions, list who is affected and how they will experience the change.',
+          'Pay deliberate attention to tone of voice, pacing, and body language in conversations.'
+        ],
+        ar: [
+          'ممارسة الاستماع الفعّال: تلخيص فكرة الطرف الآخر وشعوره قبل الرد.',
+          'قبل اعتماد القرارات المهمة، تحديد من سيتأثر بها وكيف سيستقبل التغيير.',
+          'الانتباه المقصود لنبرة الصوت وإيقاع الحديث ولغة الجسد أثناء الحوارات.'
+        ]
+      }
+    }
+  },
+  {
+    id: 'rm',
+    name: { en: 'Relationship Management', ar: 'إدارة العلاقات' },
+    mapLabel: { en: 'Relationship Management', ar: 'إدارة العلاقات' },
+    statements: [
+      { en: 'I am able to show affection', ar: 'أستطيع التعبير عن الود والتقدير للآخرين' },
+      { en: 'My relationships are safe places for me', ar: 'علاقاتي تمثل مساحة آمنة ومريحة لي' },
+      { en: 'I find it easy to share my deep feelings with others', ar: 'أجد سهولة في مشاركة مشاعري العميقة مع الآخرين' },
+      { en: 'I am good at motivating others', ar: 'أجيد تحفيز الآخرين وتشجيعهم' },
+      { en: 'I am a fairly cheerful person', ar: 'أنا شخص بشوش وإيجابي إلى حد كبير' },
+      { en: 'It is easy for me to make friends', ar: 'من السهل عليّ تكوين صداقات وعلاقات جديدة' },
+      { en: 'People tell me I am sociable and fun', ar: 'يخبرني الناس بأنني اجتماعي وممتع في التعامل' },
+      { en: 'I like helping people', ar: 'أحب مساعدة الآخرين ودعمهم' },
+      { en: 'Others can depend on me', ar: 'يمكن للآخرين الاعتماد عليّ' },
+      { en: 'I am able to talk someone down if they are very upset', ar: 'أستطيع تهدئة شخص منزعج جداً ومساعدته على استعادة هدوئه' }
+    ],
+    edu: {
+      definition: {
+        en: 'Relationship Management is putting emotional intelligence into visible interpersonal action—building trust and psychological safety, motivating and supporting others, expressing warmth and reliability, and calmly de-escalating conflict when tensions run high.',
+        ar: 'إدارة العلاقات (Relationship Management) هي ترجمة الذكاء العاطفي إلى تفاعل إنساني ملموس؛ عبر بناء الثقة والأمان النفسي، وتحفيز الآخرين ودعمهم، وإظهار الود والموثوقية، وتهدئة الخلافات بحكمة عندما يرتفع التوتر.'
+      },
+      science: {
+        en: 'Organizational psychology (including Google’s Project Aristotle on team effectiveness and John Gottman’s relationship research) proves that high-performing relationships rely on a 5:1 ratio of positive, supportive interactions to critical ones, alongside emotional co-regulation—where one calm, dependable person helps lower the nervous system arousal of an upset colleague.',
+        ar: 'تؤكد أبحاث علم النفس التنظيمي (مثل دراسة Project Aristotle لفاعلية الفرق وأبحاث جون غوتمان في العلاقات) أن العلاقات المهنية والإنسانية الناجحة تعتمد على نسبة 5 تفاعلات إيجابية داعمة مقابل كل نقد، بالإضافة إلى "التنظيم العاطفي المشترك" حيث يساعد الشخص الهادئ والموثوق على تهدئة الجهاز العصبي للطرف المنفعل.'
+      },
+      strengths: {
+        high: {
+          en: [
+            'Strong ability to inspire, encourage, and energize people around shared goals.',
+            'High dependability and warmth that make others view you as a safe, trusted ally.',
+            'Effective conflict de-escalation skills when someone is upset or overwhelmed.'
+          ],
+          ar: [
+            'قدرة قوية على تحفيز الناس وتشجيعهم وبث الطاقة الإيجابية نحو الأهداف المشتركة.',
+            'موثوقية عالية ودفء إنساني يجعلان الآخرين يرونك حليفاً آمناً وموضع ثقة.',
+            'مهارة فعّالة في تهدئة التوتر واحتواء الشخص المنزعج.'
+          ]
+        },
+        mid: {
+          en: [
+            'You are approachable, helpful, and dependable in day-to-day collaboration.',
+            'You maintain positive working relationships across your immediate circle.'
+          ],
+          ar: [
+            'تتسم بروح التعاون والمساعدة والموثوقية في العمل اليومي.',
+            'تحافظ على علاقات عمل إيجابية ومستقرة ضمن دائرتك المباشرة.'
+          ]
+        },
+        low: {
+          en: [
+            'Strong foundation of personal integrity that can be paired with more proactive outreach.',
+            'High growth potential in conflict de-escalation and vocal encouragement.'
+          ],
+          ar: [
+            'أساس قوي من الالتزام يمكن تعزيزه بمبادرات تواصل أكثر انفتاحاً.',
+            'إمكانية كبيرة للنمو في مهارات تهدئة النزاعات والتشجيع اللفظي.'
+          ]
+        }
+      },
+      weaknesses: {
+        high: {
+          en: [
+            'Over-committing to helping everyone at the expense of your own boundaries and priorities.',
+            'Avoiding necessary candid accountability in order to keep harmony comfortable.'
+          ],
+          ar: [
+            'الإفراط في مساعدة الجميع على حساب حدودك الشخصية وأولوياتك.',
+            'تجنب المحاسبة الصريحة أحياناً للحفاظ على الأجواء الودية.'
+          ]
+        },
+        mid: {
+          en: [
+            'Sharing deeper feelings or vulnerability selectively, which can slow trust-building with new stakeholders.',
+            'Stepping back from heated conflicts rather than actively mediating them.'
+          ],
+          ar: [
+            'التحفظ في مشاركة المشاعر العميقة، مما قد يبطئ بناء الثقة مع أطراف جديدة.',
+            'التراجع أحياناً عن النزاعات الحادة بدلاً من التدخل الفعّال لتهدئتها.'
+          ]
+        },
+        low: {
+          en: [
+            'Appearing distant, reserved, or overly formal even when you genuinely care.',
+            'Uncertainty about how to calm down an angry colleague or navigate difficult conversations.',
+            'Missing opportunities to motivate and recognize others visibly.'
+          ],
+          ar: [
+            'الظهور بمظهر متحفظ أو رسمي أكثر من اللازم حتى عندما تهتم بالآخرين فعلاً.',
+            'التردد في كيفية تهدئة شخص غاضب أو إدارة الحوارات الصعبة.',
+            'تفويت فرص تحفيز الآخرين وتقدير جهودهم بشكل واضح ومباشر.'
+          ]
+        }
+      },
+      actions: {
+        en: [
+          'Use the 3-Step De-Escalation Method when someone is upset: (1) Validate without agreeing ("I can see how frustrating this delay is"), (2) Lower your vocal pace, (3) Ask one forward-looking question ("What is the most important thing we should stabilize first?").',
+          'Practice intentional appreciation: give specific, genuine recognition to at least one person every day.',
+          'Build cross-functional trust through brief 10-minute check-ins with no agenda other than asking how you can support their work.'
+        ],
+        ar: [
+          'تطبيق خطوات التهدئة الثلاث عند انزعاج شخص ما: (1) التقدير دون تبرير ("أفهم تماماً حجم الإحباط من هذا التأخير")، (2) إبطاء نبرة صوتك، (3) طرح سؤال عملي للمستقبل ("ما أهم خطوة نحتاج تثبيتها الآن؟").',
+          'ممارسة التقدير المقصود: قدّم شكراً محدداً وصادقاً لشخص واحد على الأقل يومياً.',
+          'بناء جسور الثقة عبر تواصل قصير (10 دقائق) بدون جدول أعمال سوى السؤال: "كيف أستطيع دعمك هذا الأسبوع؟"'
+        ]
+      }
+    },
+    suggestions: {
+      highEx: {
+        en: [
+          'De-escalating tense disagreements by listening calmly and finding common ground.',
+          'Encouraging teammates during challenging projects and celebrating their progress.',
+          'Being a dependable, approachable colleague whom others trust for support.'
+        ],
+        ar: [
+          'تهدئة الخلافات المتوترة عبر الاستماع الهادئ وإيجاد أرضية مشتركة.',
+          'تشجيع أعضاء الفريق خلال المشاريع الصعبة والاحتفاء بتقدمهم.',
+          'أن أكون زميلاً موثوقاً وسهل التواصل يعتمد عليه الآخرون للدعم.'
+        ]
+      },
+      lowSelf: {
+        en: [
+          'Holding back personal warmth or vulnerability even in close working relationships.',
+          'Feeling drained or hesitant when asked to mediate conflict or calm an upset person.',
+          'Focusing on independent execution rather than proactively building cross-team rapport.'
+        ],
+        ar: [
+          'التحفظ في إظهار الدفء الشخصي أو الانفتاح حتى في علاقات العمل القريبة.',
+          'الشعور بالإرهاق أو التردد عند الحاجة لتهدئة شخص منزعج أو حل خلاف.',
+          'التركيز على الإنجاز الفردي بدلاً من المبادرة لبناء علاقات عبر الفرق.'
+        ]
+      },
+      lowOthers: {
+        en: [
+          'Colleagues may see me as reserved or harder to approach during stressful periods.',
+          'Conflicts may linger longer without proactive de-escalation and open dialogue.',
+          'Team members might miss out on encouragement and recognition that boosts morale.'
+        ],
+        ar: [
+          'قد يراني الزملاء متحفظاً أو يصعب الاقتراب مني في فترات الضغط.',
+          'قد تستمر الخلافات لفترة أطول دون مبادرة للتهدئة والحوار المفتوح.',
+          'قد يفتقد أعضاء الفريق التشجيع والتقدير الذي يرفع الروح المعنوية.'
+        ]
+      },
+      benefit: {
+        en: [
+          'Stronger collaboration, trust, and influence across teams and stakeholders.',
+          'Greater confidence in de-escalating conflict and motivating others under pressure.',
+          'More supportive, resilient personal and professional relationships.'
+        ],
+        ar: [
+          'تعاون وثقة وتأثير أقوى عبر الفرق وأصحاب المصلحة.',
+          'ثقة أكبر في تهدئة النزاعات وتحفيز الآخرين تحت الضغط.',
+          'علاقات شخصية ومهنية أكثر دعماً ومرونة.'
+        ]
+      },
+      develop: {
+        en: [
+          'Schedule regular 1-on-1 check-ins focused on support and recognition, not just task status.',
+          'Practice a calm de-escalation script: validate the emotion, ask open questions, and align on one next step.',
+          'Share authentic appreciation and constructive encouragement with at least one colleague daily.'
+        ],
+        ar: [
+          'تخصيص لقاءات فردية منتظمة للدعم والتقدير وليس فقط لمتابعة حالة المهام.',
+          'التدرب على أسلوب تهدئة هادئ: تقدير الشعور، طرح أسئلة مفتوحة، والاتفاق على خطوة تالية.',
+          'مشاركة تقدير صادق وتشجيع بنّاء مع زميل واحد على الأقل يومياً.'
+        ]
+      }
+    }
+  }
+];
+
+const UI = {
+  en: {
+    brandSub: 'Learning Hub • Capability Development',
+    authorLabel: 'Hazem Amyreh',
+    heroEyebrow: 'SELF-ASSESSMENT • EMOTIONAL INTELLIGENCE',
+    heroTitle: 'The Quick <span class="red">Emotional Intelligence</span> Self-Assessment',
+    heroDesc: 'Rate how closely each statement represents your typical behavior. Completed domains automatically fold away and scroll you smoothly to the next section. Once all 40 statements are answered, you will receive a comprehensive educational guide, your Emotional Map, and a single downloadable report combining your results and Action Plan.',
+    scale: ['0 = Rarely', '1 = Occasionally', '2 = Sometimes', '3 = Usually', '4 = Always'],
+    notStarted: 'Not Started',
+    inProgress: 'In Progress',
+    completed: '✓ Completed',
+    answeredTxt: (n, pct) => `${n} / 40 Answered (${pct}%)`,
+    lblName: 'Participant Name',
+    phName: 'Enter your full name',
+    lblDate: 'Assessment Date',
+    lblRole: 'Role / Department',
+    phRole: 'e.g., Team Lead / Operations',
+    lblOrg: 'Organization',
+    phOrg: 'Organization name',
+    btnSave: 'Save Progress',
+    btnUnifiedDownload: 'Download Complete Report (Results & Action Plan)',
+    btnReset: 'Reset All',
+    savedMsg: '✓ Saved locally in browser',
+    downloadedReportMsg: '✓ Complete Report (Results + Educational Guide + Action Plan) downloaded',
+    domainBadge: (i) => `DOMAIN ${i} OF 4`,
+    remainingBadge: (rem) => `${rem} left`,
+    completedBarTitle: 'Completed Domains (hidden to keep focus):',
+    showCompletedBtn: 'Show Completed Domains',
+    hideCompletedBtn: 'Hide Completed Domains',
+    lockedTitle: 'Your Emotional Intelligence Educational Report & Map',
+    lockedDesc: (rem) => `Complete all 40 statements to unlock your domain scores, scientific insights, strengths & growth areas, and 4-axis Emotional Map. (${rem} statements remaining)`,
+    analyzingTitle: 'Analyzing Your Emotional Intelligence Profile...',
+    analysisSteps: [
+      'Aggregating your 40 behavioral responses across all 4 domains...',
+      'Evaluating competency tiers, strengths, and scientific development insights...',
+      'Generating your 4-axis Emotional Map and personalized report...'
+    ],
+    resultsRibbon: 'FINAL RESULTS & EDUCATIONAL GUIDE',
+    resultsTitle: 'Your Emotional Intelligence Profile & Learning Report',
+    overallLabel: 'Overall EQ Total Score',
+    mapTitle: 'Your Emotional Map',
+    mapHint: 'Each axis plots your domain score from +5 to +40.',
+    tiers: [
+      { range: '0 – 24', title: 'Area for Enrichment', desc: 'Requires attention and development', cls: 'tier-low', level: 'low' },
+      { range: '25 – 34', title: 'Effective Functioning', desc: 'Consider strengthening', cls: 'tier-mid', level: 'mid' },
+      { range: '35 – 40', title: 'Enhanced Skills', desc: 'Use as leverage to develop weaker areas', cls: 'tier-high', level: 'high' }
+    ],
+    eduRibbon: 'COMPETENCY DEEP-DIVE • LEARNING GUIDE',
+    eduTitle: 'Understanding Your 4 Emotional Intelligence Domains',
+    eduSub: 'Explore what each competency means, your personalized strengths and watch-outs based on your score, what behavioral science says, and practical steps to grow.',
+    eduStrengthsTitle: 'Your Strengths in This Domain',
+    eduWeaknessesTitle: 'Watch-Outs & Areas to Improve',
+    eduScienceTitle: 'What Science & Research Say',
+    eduActionsTitle: 'Practical Ways to Build This Skill',
+    refRibbon: 'FOR REFLECTION & ACTION PLAN',
+    refTitle: 'Personal Reflection & Action Plan',
+    refSub: 'Select your highest and lowest domains from the lists below, then click any suggested prompt or write your own reflections.',
+    selectDomainPh: '-- Select Domain --',
+    lblHighest: 'My highest emotional intelligence domain is:',
+    lblHighEx: 'An example of how I display this EQ competency in my life/work is:',
+    lblLowest: 'My lowest emotional intelligence domain is:',
+    lblLowSelf: 'Examples of how this affects me in my life/work are:',
+    lblLowOthers: 'Examples of how this affects others in my life/work are:',
+    lblBenefit: 'Improving in this area would benefit me in the following ways:',
+    lblDevelop: 'Possible ways of developing in this area are:',
+    sugLabel: 'Suggested ideas (click to add):',
+    sugSelectFirst: 'Select a domain above to view tailored suggestions.',
+    footerPrepared: 'Prepared & Facilitated by <strong>Hazem Amyreh</strong>',
+    footerConnect: 'LinkedIn Profile',
+    footerText: '© 2026 Learning Hub • Adapted from The Quick Emotional Intelligence Self-Assessment (Courtesy of Paul Mohapel). Data is stored locally on your browser.',
+    dlgTitle: 'Reset all assessment responses?',
+    dlgBody: 'This will clear all 40 ratings, participant details, and reflection notes saved on this browser.',
+    dlgCancel: 'Cancel',
+    dlgConfirm: 'Reset Everything'
+  },
+  ar: {
+    brandSub: 'منصة التعلّم • تطوير القدرات',
+    authorLabel: 'حازم العمايرة',
+    heroEyebrow: 'التقييم الذاتي • الذكاء العاطفي',
+    heroTitle: 'التقييم الذاتي السريع <span class="red">للذكاء العاطفي</span>',
+    heroDesc: 'قيّم مدى انطباق كل عبارة على سلوكك المعتاد. عند إكمال أي محور، يُطوى تلقائياً وينقلك المؤشر بسلاسة إلى بداية المحور التالي، وبعد إكمال جميع العبارات الأربعين ستحصل على تقرير تعليمي متكامل وخريطتك العاطفية وخطة التطوير في ملف واحد.',
+    scale: ['0 = نادراً', '1 = أحياناً قليلة', '2 = أحياناً', '3 = غالباً', '4 = دائماً'],
+    notStarted: 'لم يبدأ',
+    inProgress: 'قيد التقدم',
+    completed: '✓ مكتمل',
+    answeredTxt: (n, pct) => `تمت الإجابة على ${n} / 40 (${pct}%)`,
+    lblName: 'اسم المشارك',
+    phName: 'أدخل الاسم الكامل',
+    lblDate: 'تاريخ التقييم',
+    lblRole: 'المسمى الوظيفي / القسم',
+    phRole: 'مثال: قائد فريق / العمليات',
+    lblOrg: 'المؤسسة',
+    phOrg: 'اسم المؤسسة',
+    btnSave: 'حفظ التقدم',
+    btnUnifiedDownload: 'تنزيل التقرير الشامل (النتائج وخطة التطوير)',
+    btnReset: 'تصفير الكل',
+    savedMsg: '✓ تم الحفظ محلياً في المتصفح',
+    downloadedReportMsg: '✓ تم تنزيل التقرير الشامل (النتائج + الشرح العلمي + خطة التطوير)',
+    domainBadge: (i) => `المحور ${i} من 4`,
+    remainingBadge: (rem) => `متبقي ${rem}`,
+    completedBarTitle: 'المحاور المكتملة (مخفية للتركيز):',
+    showCompletedBtn: 'إظهار المحاور المكتملة',
+    hideCompletedBtn: 'إخفاء المحاور المكتملة',
+    lockedTitle: 'تقرير الذكاء العاطفي التعليمي والخريطة العاطفية',
+    lockedDesc: (rem) => `أكمل جميع العبارات الأربعين لعرض درجات المحاور، والشرح العلمي لكل كفاءة، ونقاط القوة ومجالات التطوير، والخريطة العاطفية الرباعية. (متبقي ${rem} عبارة)`,
+    analyzingTitle: 'جارٍ تحليل نتائج الذكاء العاطفي وإعداد التقرير...',
+    analysisSteps: [
+      'تجميع إجاباتك الأربعين عبر المحاور الأربعة...',
+      'تحليل درجات الكفاءات وتحديد نقاط القوة ومجالات التطوير...',
+      'إعداد الشرح العلمي والخريطة العاطفية الرباعية...'
+    ],
+    resultsRibbon: 'النتائج النهائية والدليل التعليمي',
+    resultsTitle: 'ملف الذكاء العاطفي والتقرير التعليمي الشامل',
+    overallLabel: 'الدرجة الإجمالية للذكاء العاطفي',
+    mapTitle: 'خريطتك العاطفية',
+    mapHint: 'يمثل كل محور درجتك من +5 إلى +40.',
+    tiers: [
+      { range: '0 – 24', title: 'مجال للإثراء والتطوير', desc: 'يتطلب انتباهاً وتطويراً', cls: 'tier-low', level: 'low' },
+      { range: '25 – 34', title: 'أداء فعّال', desc: 'يُنصح بتعزيزه وتقويته', cls: 'tier-mid', level: 'mid' },
+      { range: '35 – 40', title: 'مهارات متقدمة', desc: 'استثمرها لتطوير المجالات الأقل', cls: 'tier-high', level: 'high' }
+    ],
+    eduRibbon: 'الدليل التعليمي للكفاءات • افهم نتائجك',
+    eduTitle: 'شرح محاور الذكاء العاطفي الأربعة وفق نتائجك',
+    eduSub: 'تعرّف على مفهوم كل محور، ونقاط القوة والضعف لديك بناءً على درجتك، وما يقوله العلم، وخطوات عملية لتطوير هذه المهارة.',
+    eduStrengthsTitle: 'نقاط القوة الموجودة لديك في هذا المحور',
+    eduWeaknessesTitle: 'نقاط الضعف والأشياء التي تحتاج إلى تحسين',
+    eduScienceTitle: 'ماذا يقول العلم والأبحاث في هذا الموضوع؟',
+    eduActionsTitle: 'خيارات عملية لتطوير هذه المهارة',
+    refRibbon: 'للتأمل وخطة التطوير',
+    refTitle: 'التأمل الشخصي وخطة التطوير (Action Plan)',
+    refSub: 'اختر أعلى وأقل محور لديك من القوائم أدناه، ثم اضغط على أي مقترح لإضافته أو اكتب تأملاتك الخاصة.',
+    selectDomainPh: '-- اختر المحور --',
+    lblHighest: 'أعلى محور لدي في الذكاء العاطفي هو:',
+    lblHighEx: 'مثال على كيفية إظهار هذه الكفاءة في حياتي أو عملي:',
+    lblLowest: 'أقل محور لدي في الذكاء العاطفي هو:',
+    lblLowSelf: 'أمثلة على كيفية تأثير ذلك عليّ في حياتي أو عملي:',
+    lblLowOthers: 'أمثلة على كيفية تأثير ذلك على الآخرين في حياتي أو عملي:',
+    lblBenefit: 'سيفيدني التحسن في هذا المجال بالطرق التالية:',
+    lblDevelop: 'الطرق الممكنة للتطوير في هذا المجال هي:',
+    sugLabel: 'أفكار مقترحة (اضغط للإضافة):',
+    sugSelectFirst: 'اختر محوراً من القائمة أعلاه لعرض المقترحات المناسبة.',
+    footerPrepared: 'إعداد وتقديم: <strong>حازم العمايرة (Hazem Amyreh)</strong>',
+    footerConnect: 'حساب LinkedIn',
+    footerText: '© 2026 منصة التعلّم • مقتبس من التقييم الذاتي السريع للذكاء العاطفي (Paul Mohapel). تُحفظ البيانات محلياً على متصفحك.',
+    dlgTitle: 'تصفير جميع إجابات التقييم؟',
+    dlgBody: 'سيؤدي هذا إلى مسح جميع التقييمات الأربعين وبيانات المشارك وملاحظات التأمل المحفوظة على هذا المتصفح.',
+    dlgCancel: 'إلغاء',
+    dlgConfirm: 'تصفير الكل'
+  }
+};
+
+let lang = 'en';
+let showCompleted = false;
+let isAnalyzing = false;
+let analysisTimer = null;
+
+let appState = {
+  meta: {
+    name: '',
+    date: new Date().toISOString().slice(0, 10),
+    role: '',
+    org: ''
+  },
+  answers: {},
+  reflection: {
+    highestDomain: '',
+    highExample: '',
+    lowestDomain: '',
+    lowSelf: '',
+    lowOthers: '',
+    benefit: '',
+    develop: '',
+    manualHighSelected: false,
+    manualLowSelected: false
+  }
+};
+
+function loadState() {
+  try {
+    const raw = localStorage.getItem(STORAGE_KEY);
+    if (raw) {
+      const parsed = JSON.parse(raw);
+      if (parsed.meta) appState.meta = { ...appState.meta, ...parsed.meta };
+      if (parsed.answers) appState.answers = parsed.answers;
+      if (parsed.reflection) appState.reflection = { ...appState.reflection, ...parsed.reflection };
+      if (parsed.lang) lang = parsed.lang;
+    }
+  } catch (e) {}
+}
+
+function flashStatus(msg) {
+  const el = document.getElementById('saveStatus');
+  if (!el) return;
+  el.textContent = msg;
+  setTimeout(() => { if (el.textContent === msg) el.textContent = ''; }, 2800);
+}
+
+function persistState(showFlash = false) {
+  try {
+    localStorage.setItem(STORAGE_KEY, JSON.stringify({ ...appState, lang }));
+    if (showFlash) flashStatus(UI[lang].savedMsg);
+  } catch (e) {}
+}
+
+function setLang(newLang) {
+  lang = newLang;
+  document.body.lang = lang;
+  document.body.dir = lang === 'ar' ? 'rtl' : 'ltr';
+  document.getElementById('enBtn').classList.toggle('active', lang === 'en');
+  document.getElementById('arBtn').classList.toggle('active', lang === 'ar');
+  persistState(false);
+  renderAll();
+}
+
+function saveMeta() {
+  appState.meta.name = document.getElementById('pName').value;
+  appState.meta.date = document.getElementById('pDate').value;
+  appState.meta.role = document.getElementById('pRole').value;
+  appState.meta.org = document.getElementById('pOrg').value;
+  persistState(false);
+}
+
+function manualSave() {
+  saveMeta();
+  saveReflection();
+  persistState(true);
+}
+
+function getDomainStats(domain) {
+  let answered = 0;
+  let score = 0;
+  domain.statements.forEach((_, idx) => {
+    const val = appState.answers[`${domain.id}-${idx}`];
+    if (typeof val === 'number') {
+      answered++;
+      score += val;
+    }
+  });
+  return { answered, total: domain.statements.length, score, complete: answered === domain.statements.length };
+}
+
+function getOverallStats() {
+  let answered = 0;
+  let totalScore = 0;
+  const domainResults = DOMAINS.map(d => {
+    const st = getDomainStats(d);
+    answered += st.answered;
+    totalScore += st.score;
+    return { domain: d, ...st };
+  });
+  return {
+    answered,
+    totalStatements: 40,
+    pct: Math.round((answered / 40) * 100),
+    complete: answered === 40,
+    totalScore,
+    domainResults
+  };
+}
+
+function focusNextVisibleDomain() {
+  requestAnimationFrame(() => {
+    const nextCard = DOMAINS
+      .filter(d => !getDomainStats(d).complete)
+      .map(d => document.getElementById(`domain-${d.id}`))
+      .find(el => el && !el.classList.contains('is-hidden'));
+
+    if (nextCard) {
+      nextCard.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      const firstUnansweredBtn = nextCard.querySelector('.statement-row:not(.answered) .rate-btn') || nextCard.querySelector('.rate-btn');
+      if (firstUnansweredBtn) {
+        setTimeout(() => firstUnansweredBtn.focus({ preventScroll: true }), 260);
+      }
+    }
+  });
+}
+
+function runRealisticAnalysis() {
+  if (analysisTimer) clearInterval(analysisTimer);
+  isAnalyzing = true;
+  renderResults();
+
+  requestAnimationFrame(() => {
+    const target = document.getElementById('resultsContainer');
+    if (target) target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  });
+
+  const steps = UI[lang].analysisSteps;
+  let stepIdx = 0;
+
+  const updateStepUI = () => {
+    const stepEl = document.getElementById('analysisStepText');
+    const barEl = document.getElementById('analysisProgressFill');
+    if (stepEl) stepEl.textContent = steps[Math.min(stepIdx, steps.length - 1)];
+    if (barEl) barEl.style.width = `${Math.min(100, Math.round(((stepIdx + 1) / steps.length) * 100))}%`;
+  };
+
+  updateStepUI();
+
+  analysisTimer = setInterval(() => {
+    stepIdx++;
+    if (stepIdx < steps.length) {
+      updateStepUI();
+    } else {
+      clearInterval(analysisTimer);
+      analysisTimer = null;
+      isAnalyzing = false;
+      renderResults();
+      requestAnimationFrame(() => {
+        const panel = document.querySelector('.results-panel');
+        if (panel) panel.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      });
+    }
+  }, 600);
+}
+
+function selectRating(domainId, idx, val) {
+  const prevOverallComplete = getOverallStats().complete;
+  const domainObj = DOMAINS.find(d => d.id === domainId);
+  const wasDomainComplete = domainObj ? getDomainStats(domainObj).complete : false;
+
+  appState.answers[`${domainId}-${idx}`] = val;
+
+  const isDomainNowComplete = domainObj ? getDomainStats(domainObj).complete : false;
+  const stats = getOverallStats();
+
+  if (stats.complete) {
+    const sorted = [...stats.domainResults].sort((a, b) => b.score - a.score);
+    if (!appState.reflection.manualHighSelected) {
+      appState.reflection.highestDomain = sorted[0].domain.id;
+    }
+    if (!appState.reflection.manualLowSelected) {
+      appState.reflection.lowestDomain = sorted[sorted.length - 1].domain.id;
+    }
+  }
+
+  persistState(true);
+  renderAll();
+
+  if (!prevOverallComplete && stats.complete) {
+    runRealisticAnalysis();
+  } else if (!wasDomainComplete && isDomainNowComplete && !showCompleted) {
+    focusNextVisibleDomain();
+  }
+}
+
+function toggleShowCompleted() {
+  showCompleted = !showCompleted;
+  renderDomains();
+  renderCompletedBar();
+}
+
+function renderStaticText() {
+  const t = UI[lang];
+  document.getElementById('brandSub').textContent = t.brandSub;
+  document.getElementById('headerAuthorLink').querySelector('span').textContent = t.authorLabel;
+  document.getElementById('heroEyebrow').textContent = t.heroEyebrow;
+  document.getElementById('heroTitle').innerHTML = t.heroTitle;
+  document.getElementById('heroDesc').textContent = t.heroDesc;
+  document.getElementById('scaleStrip').innerHTML = t.scale.map(s => `<span class="scale-pill">${s}</span>`).join('');
+
+  document.getElementById('lblName').textContent = t.lblName;
+  document.getElementById('pName').placeholder = t.phName;
+  document.getElementById('lblDate').textContent = t.lblDate;
+  document.getElementById('lblRole').textContent = t.lblRole;
+  document.getElementById('pRole').placeholder = t.phRole;
+  document.getElementById('lblOrg').textContent = t.lblOrg;
+  document.getElementById('pOrg').placeholder = t.phOrg;
+
+  document.getElementById('btnSave').textContent = t.btnSave;
+  document.getElementById('btnUnifiedDownload').textContent = t.btnUnifiedDownload;
+  document.getElementById('btnReset').textContent = t.btnReset;
+  document.getElementById('btnRefUnified').textContent = t.btnUnifiedDownload;
+
+  document.getElementById('refRibbon').textContent = t.refRibbon;
+  document.getElementById('refTitle').textContent = t.refTitle;
+  document.getElementById('refSub').textContent = t.refSub;
+  document.getElementById('lblHighest').textContent = t.lblHighest;
+  document.getElementById('lblHighEx').textContent = t.lblHighEx;
+  document.getElementById('lblLowest').textContent = t.lblLowest;
+  document.getElementById('lblLowSelf').textContent = t.lblLowSelf;
+  document.getElementById('lblLowOthers').textContent = t.lblLowOthers;
+  document.getElementById('lblBenefit').textContent = t.lblBenefit;
+  document.getElementById('lblDevelop').textContent = t.lblDevelop;
+
+  document.getElementById('footerAuthor').innerHTML = `${t.footerPrepared} • <a href="${AUTHOR_LINKEDIN}" target="_blank" rel="noopener noreferrer">${t.footerConnect}</a>`;
+  document.getElementById('footerText').textContent = t.footerText;
+  document.getElementById('dlgTitle').textContent = t.dlgTitle;
+  document.getElementById('dlgBody').textContent = t.dlgBody;
+  document.getElementById('dlgCancel').textContent = t.dlgCancel;
+  document.getElementById('dlgConfirm').textContent = t.dlgConfirm;
+
+  document.getElementById('pName').value = appState.meta.name;
+  document.getElementById('pDate').value = appState.meta.date;
+  document.getElementById('pRole').value = appState.meta.role;
+  document.getElementById('pOrg').value = appState.meta.org;
+}
+
+function renderProgress() {
+  const t = UI[lang];
+  const st = getOverallStats();
+  const card = document.getElementById('progressCard');
+  const badge = document.getElementById('statusBadge');
+
+  card.classList.toggle('completed-card', st.complete);
+  badge.classList.remove('hub-started');
+  if (st.complete) {
+    badge.textContent = t.completed;
+  } else if (st.answered > 0) {
+    badge.textContent = t.inProgress;
+    badge.classList.add('hub-started');
+  } else {
+    badge.textContent = t.notStarted;
+  }
+
+  document.getElementById('progressText').textContent = t.answeredTxt(st.answered, st.pct);
+  document.getElementById('progressFill').style.width = `${st.pct}%`;
+}
+
+function renderCompletedBar() {
+  const t = UI[lang];
+  const container = document.getElementById('completedBarContainer');
+  const completedDomains = DOMAINS.filter(d => getDomainStats(d).complete);
+
+  if (!completedDomains.length) {
+    container.innerHTML = '';
+    return;
+  }
+
+  container.innerHTML = `
+    <div class="completed-bar">
+      <div class="completed-chips">
+        <strong style="font-size:13px;color:var(--navy)">${t.completedBarTitle}</strong>
+        ${completedDomains.map(d => `<span class="done-chip">✓ ${d.name[lang]}</span>`).join('')}
+      </div>
+      <button type="button" class="btn-secondary" style="padding:7px 12px;font-size:12.5px" onclick="toggleShowCompleted()">
+        ${showCompleted ? t.hideCompletedBtn : t.showCompletedBtn}
+      </button>
+    </div>
+  `;
+}
+
+function renderDomains() {
+  const t = UI[lang];
+  const container = document.getElementById('domainsContainer');
+
+  container.innerHTML = DOMAINS.map((domain, dIndex) => {
+    const st = getDomainStats(domain);
+    const hideCard = st.complete && !showCompleted;
+    const rem = st.total - st.answered;
+
+    return `
+      <section class="domain-card ${hideCard ? 'is-hidden' : ''}" id="domain-${domain.id}">
+        <div class="domain-head">
+          <div>
+            <span class="ribbon">${t.domainBadge(dIndex + 1)}</span>
+            <h3 class="display">${domain.name[lang]}</h3>
+          </div>
+          <span class="q-count-pill">${st.complete ? t.completed : t.remainingBadge(rem)}</span>
+        </div>
+        <div>
+          ${domain.statements.map((stmt, sIdx) => {
+            const val = appState.answers[`${domain.id}-${sIdx}`];
+            const isAnswered = typeof val === 'number';
+            return `
+              <div class="statement-row ${isAnswered ? 'answered' : ''}">
+                <div class="statement-text">
+                  <span class="q-num">${sIdx + 1}</span>
+                  <span>${stmt[lang]}</span>
+                </div>
+                <div class="rating-group" role="radiogroup" aria-label="${stmt[lang]}">
+                  ${[0, 1, 2, 3, 4].map(num => `
+                    <button type="button"
+                      class="rate-btn ${val === num ? 'selected' : ''}"
+                      aria-pressed="${val === num}"
+                      onclick="selectRating('${domain.id}', ${sIdx}, ${num})">${num}</button>
+                  `).join('')}
+                </div>
+              </div>
+            `;
+          }).join('')}
+        </div>
+      </section>
+    `;
+  }).join('');
+}
+
+function getTierInfo(score) {
+  const tiers = UI[lang].tiers;
+  if (score <= 24) return tiers[0];
+  if (score <= 34) return tiers[1];
+  return tiers[2];
+}
+
+function buildEmotionalMapSVG(scoresMap) {
+  const cx = 180, cy = 180, maxR = 125;
+  const scale = (val) => Math.max(0, Math.min(40, val)) / 40 * maxR;
+
+  const pTop = [cx, cy - scale(scoresMap.sa)];
+  const pBottom = [cx, cy + scale(scoresMap.sm)];
+  const pLeft = [cx - scale(scoresMap.soa), cy];
+  const pRight = [cx + scale(scoresMap.rm), cy];
+  const polyPoints = [pTop, pRight, pBottom, pLeft].map(p => p.join(',')).join(' ');
+
+  const ticks = [5, 10, 15, 20, 25, 30, 35, 40];
+  const rings = [10, 20, 30, 40].map(v => {
+    const r = scale(v);
+    return `<polygon points="${cx},${cy-r} ${cx+r},${cy} ${cx},${cy+r} ${cx-r},${cy}" fill="none" stroke="#d5e3ef" stroke-width="1"/>`;
+  }).join('');
+
+  const tickMarks = ticks.map(v => {
+    const r = scale(v);
+    return `
+      <line x1="${cx-3}" y1="${cy-r}" x2="${cx+3}" y2="${cy-r}" stroke="#8aa0b8" stroke-width="1"/>
+      <line x1="${cx-3}" y1="${cy+r}" x2="${cx+3}" y2="${cy+r}" stroke="#8aa0b8" stroke-width="1"/>
+      <line x1="${cx-r}" y1="${cy-3}" x2="${cx-r}" y2="${cy+3}" stroke="#8aa0b8" stroke-width="1"/>
+      <line x1="${cx+r}" y1="${cy-3}" x2="${cx+r}" y2="${cy+3}" stroke="#8aa0b8" stroke-width="1"/>
+    `;
+  }).join('');
+
+  const lbl = {
+    top: DOMAINS[0].mapLabel[lang],
+    bottom: DOMAINS[1].mapLabel[lang],
+    left: DOMAINS[2].mapLabel[lang],
+    right: DOMAINS[3].mapLabel[lang]
+  };
+
+  return `
+    <svg viewBox="0 0 360 360" role="img" aria-label="Emotional Map">
+      ${rings}
+      <line x1="${cx}" y1="${cy-maxR}" x2="${cx}" y2="${cy+maxR}" stroke="#94a8be" stroke-width="1.4"/>
+      <line x1="${cx-maxR}" y1="${cy}" x2="${cx+maxR}" y2="${cy}" stroke="#94a8be" stroke-width="1.4"/>
+      ${tickMarks}
+      <polygon points="${polyPoints}" fill="rgba(72, 186, 226, 0.28)" stroke="#001B4D" stroke-width="2.5"/>
+      <circle cx="${pTop[0]}" cy="${pTop[1]}" r="5.5" fill="#C8102E"/>
+      <circle cx="${pBottom[0]}" cy="${pBottom[1]}" r="5.5" fill="#C8102E"/>
+      <circle cx="${pLeft[0]}" cy="${pLeft[1]}" r="5.5" fill="#C8102E"/>
+      <circle cx="${pRight[0]}" cy="${pRight[1]}" r="5.5" fill="#C8102E"/>
+
+      <text x="${cx}" y="22" text-anchor="middle" font-size="11.5" font-weight="800" fill="#001B4D">${lbl.top} (+${scoresMap.sa})</text>
+      <text x="${cx}" y="346" text-anchor="middle" font-size="11.5" font-weight="800" fill="#001B4D">${lbl.bottom} (+${scoresMap.sm})</text>
+      <text x="14" y="${cy-10}" text-anchor="start" font-size="10.5" font-weight="800" fill="#001B4D">${lbl.left}</text>
+      <text x="14" y="${cy+18}" text-anchor="start" font-size="11" font-weight="800" fill="#C8102E">+${scoresMap.soa}</text>
+      <text x="346" y="${cy-10}" text-anchor="end" font-size="10.5" font-weight="800" fill="#001B4D">${lbl.right}</text>
+      <text x="346" y="${cy+18}" text-anchor="end" font-size="11" font-weight="800" fill="#C8102E">+${scoresMap.rm}</text>
+    </svg>
+  `;
+}
+
+function buildEducationalDomainCardsHtml(domainResults) {
+  const t = UI[lang];
+  return domainResults.map(r => {
+    const tier = getTierInfo(r.score);
+    const edu = r.domain.edu;
+    const strengthsList = edu.strengths[tier.level][lang];
+    const weaknessesList = edu.weaknesses[tier.level][lang];
+    const actionsList = edu.actions[lang];
+
+    return `
+      <article class="edu-card">
+        <div class="edu-card-top">
+          <h5 class="display">${r.domain.name[lang]} — <span style="color:var(--teal)">${r.score} / 40</span></h5>
+          <span class="tier-tag ${tier.cls}">${tier.title}</span>
+        </div>
+        <p class="edu-definition">${edu.definition[lang]}</p>
+        <div class="edu-cols">
+          <div class="edu-box strength-box">
+            <h6>✓ ${t.eduStrengthsTitle}</h6>
+            <ul>${strengthsList.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+          <div class="edu-box weakness-box">
+            <h6>△ ${t.eduWeaknessesTitle}</h6>
+            <ul>${weaknessesList.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        </div>
+        <div class="edu-cols" style="margin-bottom:0">
+          <div class="edu-box science-box">
+            <h6>🔬 ${t.eduScienceTitle}</h6>
+            <p>${edu.science[lang]}</p>
+          </div>
+          <div class="edu-box action-box">
+            <h6>🧭 ${t.eduActionsTitle}</h6>
+            <ul>${actionsList.map(item => `<li>${item}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </article>
+    `;
+  }).join('');
+}
+
+function renderResults() {
+  const t = UI[lang];
+  const st = getOverallStats();
+  const container = document.getElementById('resultsContainer');
+
+  if (!st.complete) {
+    const rem = 40 - st.answered;
+    container.innerHTML = `
+      <section class="results-locked">
+        <span class="ribbon">${t.resultsRibbon}</span>
+        <h3 class="display">${t.lockedTitle}</h3>
+        <p>${t.lockedDesc(rem)}</p>
+      </section>
+    `;
+    return;
+  }
+
+  if (isAnalyzing) {
+    container.innerHTML = `
+      <section class="analysis-card" aria-live="polite">
+        <div class="spinner-ring"></div>
+        <h3 class="display">${t.analyzingTitle}</h3>
+        <p class="analysis-step" id="analysisStepText">${t.analysisSteps[0]}</p>
+        <div class="analysis-bar"><span id="analysisProgressFill" style="width:33%"></span></div>
+      </section>
+    `;
+    return;
+  }
+
+  const scoresMap = {};
+  st.domainResults.forEach(r => { scoresMap[r.domain.id] = r.score; });
+
+  container.innerHTML = `
+    <section class="results-panel">
+      <div class="results-header-row">
+        <div>
+          <span class="ribbon">${t.resultsRibbon}</span>
+          <h3 class="display" style="margin:6px 0 0;color:var(--navy);font-size:24px">${t.resultsTitle}</h3>
+        </div>
+        <button type="button" class="btn-teal" onclick="downloadUnifiedReport()">${t.btnUnifiedDownload}</button>
+      </div>
+
+      <div class="results-grid">
+        <div>
+          <div class="score-cards">
+            ${st.domainResults.map(r => {
+              const tier = getTierInfo(r.score);
+              return `
+                <div class="score-card">
+                  <h4>${r.domain.name[lang]}</h4>
+                  <div class="score-val">${r.score} <span>/ 40</span></div>
+                  <span class="tier-tag ${tier.cls}">${tier.title}</span>
+                </div>
+              `;
+            }).join('')}
+          </div>
+          <div class="total-banner">
+            <div>
+              <div style="font-size:12px;opacity:.85;font-weight:700;text-transform:uppercase">${t.overallLabel}</div>
+              <div style="font-size:13px;opacity:.9">${appState.meta.name ? appState.meta.name : ''}</div>
+            </div>
+            <b>${st.totalScore} / 160</b>
+          </div>
+        </div>
+
+        <div class="map-box">
+          <h4 class="display" style="margin:0 0 4px;color:var(--navy);font-size:16px">${t.mapTitle}</h4>
+          <p style="margin:0 0 8px;color:var(--muted);font-size:12px">${t.mapHint}</p>
+          ${buildEmotionalMapSVG(scoresMap)}
+        </div>
+      </div>
+
+      <div class="scoring-key">
+        ${t.tiers.map(tier => `
+          <div class="key-item">
+            <strong>${tier.range}: ${tier.title}</strong>
+            <span style="color:var(--muted)">${tier.desc}</span>
+          </div>
+        `).join('')}
+      </div>
+
+      <div class="edu-section">
+        <div class="edu-section-head">
+          <span class="ribbon">${t.eduRibbon}</span>
+          <h4 class="display">${t.eduTitle}</h4>
+          <p>${t.eduSub}</p>
+        </div>
+        <div class="edu-grid">
+          ${buildEducationalDomainCardsHtml(st.domainResults)}
+        </div>
+      </div>
+    </section>
+  `;
+}
+
+function renderReflectionSection() {
+  const t = UI[lang];
+  const highSel = document.getElementById('highestDomainSelect');
+  const lowSel = document.getElementById('lowestDomainSelect');
+
+  const optionsHtml = `<option value="">${t.selectDomainPh}</option>` +
+    DOMAINS.map(d => `<option value="${d.id}">${d.name[lang]}</option>`).join('');
+
+  highSel.innerHTML = optionsHtml;
+  lowSel.innerHTML = optionsHtml;
+
+  highSel.value = appState.reflection.highestDomain || '';
+  lowSel.value = appState.reflection.lowestDomain || '';
+
+  document.getElementById('refHighExample').value = appState.reflection.highExample || '';
+  document.getElementById('refLowSelf').value = appState.reflection.lowSelf || '';
+  document.getElementById('refLowOthers').value = appState.reflection.lowOthers || '';
+  document.getElementById('refBenefit').value = appState.reflection.benefit || '';
+  document.getElementById('refDevelop').value = appState.reflection.develop || '';
+
+  renderSuggestionChips();
+}
+
+function onReflectionDomainChange() {
+  const highVal = document.getElementById('highestDomainSelect').value;
+  const lowVal = document.getElementById('lowestDomainSelect').value;
+  appState.reflection.highestDomain = highVal;
+  appState.reflection.lowestDomain = lowVal;
+  appState.reflection.manualHighSelected = Boolean(highVal);
+  appState.reflection.manualLowSelected = Boolean(lowVal);
+  persistState(false);
+  renderSuggestionChips();
+}
+
+function saveReflection() {
+  appState.reflection.highExample = document.getElementById('refHighExample').value;
+  appState.reflection.lowSelf = document.getElementById('refLowSelf').value;
+  appState.reflection.lowOthers = document.getElementById('refLowOthers').value;
+  appState.reflection.benefit = document.getElementById('refBenefit').value;
+  appState.reflection.develop = document.getElementById('refDevelop').value;
+  persistState(false);
+}
+
+function applySuggestion(textareaId, text) {
+  const ta = document.getElementById(textareaId);
+  const current = ta.value.trim();
+  if (!current) {
+    ta.value = text;
+  } else if (!current.includes(text)) {
+    ta.value = current + '\n• ' + text;
+  }
+  saveReflection();
+}
+
+function renderSuggestionChips() {
+  const t = UI[lang];
+  const highDomain = DOMAINS.find(d => d.id === appState.reflection.highestDomain);
+  const lowDomain = DOMAINS.find(d => d.id === appState.reflection.lowestDomain);
+
+  const renderBox = (containerId, domainObj, key, textareaId) => {
+    const box = document.getElementById(containerId);
+    if (!domainObj) {
+      box.innerHTML = `<span class="sug-title" style="color:var(--muted);font-weight:600">${t.sugSelectFirst}</span>`;
+      return;
+    }
+    const items = domainObj.suggestions[key][lang];
+    box.innerHTML = `
+      <span class="sug-title">${t.sugLabel}</span>
+      <div class="sug-list">
+        ${items.map((txt, i) => `<button type="button" class="sug-chip" data-idx="${i}">+ ${txt}</button>`).join('')}
+      </div>
+    `;
+    box.querySelectorAll('.sug-chip').forEach((btn, idx) => {
+      btn.addEventListener('click', () => applySuggestion(textareaId, items[idx]));
+    });
+  };
+
+  renderBox('sugHighEx', highDomain, 'highEx', 'refHighExample');
+  renderBox('sugLowSelf', lowDomain, 'lowSelf', 'refLowSelf');
+  renderBox('sugLowOthers', lowDomain, 'lowOthers', 'refLowOthers');
+  renderBox('sugBenefit', lowDomain, 'benefit', 'refBenefit');
+  renderBox('sugDevelop', lowDomain, 'develop', 'refDevelop');
+}
+
+function escapeHtml(str) {
+  return String(str || '')
+    .replace(/&/g, '&amp;')
+    .replace(/</g, '&lt;')
+    .replace(/>/g, '&gt;')
+    .replace(/"/g, '&quot;');
+}
+
+function downloadUnifiedReport() {
+  saveMeta();
+  saveReflection();
+  const t = UI[lang];
+  const st = getOverallStats();
+  const dir = lang === 'ar' ? 'rtl' : 'ltr';
+  const scoresMap = {};
+  st.domainResults.forEach(r => { scoresMap[r.domain.id] = r.score; });
+
+  const highDomainObj = DOMAINS.find(d => d.id === appState.reflection.highestDomain);
+  const lowDomainObj = DOMAINS.find(d => d.id === appState.reflection.lowestDomain);
+
+  const reportHtml = `<!DOCTYPE html>
+<html lang="${lang}" dir="${dir}">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>${escapeHtml(t.resultsTitle)} - ${escapeHtml(appState.meta.name || 'Participant')}</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Inter:wght@400;600;700;800&family=Poppins:wght@700;800&display=swap" rel="stylesheet">
+<style>
+body{font-family:${lang === 'ar' ? 'Cairo,Tahoma,sans-serif' : 'Inter,Arial,sans-serif'};background:#f6f9fc;color:#11233f;margin:0;padding:26px;line-height:1.65}
+.container{max-width:980px;margin:auto;background:#fff;border:1px solid #dce7f1;border-radius:20px;padding:32px}
+.topbar{display:flex;justify-content:space-between;align-items:center;gap:12px;flex-wrap:wrap;border-bottom:1px solid #dce7f1;padding-bottom:14px;margin-bottom:18px}
+.badge{display:inline-block;background:#e9f7fc;color:#087ca5;padding:5px 12px;border-radius:999px;font-size:12px;font-weight:800}
+.print-btn{background:#001B4D;color:#fff;border:0;border-radius:9px;padding:9px 15px;font:inherit;font-size:13px;font-weight:700;cursor:pointer}
+h1,h2,h3,h4{color:#001B4D;margin-top:0}
+.meta-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;background:#f8fbfe;border:1px solid #dce7f1;border-radius:12px;padding:16px;margin:16px 0}
+.scores-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:16px 0}
+.card{background:#f8fbfe;border:1px solid #dce7f1;border-radius:12px;padding:15px}
+.total{background:#001B4D;color:#fff;padding:16px 20px;border-radius:12px;display:flex;justify-content:space-between;align-items:center;margin:16px 0}
+.edu-card{background:#fbfdff;border:1px solid #d5e4f0;border-inline-start:5px solid #001B4D;border-radius:14px;padding:18px 20px;margin-bottom:16px;break-inside:avoid}
+.edu-cols{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin-top:10px}
+.edu-box{background:#fff;border:1px solid #e1ebf3;border-radius:10px;padding:12px 14px;font-size:13.5px}
+.edu-box h5{margin:0 0 6px;color:#001B4D;font-size:13.5px}
+.edu-box ul{margin:0;padding-inline-start:18px}
+.ref-item{background:#f9fbfd;border:1px solid #e1ebf3;border-radius:12px;padding:14px;margin-bottom:12px;break-inside:avoid}
+.ref-item strong{display:block;color:#001B4D;margin-bottom:4px}
+table{width:100%;border-collapse:collapse;margin-top:14px;font-size:13.5px}
+th,td{border:1px solid #dce7f1;padding:9px 11px;text-align:start}
+th{background:#eef5fa;color:#001B4D}
+.report-footer{margin-top:26px;padding-top:16px;border-top:1px solid #dce7f1;text-align:center;font-size:13px;color:#526476}
+.report-footer a{color:#001B4D;font-weight:800}
+@media(max-width:720px){.meta-grid,.scores-grid,.edu-cols{grid-template-columns:1fr}}
+@media print{.print-btn{display:none!important}body{background:#fff;padding:0}.container{border:0;padding:0}}
+</style>
+</head>
+<body>
+<div class="container">
+  <div class="topbar">
+    <span class="badge">Learning Hub • Emotional Intelligence Report & Action Plan</span>
+    <button class="print-btn" onclick="window.print()">Print / Save as PDF</button>
+  </div>
+
+  <h1>${t.resultsTitle}</h1>
+  <div class="meta-grid">
+    <div><strong>${t.lblName}:</strong> ${escapeHtml(appState.meta.name || '—')}</div>
+    <div><strong>${t.lblDate}:</strong> ${escapeHtml(appState.meta.date || '—')}</div>
+    <div><strong>${t.lblRole}:</strong> ${escapeHtml(appState.meta.role || '—')}</div>
+    <div><strong>${t.lblOrg}:</strong> ${escapeHtml(appState.meta.org || '—')}</div>
+  </div>
+
+  <h2>1. ${t.resultsRibbon}</h2>
+  <div class="scores-grid">
+    ${st.domainResults.map(r => {
+      const tier = getTierInfo(r.score);
+      return `<div class="card"><strong>${r.domain.name[lang]}</strong><div style="font-size:24px;font-weight:800;color:#001B4D">${r.score} / 40</div><div>${tier.title} (${tier.desc})</div></div>`;
+    }).join('')}
+  </div>
+  <div class="total"><span>${t.overallLabel} (${st.answered}/40)</span><strong style="font-size:24px;color:#48BAE2">${st.totalScore} / 160</strong></div>
+
+  <div style="text-align:center;margin:18px 0">${buildEmotionalMapSVG(scoresMap)}</div>
+
+  <h2>2. ${t.eduTitle}</h2>
+  <p style="color:#526476;margin-top:0">${t.eduSub}</p>
+  ${st.domainResults.map(r => {
+    const tier = getTierInfo(r.score);
+    const edu = r.domain.edu;
+    return `
+      <div class="edu-card">
+        <h3>${r.domain.name[lang]} (${r.score} / 40 — ${tier.title})</h3>
+        <p>${edu.definition[lang]}</p>
+        <div class="edu-cols">
+          <div class="edu-box" style="border-top:3px solid #197647">
+            <h5>✓ ${t.eduStrengthsTitle}</h5>
+            <ul>${edu.strengths[tier.level][lang].map(x => `<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="edu-box" style="border-top:3px solid #C8102E">
+            <h5>△ ${t.eduWeaknessesTitle}</h5>
+            <ul>${edu.weaknesses[tier.level][lang].map(x => `<li>${x}</li>`).join('')}</ul>
+          </div>
+          <div class="edu-box" style="border-top:3px solid #48BAE2;background:#f4fafe">
+            <h5>🔬 ${t.eduScienceTitle}</h5>
+            <p style="margin:0">${edu.science[lang]}</p>
+          </div>
+          <div class="edu-box" style="border-top:3px solid #167a8b;background:#f3faf9">
+            <h5>🧭 ${t.eduActionsTitle}</h5>
+            <ul>${edu.actions[lang].map(x => `<li>${x}</li>`).join('')}</ul>
+          </div>
+        </div>
+      </div>
+    `;
+  }).join('')}
+
+  <h2>3. ${t.refTitle}</h2>
+  <div class="ref-item"><strong>${t.lblHighest}</strong><div>${highDomainObj ? highDomainObj.name[lang] : '—'}</div></div>
+  <div class="ref-item"><strong>${t.lblHighEx}</strong><div style="white-space:pre-line">${escapeHtml(appState.reflection.highExample || '—')}</div></div>
+  <div class="ref-item"><strong>${t.lblLowest}</strong><div>${lowDomainObj ? lowDomainObj.name[lang] : '—'}</div></div>
+  <div class="ref-item"><strong>${t.lblLowSelf}</strong><div style="white-space:pre-line">${escapeHtml(appState.reflection.lowSelf || '—')}</div></div>
+  <div class="ref-item"><strong>${t.lblLowOthers}</strong><div style="white-space:pre-line">${escapeHtml(appState.reflection.lowOthers || '—')}</div></div>
+  <div class="ref-item"><strong>${t.lblBenefit}</strong><div style="white-space:pre-line">${escapeHtml(appState.reflection.benefit || '—')}</div></div>
+  <div class="ref-item"><strong>${t.lblDevelop}</strong><div style="white-space:pre-line">${escapeHtml(appState.reflection.develop || '—')}</div></div>
+
+  <h2>4. Detailed Responses (40 Statements)</h2>
+  <table>
+    <thead><tr><th>Domain</th><th>#</th><th>Statement</th><th>Rating (0-4)</th></tr></thead>
+    <tbody>
+      ${DOMAINS.map(d => d.statements.map((stmt, idx) => {
+        const val = appState.answers[`${d.id}-${idx}`];
+        return `<tr><td>${d.name[lang]}</td><td>${idx + 1}</td><td>${stmt[lang]}</td><td><strong>${typeof val === 'number' ? val : '—'}</strong></td></tr>`;
+      }).join('')).join('')}
+    </tbody>
+  </table>
+
+  <div class="report-footer">
+    <div>${t.footerPrepared} • <a href="${AUTHOR_LINKEDIN}" target="_blank" rel="noopener noreferrer">${AUTHOR_LINKEDIN}</a></div>
+    <div style="margin-top:4px;font-size:12px">${t.footerText}</div>
+  </div>
+</div>
+</body>
+</html>`;
+
+  const blob = new Blob([reportHtml], { type: 'text/html;charset=utf-8' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  const safeName = (appState.meta.name || 'EQ-Assessment').trim().replace(/[^a-zA-Z0-9\u0600-\u06FF_-]+/g, '_');
+  a.href = url;
+  a.download = `${safeName}_Complete_EQ_Report.html`;
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  flashStatus(UI[lang].downloadedReportMsg);
+}
+
+function confirmReset() {
+  localStorage.removeItem(STORAGE_KEY);
+  if (analysisTimer) clearInterval(analysisTimer);
+  isAnalyzing = false;
+  appState = {
+    meta: { name: '', date: new Date().toISOString().slice(0, 10), role: '', org: '' },
+    answers: {},
+    reflection: {
+      highestDomain: '',
+      highExample: '',
+      lowestDomain: '',
+      lowSelf: '',
+      lowOthers: '',
+      benefit: '',
+      develop: '',
+      manualHighSelected: false,
+      manualLowSelected: false
+    }
+  };
+  showCompleted = false;
+  document.getElementById('resetDialog').close();
+  renderAll();
+}
+
+function renderAll() {
+  renderStaticText();
+  renderProgress();
+  renderCompletedBar();
+  renderDomains();
+  renderResults();
+  renderReflectionSection();
+}
+
+loadState();
+setLang(lang);
+</script>
+</body>
+</html>
